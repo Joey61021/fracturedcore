@@ -1,0 +1,16 @@
+name: FracturedSMP
+version: '1.0'
+main: com.fractured.FracturedCore
+api-version: '1.21'
+
+commands:
+  coords:
+    aliases: [coordinates]
+  gm:
+    aliases: [gamemode]
+  me:
+    aliases: [profile]
+  teamchat:
+    aliases: [tc]
+  team:
+    aliases: []
