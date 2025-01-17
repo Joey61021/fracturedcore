@@ -34,7 +34,6 @@ public class FracturedCore extends JavaPlugin {
 
     private void registerCommands() {
         getCommand("coords").setExecutor(new CoordsCmd());
-        getCommand("gm").setExecutor(new GmCmd());
         getCommand("me").setExecutor(new MeCmd());
         getCommand("teamchat").setExecutor(new TeamChatCmd());
         getCommand("team").setExecutor(new TeamCmd());

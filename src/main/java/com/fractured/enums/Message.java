@@ -9,11 +9,7 @@ import org.bukkit.inventory.ItemStack;
 public enum Message {
     NO_PERMISSION("&cYou do not have permission to run this command!"),
     CONSOLE_BLOCKED("&cThis command cannot be run through console!"),
-    MISSING_PARAMETERS("&cMissing parameters, please ensure the correct usage is followed."),
     TEAM_INVENTORY_CLOSED("&cTo get started, join a team with /team"),
-
-    CMD_GM_SURVIVAL("&fYour gamemode has been changed to &aSurvival&f!"),
-    CMD_GM_CREATIVE("&fYour gamemode has been changed to &cCreative&f!"),
 
     CMD_TC_TOGGLE_ON("&fTeam chat has been toggled &aON"),
     CMD_TC_TOGGLE_OFF("&fTeam chat has been toggled &cOFF"),

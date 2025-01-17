@@ -4,7 +4,6 @@ com\fractured\enums\Message.class
 com\fractured\events\inventory\InventoryClickListener.class
 com\fractured\events\HungerListener.class
 com\fractured\events\JoinListener.class
-com\fractured\commands\GmCmd.class
 com\fractured\commands\MeCmd.class
 com\fractured\commands\TeamCmd.class
 com\fractured\events\ChatListener.class
