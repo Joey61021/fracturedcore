@@ -54,6 +54,7 @@ public class TeamManager {
 
         team.getPlayers().add(player);
         player.teleport(team.getSpawn());
+        player.setBedSpawnLocation(team.getSpawn());
         player.setPlayerListName(team.getColor() + player.getName());
         player.setPlayerListFooter(Utils.Color("&7Your team: " + team.getColor() + team.getName() + " team"));
 

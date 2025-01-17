@@ -23,8 +23,6 @@ public class JoinListener implements Listener {
         player.setPlayerListHeader(Utils.Color("&eFractured &f| &e1.21.4 SMP"));
         player.setPlayerListFooter(Utils.Color("&7Your team: None"));
 
-
-
         String pooledTeam = FracturedCore.getDatabase.getString("teams." + player.getUniqueId());
         if (pooledTeam == null) {
             player.teleport(LocationManager.spawnPoint);

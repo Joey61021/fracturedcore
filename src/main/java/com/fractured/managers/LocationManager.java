@@ -13,6 +13,12 @@ public class LocationManager {
     public static World world = Bukkit.getServer().getWorld("world");
 
     // Locations
+    public static Location beaconLoc = new Location(world, 0, 63, 0);
+    public static Location redSpawnLoc = new Location(LocationManager.world, 250.5, 64, 250.5);
+    public static Location blueSpawnLoc = new Location(LocationManager.world, 250, 64, -249.5);
+    public static Location greenSpawnLoc = new Location(LocationManager.world, -250.5, 71, -250.5);
+    public static Location yellowSpawnLoc = new Location(LocationManager.world, -250.5, 64, 250.5);
+
     public static Location spawnPoint = new Location(world, 0.5, 165, 0.5, 0, 0);
 
     public static Location redPos1 = new Location(world, 750.5, MAX_HEIGHT, 750.5);
