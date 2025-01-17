@@ -15,16 +15,16 @@ public class LocationManager {
     // Locations
     public static Location spawnPoint = new Location(world, 0.5, 165, 0.5, 0, 0);
 
-    public static Location redPos1 = new Location(world, 500.5, MAX_HEIGHT, 500.5);
+    public static Location redPos1 = new Location(world, 750.5, MAX_HEIGHT, 750.5);
     public static Location redPos2 = new Location(world, 2.5, MIN_HEIGHT, 2.5);
 
-    public static Location greenPos1 = new Location(world, -500.5, MAX_HEIGHT, -500.5);
+    public static Location greenPos1 = new Location(world, -750.5, MAX_HEIGHT, -750.5);
     public static Location greenPos2 = new Location(world, -1.5, MIN_HEIGHT, -1.5);
 
-    public static Location bluePos1 = new Location(world, 500.5, MAX_HEIGHT, -500.5);
+    public static Location bluePos1 = new Location(world, 750.5, MAX_HEIGHT, -750.5);
     public static Location bluePos2 = new Location(world, 2.5, MIN_HEIGHT, 2.5);
 
-    public static Location yellowPos1 = new Location(world, -500.5, MAX_HEIGHT, 500.5);
+    public static Location yellowPos1 = new Location(world, -750.5, MAX_HEIGHT, 750.5);
     public static Location yellowPos2 = new Location(world, 2.5, MIN_HEIGHT, 2.5);
 
     public static boolean isInRegion(Location loc, Location pos1, Location pos2) {

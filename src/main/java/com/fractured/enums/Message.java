@@ -22,8 +22,9 @@ public enum Message {
 
     REGION_TEAM_ALERTED("&4The %team% team has been alerted of your location."),
     REGION_TEAM_OFFLINE("&cYou are unable to complete this action while this team is offline!"),
-    REGION_ALERT_BLOCK_PLACE("&4&l!!! &c%player% has placed a blocked in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% &4&l!!!"),
-    REGION_ALERT_BLOCK_BREAK("&4&l!!! &c%player% has broken a blocked in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% &4&l!!!");
+    REGION_ALERT_BLOCK_PLACE("&4&l!!! &c%player% has placed a block in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% &4&l!!!"),
+    REGION_ALERT_BLOCK_BREAK("&4&l!!! &c%player% has broken a block in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% &4&l!!!"),
+    REGION_ALERT_CHEST_OPEN("&4&l!!! &c%player% has chest has been opened in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% &4&l!!!");
 
     @Getter private final String message;
 

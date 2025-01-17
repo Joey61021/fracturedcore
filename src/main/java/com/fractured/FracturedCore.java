@@ -5,6 +5,7 @@ import com.fractured.events.*;
 import com.fractured.events.inventory.InventoryClickListener;
 import com.fractured.events.inventory.InventoryCloseListener;
 import com.fractured.events.world.BreakListener;
+import com.fractured.events.world.ChestListener;
 import com.fractured.events.world.PlaceListener;
 import com.fractured.utilities.Config;
 import com.fractured.utilities.Utils;
@@ -20,6 +21,7 @@ public class FracturedCore extends JavaPlugin {
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new BreakListener(), this);
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
+        getServer().getPluginManager().registerEvents(new ChestListener(), this);
         getServer().getPluginManager().registerEvents(new DeathListener(), this);
         getServer().getPluginManager().registerEvents(new HungerListener(), this);
         getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);

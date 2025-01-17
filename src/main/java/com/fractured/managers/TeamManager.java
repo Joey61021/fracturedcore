@@ -87,12 +87,12 @@ public class TeamManager {
     public static void alertTeam(Player player, Teams team, Location location, AlertReason alertReason) {
         player.sendMessage(Utils.Color(Message.REGION_TEAM_ALERTED.getMessage().replace("%team%", team.getName())));
 
-        if (team.getPlayers().size() > 1) {
+        if (team.getPlayers().size() > 0) {
             for (Player players : team.getPlayers()) {
-                players.sendMessage(alertReason.getMessage().replace("%player%", player.getName()).replace("%team%", team.getName())
-                        .replace("%locx%", "" + Math.round(location.getX()))
-                        .replace("%locy%", "" + Math.round(location.getY()))
-                        .replace("%locz%", "" + Math.round(location.getZ())));
+                players.sendMessage(Utils.Color(alertReason.getMessage().replace("%player%", player.getName()).replace("%team%", team.getName())
+                        .replace("%locx%", String.valueOf(Math.round(location.getX()))))
+                        .replace("%locy%", String.valueOf(Math.round(location.getY())))
+                        .replace("%locz%", String.valueOf(Math.round(location.getZ()))));
             }
         }
     }
