@@ -31,7 +31,7 @@ public class DamageListener implements Listener {
 
         Teams team = TeamManager.getTeam((Player) damager);
 
-        if (((Player) damager).getGameMode() != GameMode.SURVIVAL && team != null && LocationManager.getEnemyTeam(team, damager.getLocation()) != null) {
+        if (((Player) damager).getGameMode() != GameMode.SURVIVAL && team != null && LocationManager.getEnemyTeam(damager.getLocation(), team) != null) {
             damager.sendMessage(Utils.Color(Message.REGION_TEAM_OFFLINE.getMessage()));
             event.setCancelled(true);
         }

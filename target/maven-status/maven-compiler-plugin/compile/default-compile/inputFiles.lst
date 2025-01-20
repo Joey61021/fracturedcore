@@ -10,12 +10,14 @@ C:\Users\jogam\OneDrive\Desktop\Work\Servers\Plugins\FracturedSMP\src\main\java\
 C:\Users\jogam\OneDrive\Desktop\Work\Servers\Plugins\FracturedSMP\src\main\java\com\fractured\managers\SettingsManager.java
 C:\Users\jogam\OneDrive\Desktop\Work\Servers\Plugins\FracturedSMP\src\main\java\com\fractured\events\world\InteractListener.java
 C:\Users\jogam\OneDrive\Desktop\Work\Servers\Plugins\FracturedSMP\src\main\java\com\fractured\commands\TeamCmd.java
+C:\Users\jogam\OneDrive\Desktop\Work\Servers\Plugins\FracturedSMP\src\main\java\com\fractured\commands\BypassRegionsCmd.java
 C:\Users\jogam\OneDrive\Desktop\Work\Servers\Plugins\FracturedSMP\src\main\java\com\fractured\events\KillListener.java
 C:\Users\jogam\OneDrive\Desktop\Work\Servers\Plugins\FracturedSMP\src\main\java\com\fractured\FracturedCore.java
 C:\Users\jogam\OneDrive\Desktop\Work\Servers\Plugins\FracturedSMP\src\main\java\com\fractured\events\inventory\InventoryCloseListener.java
 C:\Users\jogam\OneDrive\Desktop\Work\Servers\Plugins\FracturedSMP\src\main\java\com\fractured\events\inventory\InventoryClickListener.java
 C:\Users\jogam\OneDrive\Desktop\Work\Servers\Plugins\FracturedSMP\src\main\java\com\fractured\enums\Teams.java
 C:\Users\jogam\OneDrive\Desktop\Work\Servers\Plugins\FracturedSMP\src\main\java\com\fractured\commands\BuildCmd.java
+C:\Users\jogam\OneDrive\Desktop\Work\Servers\Plugins\FracturedSMP\src\main\java\com\fractured\events\world\DropListener.java
 C:\Users\jogam\OneDrive\Desktop\Work\Servers\Plugins\FracturedSMP\src\main\java\com\fractured\managers\LocationManager.java
 C:\Users\jogam\OneDrive\Desktop\Work\Servers\Plugins\FracturedSMP\src\main\java\com\fractured\commands\RegionWand.java
 C:\Users\jogam\OneDrive\Desktop\Work\Servers\Plugins\FracturedSMP\src\main\java\com\fractured\events\DamageListener.java

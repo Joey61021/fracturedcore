@@ -24,3 +24,5 @@ commands:
     aliases: [region]
   bypassregions:
     aliases: []
+  regioncheck:
+    aliases: []

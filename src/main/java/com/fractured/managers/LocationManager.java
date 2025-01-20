@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import javax.annotation.Nullable;
+
 public class LocationManager {
 
     public static final int MAX_HEIGHT = 320;
@@ -30,9 +32,9 @@ public class LocationManager {
         return pos1.getWorld().equals(loc.getWorld()) && loc.getX() > minX && loc.getX() < maxX && loc.getY() > minY && loc.getY() < maxY && loc.getZ() > minZ && loc.getZ() < maxZ;
     }
 
-    public static Teams getEnemyTeam(Teams team, Location loc) {
+    public static Teams getEnemyTeam(Location loc, @Nullable Teams team) {
         for (Teams teams : Teams.values()) {
-            if (teams != team && isInRegion(loc, teams.getPos1(), teams.getPos2())) {
+            if ((team == null || teams == team) && isInRegion(loc, teams.getPos1(), teams.getPos2())) {
                 return teams;
             }
         }

@@ -2,14 +2,16 @@ package com.fractured.commands;
 
 import com.fractured.enums.Message;
 import com.fractured.enums.Teams;
-import com.fractured.managers.TeamManager;
+import com.fractured.managers.LocationManager;
 import com.fractured.utilities.Utils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class MeCmd implements CommandExecutor {
+import java.util.ArrayList;
+
+public class RegionCheckCmd implements CommandExecutor {
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
         if (!(sender instanceof Player)) {
@@ -18,9 +20,14 @@ public class MeCmd implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        player.sendMessage(Utils.Color("&e" + player.getName() + "&f | &eMy Profile"));
-        Teams team = TeamManager.getTeam(player);
-        player.sendMessage(Utils.Color("&7- My Team: " + (team != null ? team.getColor() + team.getName() + " team" : "&7None")));
+
+        if (!player.hasPermission("fractured.admin")) {
+            player.sendMessage(Utils.Color(Message.NO_PERMISSION.getMessage()));
+            return false;
+        }
+
+        Teams team = LocationManager.getEnemyTeam(player.getLocation(), null);
+        player.sendMessage(Utils.Color(Message.CMD_REGION_CHECK.getMessage().replace("%team%", team == null ? "&7None" : team.getColor() + team.getName())));
         return false;
     }
 }

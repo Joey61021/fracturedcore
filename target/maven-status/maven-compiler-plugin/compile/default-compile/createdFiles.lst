@@ -15,6 +15,7 @@ com\fractured\managers\RegionManager.class
 com\fractured\events\world\BreakListener.class
 com\fractured\managers\TeamManager.class
 com\fractured\commands\CoordsCmd.class
+com\fractured\commands\RegionCheckCmd.class
 com\fractured\events\inventory\InventoryCloseListener.class
 com\fractured\utilities\Config.class
 com\fractured\events\world\DropListener.class

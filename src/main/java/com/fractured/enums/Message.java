@@ -1,10 +1,6 @@
 package com.fractured.enums;
 
 import lombok.Getter;
-import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 public enum Message {
     NO_PERMISSION("&cYou do not have permission to run this command!"),
@@ -40,6 +36,8 @@ public enum Message {
     CMD_GENERATE_BORDER_CONFIRM("&cAre you sure you want to generate world borders at your current location? Doing so will cause lag to the server. Please execute /generateborders confirm to proceed."),
     CMD_GENERATE_BORDER_GENERATING("&7Generating, please wait..."),
     CMD_GENERATE_BORDER_COMPLETE("&aBorder generated successfully!"),
+
+    CMD_REGION_CHECK("&fYou are currently in %team% team's &fregion!"),
 
     REGION_SELECTED("&f%pos% has been selected at your location for %team%&f!"),
     REGION_CYCLE_TEAM("&fTeam cycled to %team%&f!");

@@ -64,7 +64,7 @@ public class InteractListener implements Listener {
 
         if (!BypassRegionsCmd.bypass.contains(player) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && event.getClickedBlock().getType().equals(Material.CHEST)) {
             if (!LocationManager.isInRegion(event.getClickedBlock().getLocation(), team.getPos1(), team.getPos2())) {
-                Teams enemyTeam = LocationManager.getEnemyTeam(team, event.getClickedBlock().getLocation());
+                Teams enemyTeam = LocationManager.getEnemyTeam(event.getClickedBlock().getLocation(), team);
                 if (enemyTeam == null) {
                     event.setCancelled(true);
                     return;

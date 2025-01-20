@@ -46,7 +46,7 @@ public class BreakListener implements Listener {
             return;
         }
 
-        if (player.getGameMode() == GameMode.CREATIVE || !player.getWorld().getName().equalsIgnoreCase("world")) {
+        if (player.getGameMode() == GameMode.CREATIVE || !player.getWorld().getName().equalsIgnoreCase(LocationManager.world.getName())) {
             return;
         }
 
@@ -58,7 +58,7 @@ public class BreakListener implements Listener {
         }
 
         if (!BypassRegionsCmd.bypass.contains(player) && !LocationManager.isInRegion(block.getLocation(), team.getPos1(), team.getPos2())) {
-            Teams enemyTeam = LocationManager.getEnemyTeam(team, block.getLocation());
+            Teams enemyTeam = LocationManager.getEnemyTeam(block.getLocation(), team);
             if (enemyTeam == null) {
                 event.setCancelled(true);
                 return;

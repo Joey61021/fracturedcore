@@ -19,7 +19,7 @@ public class RespawnListener implements Listener {
         Player player = event.getPlayer();
         Teams team = TeamManager.getTeam(player);
 
-        if (team != null && LocationManager.getEnemyTeam(team, event.getRespawnLocation()) != null) {
+        if (team != null && LocationManager.getEnemyTeam(event.getRespawnLocation(), team) != null) {
             event.setRespawnLocation(team.getSpawn());
             player.setBedSpawnLocation(team.getSpawn());
         }

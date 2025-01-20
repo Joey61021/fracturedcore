@@ -41,7 +41,7 @@ public class PlaceListener implements Listener {
         }
 
         if (!BypassRegionsCmd.bypass.contains(player) && !LocationManager.isInRegion(event.getBlock().getLocation(), team.getPos1(), team.getPos2())) {
-            Teams enemyTeam = LocationManager.getEnemyTeam(team, event.getBlock().getLocation());
+            Teams enemyTeam = LocationManager.getEnemyTeam(event.getBlock().getLocation(), team);
             if (enemyTeam == null) {
                 event.setCancelled(true);
                 return;

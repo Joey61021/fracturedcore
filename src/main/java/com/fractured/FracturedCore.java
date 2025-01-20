@@ -51,6 +51,7 @@ public class FracturedCore extends JavaPlugin {
         getCommand("generateborders").setExecutor(new GenerateBordersCmd());
         getCommand("regionwand").setExecutor(new RegionWand());
         getCommand("bypassregions").setExecutor(new BypassRegionsCmd());
+        getCommand("regioncheck").setExecutor(new RegionCheckCmd());
     }
 
     private void establishDatabase() {
