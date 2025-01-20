@@ -1,5 +1,6 @@
 package com.fractured.events.world;
 
+import com.fractured.FracturedCore;
 import com.fractured.commands.BuildCmd;
 import com.fractured.commands.BypassRegionsCmd;
 import com.fractured.enums.AlertReason;
@@ -18,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -73,12 +75,20 @@ public class BreakListener implements Listener {
 
 
         if (isOre(block.getType())) {
+            if (block.hasMetadata("veinProcessed")) {
+                return;
+            }
+
             Set<Block> countedBlocks = new HashSet<>();
             countOreVein(block, countedBlocks);
 
+            for (Block oreBlock : countedBlocks) {
+                oreBlock.setMetadata("veinProcessed", new FixedMetadataValue(FracturedCore.instance, true));
+            }
+
             for (Player players : Bukkit.getOnlinePlayers()) {
                 if (players.hasPermission("fractured.admin")) {
-                    players.sendMessage(Utils.Color("&c&l[XRAY] " + player.getDisplayName() + " &fhas broken a vein of &b" + countedBlocks.size() + " " + block.getType().name() + "&f!"));
+                    players.sendMessage(Utils.Color("&c&l[XRAY] " + player.getDisplayName() + " &fhas broken a vein of &b&l" + countedBlocks.size() + " " + block.getType().name() + "&f!"));
                 }
             }
         }
