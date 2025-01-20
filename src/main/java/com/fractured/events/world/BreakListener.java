@@ -1,6 +1,7 @@
 package com.fractured.events.world;
 
 import com.fractured.commands.BuildCmd;
+import com.fractured.commands.BypassRegionsCmd;
 import com.fractured.enums.AlertReason;
 import com.fractured.enums.Message;
 import com.fractured.enums.Teams;
@@ -54,7 +55,7 @@ public class BreakListener implements Listener {
             return;
         }
 
-        if (!LocationManager.isInRegion(block.getLocation(), team.getPos1(), team.getPos2())) {
+        if (!BypassRegionsCmd.bypass.contains(player) && !LocationManager.isInRegion(block.getLocation(), team.getPos1(), team.getPos2())) {
             Teams enemyTeam = LocationManager.getEnemyTeam(team, block.getLocation());
             if (enemyTeam == null) {
                 event.setCancelled(true);
@@ -77,7 +78,7 @@ public class BreakListener implements Listener {
 
             for (Player players : Bukkit.getOnlinePlayers()) {
                 if (players.hasPermission("fractured.admin")) {
-                    players.sendMessage(Utils.Color("&c&l[XRAY] " + player.getDisplayName() + " &fhas broken a vein of &b" + countedBlocks.size() + " " + block.getType().name() + " &f!"));
+                    players.sendMessage(Utils.Color("&c&l[XRAY] " + player.getDisplayName() + " &fhas broken a vein of &b" + countedBlocks.size() + " " + block.getType().name() + "&f!"));
                 }
             }
         }

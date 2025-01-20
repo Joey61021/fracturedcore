@@ -1,6 +1,7 @@
 package com.fractured.events.world;
 
 import com.fractured.commands.BuildCmd;
+import com.fractured.commands.BypassRegionsCmd;
 import com.fractured.enums.AlertReason;
 import com.fractured.enums.Message;
 import com.fractured.enums.Teams;
@@ -39,7 +40,7 @@ public class PlaceListener implements Listener {
             return;
         }
 
-        if (!LocationManager.isInRegion(event.getBlock().getLocation(), team.getPos1(), team.getPos2())) {
+        if (!BypassRegionsCmd.bypass.contains(player) && !LocationManager.isInRegion(event.getBlock().getLocation(), team.getPos1(), team.getPos2())) {
             Teams enemyTeam = LocationManager.getEnemyTeam(team, event.getBlock().getLocation());
             if (enemyTeam == null) {
                 event.setCancelled(true);

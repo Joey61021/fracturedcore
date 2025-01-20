@@ -6,6 +6,7 @@ com\fractured\events\HungerListener.class
 com\fractured\commands\GenerateBordersCmd.class
 com\fractured\events\JoinListener.class
 com\fractured\commands\MeCmd.class
+com\fractured\commands\BypassRegionsCmd.class
 com\fractured\commands\TeamCmd.class
 com\fractured\commands\RegionWand.class
 com\fractured\events\ChatListener.class

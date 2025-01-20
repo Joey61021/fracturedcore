@@ -22,3 +22,5 @@ commands:
     aliases: [generateborder]
   regionwand:
     aliases: [region]
+  bypassregions:
+    aliases: []

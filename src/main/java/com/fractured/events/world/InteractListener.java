@@ -1,6 +1,7 @@
 package com.fractured.events.world;
 
 import com.fractured.commands.BuildCmd;
+import com.fractured.commands.BypassRegionsCmd;
 import com.fractured.enums.AlertReason;
 import com.fractured.enums.Message;
 import com.fractured.enums.Teams;
@@ -61,7 +62,7 @@ public class InteractListener implements Listener {
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F);
         }
 
-        if (event.getClickedBlock().getType().equals(Material.CHEST)) {
+        if (!BypassRegionsCmd.bypass.contains(player) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && event.getClickedBlock().getType().equals(Material.CHEST)) {
             if (!LocationManager.isInRegion(event.getClickedBlock().getLocation(), team.getPos1(), team.getPos2())) {
                 Teams enemyTeam = LocationManager.getEnemyTeam(team, event.getClickedBlock().getLocation());
                 if (enemyTeam == null) {

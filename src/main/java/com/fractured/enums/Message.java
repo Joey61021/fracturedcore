@@ -29,6 +29,9 @@ public enum Message {
     CMD_BUILD_TOGGLE_ON("&fBuild is now toggled &aON&f!"),
     CMD_BUILD_TOGGLE_OFF("&fBuild is now toggled &cOFF&f!"),
 
+    CMD_BYPASS_REGIONS_TOGGLE_ON("&cYou are now bypassing region restrictions."),
+    CMD_BYPASS_REGIONS_TOGGLE_OFF("&eYou are no longer bypassing region restrictions."),
+
     CMD_SETTING_TOGGLE("&b%val% &fhas been toggled %bool%&f!"),
 
     CMD_SET_LOCATION_INVALID("&cInvalid location, please double check your arguments!"),
