@@ -14,24 +14,9 @@ public class LocationManager {
 
     public static World world = Bukkit.getServer().getWorld("world");
 
-    // Locations
-    public static Location beaconLoc = new Location(world, 0, 63, 0);
-
-    public static Location redPos1 = new Location(world, 750.5, MAX_HEIGHT, 750.5);
-    public static Location redPos2 = new Location(world, 2.5, MIN_HEIGHT, 2.5);
-
-    public static Location greenPos1 = new Location(world, -750.5, MAX_HEIGHT, -750.5);
-    public static Location greenPos2 = new Location(world, -1.5, MIN_HEIGHT, -1.5);
-
-    public static Location bluePos1 = new Location(world, 750.5, MAX_HEIGHT, -750.5);
-    public static Location bluePos2 = new Location(world, 2.5, MIN_HEIGHT, 2.5);
-
-    public static Location yellowPos1 = new Location(world, -750.5, MAX_HEIGHT, 750.5);
-    public static Location yellowPos2 = new Location(world, 2.5, MIN_HEIGHT, 2.5);
-
-    public static Location getLocation(String key) {
+    public static Location getLocation(String path) {
         Config settings = FracturedCore.getSettings;
-        return new Location(world, settings.getDouble("locations." + key + ".x", 0.0), settings.getDouble("locations." + key + ".y", 64.0), settings.getDouble("locations." + key + ".z", 0.0), 0.0F, 0.0F);
+        return new Location(world, settings.getDouble(path + ".x", 0.0), settings.getDouble(path + ".y", 64.0), settings.getDouble(path + ".z", 0.0), 0.0F, 0.0F);
     }
 
     public static boolean isInRegion(Location loc, Location pos1, Location pos2) {

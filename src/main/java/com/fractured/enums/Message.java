@@ -36,7 +36,10 @@ public enum Message {
 
     CMD_GENERATE_BORDER_CONFIRM("&cAre you sure you want to generate world borders at your current location? Doing so will cause lag to the server. Please execute /generateborders confirm to proceed."),
     CMD_GENERATE_BORDER_GENERATING("&7Generating, please wait..."),
-    CMD_GENERATE_BORDER_COMPLETE("&aBorder generated successfully!");
+    CMD_GENERATE_BORDER_COMPLETE("&aBorder generated successfully!"),
+
+    REGION_SELECTED("&f%pos% has been selected at your location for %team%&f!"),
+    REGION_CYCLE_TEAM("&fTeam cycled to %team%&f!");
 
     @Getter private final String message;
 

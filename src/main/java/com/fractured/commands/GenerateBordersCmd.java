@@ -1,8 +1,11 @@
 package com.fractured.commands;
 
+import com.fractured.FracturedCore;
 import com.fractured.enums.Message;
 import com.fractured.managers.LocationManager;
+import com.fractured.utilities.Config;
 import com.fractured.utilities.Utils;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -76,6 +79,10 @@ public class GenerateBordersCmd implements CommandExecutor {
         }
 
         player.sendMessage(Utils.Color(Message.CMD_GENERATE_BORDER_COMPLETE.getMessage()));
+
+        Config settings = FracturedCore.getSettings;
+        settings.set("locations.beacon", new Location(LocationManager.world, x, y-1, z));
+        settings.save();
         return false;
     }
 }

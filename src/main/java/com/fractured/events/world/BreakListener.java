@@ -5,6 +5,7 @@ import com.fractured.enums.AlertReason;
 import com.fractured.enums.Message;
 import com.fractured.enums.Teams;
 import com.fractured.managers.LocationManager;
+import com.fractured.managers.RegionManager;
 import com.fractured.managers.TeamManager;
 import com.fractured.utilities.Utils;
 import org.bukkit.Bukkit;
@@ -27,9 +28,18 @@ public class BreakListener implements Listener {
         Player player = event.getPlayer();
         Block block = event.getBlock();
 
-        if (!BuildCmd.build.contains(player) && player.getGameMode() == GameMode.CREATIVE) {
-            player.sendMessage(Utils.Color(Message.UNABLE_TO_BUILD.getMessage()));
-            event.setCancelled(true);
+        if (player.getGameMode() == GameMode.CREATIVE) {
+            if (!BuildCmd.build.contains(player)) {
+                player.sendMessage(Utils.Color(Message.UNABLE_TO_BUILD.getMessage()));
+                event.setCancelled(true);
+                return;
+            }
+
+            if (player.getItemInHand().getType() == Material.BLAZE_ROD && player.getItemInHand().hasItemMeta() && player.getItemInHand().getItemMeta().getDisplayName().toLowerCase().contains("region wand")) {
+                event.setCancelled(true);
+                RegionManager.selectRegion(false, block.getLocation());
+                player.sendMessage(Utils.Color(Message.REGION_SELECTED.getMessage().replace("%pos%", "Pos2").replace("%team%", RegionManager.selectedTeam.getColor() + RegionManager.selectedTeam.getName())));
+            }
             return;
         }
 

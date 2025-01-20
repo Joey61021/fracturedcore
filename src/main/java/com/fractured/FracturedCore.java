@@ -5,6 +5,7 @@ import com.fractured.events.*;
 import com.fractured.events.inventory.InventoryClickListener;
 import com.fractured.events.inventory.InventoryCloseListener;
 import com.fractured.events.world.BreakListener;
+import com.fractured.events.world.DropListener;
 import com.fractured.events.world.InteractListener;
 import com.fractured.events.world.PlaceListener;
 import com.fractured.utilities.Config;
@@ -23,6 +24,7 @@ public class FracturedCore extends JavaPlugin {
 
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new BreakListener(), this);
+        getServer().getPluginManager().registerEvents(new DropListener(), this);
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
         getServer().getPluginManager().registerEvents(new DamageListener(), this);
         getServer().getPluginManager().registerEvents(new InteractListener(), this);
@@ -47,6 +49,7 @@ public class FracturedCore extends JavaPlugin {
         getCommand("settings").setExecutor(new SettingsCmd());
         getCommand("setlocation").setExecutor(new SetLocation());
         getCommand("generateborders").setExecutor(new GenerateBordersCmd());
+        getCommand("regionwand").setExecutor(new RegionWand());
     }
 
     private void establishDatabase() {
@@ -65,8 +68,8 @@ public class FracturedCore extends JavaPlugin {
 
     @Override
     public void onDisable() {
-//        for (Player players : Bukkit.getOnlinePlayers()) {
-//            players.kickPlayer(Utils.Color("&eServer restarting..."));
-//        }
+        for (Player players : Bukkit.getOnlinePlayers()) {
+            players.kickPlayer(Utils.Color("&eServer restarting..."));
+        }
     }
 }
