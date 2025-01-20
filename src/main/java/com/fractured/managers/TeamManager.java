@@ -3,10 +3,13 @@ package com.fractured.managers;
 import com.fractured.FracturedCore;
 import com.fractured.enums.AlertReason;
 import com.fractured.enums.Message;
+import com.fractured.enums.Settings;
 import com.fractured.enums.Teams;
 import com.fractured.utilities.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -51,6 +54,12 @@ public class TeamManager {
     public static void establishTeam(Player player, Teams team) {
         FracturedCore.getDatabase.set("teams." + player.getUniqueId(), team.toString());
         FracturedCore.getDatabase.save();
+
+        if (SettingsManager.isToggled(Settings.STARTER_ITEMS)) {
+            player.getInventory().setItem(0, new ItemStack(Material.WOODEN_SWORD));
+            player.getInventory().setItem(1, new ItemStack(Material.WOODEN_AXE));
+            player.getInventory().setItem(2, new ItemStack(Material.WOODEN_PICKAXE));
+        }
 
         team.getPlayers().add(player);
         player.teleport(team.getSpawn());
@@ -101,7 +110,9 @@ public class TeamManager {
     public static Teams applyTeam(Player player, String pooledTeam) {
         Teams team = Teams.valueOf(pooledTeam);
         team.getPlayers().add(player);
+
         player.setPlayerListName(team.getColor() + player.getName());
+        player.setDisplayName(Utils.Color(team.getColor() + player.getDisplayName()));
         player.setPlayerListFooter(Utils.Color("&7Your team: " + team.getColor() + team.getName() + " team"));
         return team;
     }

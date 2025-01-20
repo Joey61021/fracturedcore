@@ -1,25 +1,21 @@
 package com.fractured.managers;
 
+import com.fractured.FracturedCore;
 import com.fractured.enums.Teams;
+import com.fractured.utilities.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
 public class LocationManager {
 
-    private static final int MAX_HEIGHT = 320;
-    private static final int MIN_HEIGHT = -64;
+    public static final int MAX_HEIGHT = 320;
+    public static final int MIN_HEIGHT = -64;
 
     public static World world = Bukkit.getServer().getWorld("world");
 
     // Locations
     public static Location beaconLoc = new Location(world, 0, 63, 0);
-    public static Location redSpawnLoc = new Location(LocationManager.world, 250.5, 64, 250.5);
-    public static Location blueSpawnLoc = new Location(LocationManager.world, 250, 64, -249.5);
-    public static Location greenSpawnLoc = new Location(LocationManager.world, -250.5, 71, -250.5);
-    public static Location yellowSpawnLoc = new Location(LocationManager.world, -250.5, 64, 250.5);
-
-    public static Location spawnPoint = new Location(world, 0.5, 165, 0.5, 0, 0);
 
     public static Location redPos1 = new Location(world, 750.5, MAX_HEIGHT, 750.5);
     public static Location redPos2 = new Location(world, 2.5, MIN_HEIGHT, 2.5);
@@ -32,6 +28,11 @@ public class LocationManager {
 
     public static Location yellowPos1 = new Location(world, -750.5, MAX_HEIGHT, 750.5);
     public static Location yellowPos2 = new Location(world, 2.5, MIN_HEIGHT, 2.5);
+
+    public static Location getLocation(String key) {
+        Config settings = FracturedCore.getSettings;
+        return new Location(world, settings.getDouble("locations." + key + ".x", 0.0), settings.getDouble("locations." + key + ".y", 64.0), settings.getDouble("locations." + key + ".z", 0.0), 0.0F, 0.0F);
+    }
 
     public static boolean isInRegion(Location loc, Location pos1, Location pos2) {
         double minX = Math.min(pos1.getX(), pos2.getX());

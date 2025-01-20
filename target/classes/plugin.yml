@@ -12,5 +12,11 @@ commands:
     aliases: [tc]
   team:
     aliases: []
-  shard:
-    aliases: []
+  build:
+    aliases: [b]
+  settings:
+    aliases: [setting]
+  setlocation:
+    aliases: [setloc]
+  generateborders:
+    aliases: [generateborder]

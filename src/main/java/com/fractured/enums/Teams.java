@@ -11,10 +11,10 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 
 public enum Teams {
-    RED("Red", ChatColor.RED, new ItemStack(Material.RED_CONCRETE), 1, LocationManager.redSpawnLoc, LocationManager.redPos1, LocationManager.redPos2,  Material.RED_STAINED_GLASS, new ArrayList<>()),
-    BLUE("Blue", ChatColor.BLUE, new ItemStack(Material.BLUE_CONCRETE), 3, LocationManager.blueSpawnLoc, LocationManager.bluePos1, LocationManager.bluePos2, Material.BLUE_STAINED_GLASS, new ArrayList<>()),
-    GREEN("Green", ChatColor.GREEN, new ItemStack(Material.LIME_CONCRETE), 5, LocationManager.greenSpawnLoc, LocationManager.greenPos1, LocationManager.greenPos2, Material.LIME_STAINED_GLASS, new ArrayList<>()),
-    YELLOW("Yellow", ChatColor.YELLOW, new ItemStack(Material.YELLOW_CONCRETE), 7, LocationManager.yellowSpawnLoc, LocationManager.yellowPos1, LocationManager.yellowPos2, Material.YELLOW_STAINED_GLASS, new ArrayList<>());
+    RED("Red", ChatColor.RED, new ItemStack(Material.RED_CONCRETE), 1, LocationManager.getLocation("red"), LocationManager.redPos1, LocationManager.redPos2,  Material.RED_STAINED_GLASS, new ArrayList<>()),
+    BLUE("Blue", ChatColor.BLUE, new ItemStack(Material.BLUE_CONCRETE), 3, LocationManager.getLocation("blue"), LocationManager.bluePos1, LocationManager.bluePos2, Material.BLUE_STAINED_GLASS, new ArrayList<>()),
+    GREEN("Green", ChatColor.GREEN, new ItemStack(Material.LIME_CONCRETE), 5, LocationManager.getLocation("green"), LocationManager.greenPos1, LocationManager.greenPos2, Material.LIME_STAINED_GLASS, new ArrayList<>()),
+    YELLOW("Yellow", ChatColor.YELLOW, new ItemStack(Material.YELLOW_CONCRETE), 7, LocationManager.getLocation("yellow"), LocationManager.yellowPos1, LocationManager.yellowPos2, Material.YELLOW_STAINED_GLASS, new ArrayList<>());
 
     @Getter private final String name;
     @Getter private final ChatColor color;

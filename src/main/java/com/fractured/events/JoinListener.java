@@ -17,7 +17,6 @@ public class JoinListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        player.setGameMode(GameMode.SURVIVAL);
 
         // Tab
         player.setPlayerListHeader(Utils.Color("&eFractured &f| &e1.21.4 SMP"));
@@ -25,7 +24,7 @@ public class JoinListener implements Listener {
 
         String pooledTeam = FracturedCore.getDatabase.getString("teams." + player.getUniqueId());
         if (pooledTeam == null) {
-            player.teleport(LocationManager.spawnPoint);
+            player.teleport(LocationManager.getLocation("spawn"));
             TeamManager.displayGUI(player);
             event.setJoinMessage(Utils.Color("&7" + player.getName() + " &fhas connected"));
             return;

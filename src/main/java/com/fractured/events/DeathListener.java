@@ -11,9 +11,15 @@ public class DeathListener implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
-        Player player = event.getEntity();
-        Location loc = player.getLocation();
+        Player victim = event.getEntity();
+        Location loc = victim.getLocation();
 
-        player.sendMessage(Utils.Color("&7You died at (" + Math.round(loc.getX()) + ", " + Math.round(loc.getY()) + ", " + Math.round(loc.getZ()) + ")"));
+        victim.sendMessage(Utils.Color("&7You died at (" + Math.round(loc.getX()) + ", " + Math.round(loc.getY()) + ", " + Math.round(loc.getZ()) + ")"));
+
+        if (victim.getKiller() != null) {
+            event.setDeathMessage(Utils.Color(victim.getDisplayName() + " &fwas killed by " + victim.getKiller().getDisplayName()));
+            return;
+        }
+        event.setDeathMessage(Utils.Color(victim.getDisplayName() + " &fdied"));
     }
 }

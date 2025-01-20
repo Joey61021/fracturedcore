@@ -14,7 +14,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 
-public class ShardCmd implements CommandExecutor {
+public class BuildCmd implements CommandExecutor {
+
+    public static ArrayList<Player> build = new ArrayList<>();
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
         if (!(sender instanceof Player)) {
@@ -29,20 +31,13 @@ public class ShardCmd implements CommandExecutor {
             return false;
         }
 
-        ItemStack item = new ItemStack(Material.PRISMARINE_SHARD);
-
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(Utils.Color("&bFractured Shard"));
-        meta.addEnchant(Enchantment.DURABILITY, 1, true);
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        ArrayList<String> lore = new ArrayList<>();
-        lore.add(Utils.Color("&7Insert this shard into the centre beacon to activate"));
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-
-        player.getInventory().addItem(item);
-
-        player.sendMessage(Utils.Color("&eYou have been given the a &bFractured Shard"));
+        if (build.contains(player)) {
+            build.remove(player);
+            player.sendMessage(Utils.Color(Message.CMD_BUILD_TOGGLE_OFF.getMessage()));
+            return false;
+        }
+        build.add(player);
+        player.sendMessage(Utils.Color(Message.CMD_BUILD_TOGGLE_ON.getMessage()));
         return false;
     }
 }

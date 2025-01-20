@@ -1,5 +1,6 @@
 package com.fractured.events.world;
 
+import com.fractured.commands.BuildCmd;
 import com.fractured.enums.AlertReason;
 import com.fractured.enums.Message;
 import com.fractured.enums.Teams;
@@ -18,6 +19,12 @@ public class PlaceListener implements Listener {
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
+
+        if (!BuildCmd.build.contains(player) && player.getGameMode() == GameMode.CREATIVE) {
+            player.sendMessage(Utils.Color(Message.UNABLE_TO_BUILD.getMessage()));
+            event.setCancelled(true);
+            return;
+        }
 
         if (player.getGameMode() == GameMode.CREATIVE || !player.getWorld().getName().equalsIgnoreCase("world")) {
             return;
