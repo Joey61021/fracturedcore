@@ -18,6 +18,10 @@ public class RespawnListener implements Listener {
             return;
         }
 
+        if (!event.isBedSpawn()) {
+            event.setRespawnLocation(team.getSpawn());
+        }
+
         player.getInventory().setHelmet(TeamManager.getHelmet(team));
     }
 }

@@ -5,8 +5,6 @@ import com.fractured.enums.Teams;
 import com.fractured.managers.LocationManager;
 import com.fractured.managers.TeamManager;
 import com.fractured.utilities.Utils;
-import net.md_5.bungee.api.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,8 +22,12 @@ public class JoinListener implements Listener {
 
         String pooledTeam = FracturedCore.getDatabase.getString("teams." + player.getUniqueId());
         if (pooledTeam == null) {
-            player.teleport(LocationManager.getLocation("spawn"));
+            player.setHealth(player.getMaxHealth());
+            player.setFoodLevel(20);
+            player.getInventory().clear();
+            player.teleport(LocationManager.getLocation("locations.spawn"));
             TeamManager.displayGUI(player);
+            player.setPlayerListName(Utils.Color("&7" + player.getName()));
             event.setJoinMessage(Utils.Color("&7" + player.getName() + " &fhas connected"));
             return;
         }

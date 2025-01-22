@@ -19,7 +19,7 @@ public class InventoryClickListener implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         Entity player = event.getWhoClicked();
 
-        if (event.getSlotType().equals(InventoryType.SlotType.ARMOR) && event.getSlot() == 0) {
+        if (event.getSlotType().equals(InventoryType.SlotType.ARMOR) && event.getSlot() == 39) {
             event.setCancelled(true);
             return;
         }

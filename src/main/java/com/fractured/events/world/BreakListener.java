@@ -70,7 +70,6 @@ public class BreakListener implements Listener {
             if (enemyTeam.getPlayers().size() < 1) {
                 event.setCancelled(true);
                 player.sendMessage(Utils.Color(Message.REGION_TEAM_OFFLINE.getMessage()));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 60 * 20, 0, false, false));
                 return;
             }
 

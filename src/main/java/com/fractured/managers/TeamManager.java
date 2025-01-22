@@ -6,25 +6,24 @@ import com.fractured.enums.Message;
 import com.fractured.enums.Settings;
 import com.fractured.enums.Teams;
 import com.fractured.utilities.Utils;
-import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
-import java.awt.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class TeamManager {
 
     public static ArrayList<Player> toggled = new ArrayList<>();
+
 
     public static void displayGUI(Player player) {
         Inventory inv = Bukkit.createInventory(null, 9, Utils.Color("&7Select Team"));
@@ -59,8 +58,18 @@ public class TeamManager {
     public static ItemStack getHelmet(Teams team) {
         ItemStack item = new ItemStack(Material.LEATHER_HELMET);
         LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
-        meta.setColor(Color.fromRGB(team.getColor().getColor().getRGB()));
+
+        Map<ChatColor, Color> colorMap = Map.of(
+                ChatColor.RED, Color.RED,
+                ChatColor.BLUE, Color.BLUE,
+                ChatColor.GREEN, Color.GREEN
+        );
+
+        ChatColor color = team.getColor();
+        meta.setColor(colorMap.getOrDefault(color, Color.YELLOW));
+
         meta.addEnchant(Enchantment.DURABILITY, 1, false);
+        meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.setDisplayName(Utils.Color(team.getColor() + team.getName() + " team"));
         item.setItemMeta(meta);
@@ -113,7 +122,8 @@ public class TeamManager {
     }
 
     public static void alertTeam(Player player, Teams team, Location location, AlertReason alertReason) {
-        player.sendMessage(Utils.Color(Message.REGION_TEAM_ALERTED.getMessage().replace("%team%", team.getName())));
+        player.sendMessage(Utils.Color(Message.REGION_TEAM_ALERTED.getMessage().replace("%team%", team.getName().toLowerCase())));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 60 * 20, 0, false, false));
 
         if (team.getPlayers().size() > 0) {
             for (Player players : team.getPlayers()) {
