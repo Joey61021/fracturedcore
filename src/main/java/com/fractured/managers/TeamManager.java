@@ -7,14 +7,19 @@ import com.fractured.enums.Settings;
 import com.fractured.enums.Teams;
 import com.fractured.utilities.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class TeamManager {
@@ -51,6 +56,17 @@ public class TeamManager {
         return null;
     }
 
+    public static ItemStack getHelmet(Teams team) {
+        ItemStack item = new ItemStack(Material.LEATHER_HELMET);
+        LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
+        meta.setColor(Color.fromRGB(team.getColor().getColor().getRGB()));
+        meta.addEnchant(Enchantment.DURABILITY, 1, false);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta.setDisplayName(Utils.Color(team.getColor() + team.getName() + " team"));
+        item.setItemMeta(meta);
+        return item;
+    }
+
     public static void establishTeam(Player player, Teams team) {
         FracturedCore.getDatabase.set("teams." + player.getUniqueId(), team.toString());
         FracturedCore.getDatabase.save();
@@ -60,6 +76,8 @@ public class TeamManager {
             player.getInventory().setItem(1, new ItemStack(Material.WOODEN_AXE));
             player.getInventory().setItem(2, new ItemStack(Material.WOODEN_PICKAXE));
         }
+
+        player.getInventory().setHelmet(getHelmet(team));
 
         team.getPlayers().add(player);
         player.teleport(team.getSpawn());

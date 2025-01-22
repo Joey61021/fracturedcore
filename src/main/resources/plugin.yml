@@ -26,3 +26,5 @@ commands:
     aliases: []
   regioncheck:
     aliases: []
+  spawn:
+    aliases: []

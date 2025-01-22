@@ -20,6 +20,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -67,6 +70,7 @@ public class BreakListener implements Listener {
             if (enemyTeam.getPlayers().size() < 1) {
                 event.setCancelled(true);
                 player.sendMessage(Utils.Color(Message.REGION_TEAM_OFFLINE.getMessage()));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 60 * 20, 0, false, false));
                 return;
             }
 
@@ -95,11 +99,10 @@ public class BreakListener implements Listener {
     }
 
     private boolean isOre(Material material) {
-        return material == Material.IRON_ORE || material == Material.GOLD_ORE ||
-                material == Material.DIAMOND_ORE || material == Material.COAL_ORE ||
-                material == Material.EMERALD_ORE || material == Material.REDSTONE_ORE ||
-                material == Material.LAPIS_ORE || material == Material.NETHER_QUARTZ_ORE ||
-                material == Material.ANCIENT_DEBRIS;
+        return material == Material.IRON_ORE || material == Material.DEEPSLATE_IRON_ORE ||
+                material == Material.GOLD_ORE || material == Material.DEEPSLATE_GOLD_ORE ||
+                material == Material.DIAMOND_ORE || material == Material.DEEPSLATE_DIAMOND_ORE ||
+                material == Material.NETHER_QUARTZ_ORE || material == Material.ANCIENT_DEBRIS;
     }
 
     private void countOreVein(Block block, Set<Block> countedBlocks) {

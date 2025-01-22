@@ -37,6 +37,7 @@ public class FracturedCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new LeaveListener(), this);
         getServer().getPluginManager().registerEvents(new RespawnListener(), this);
         getServer().getPluginManager().registerEvents(new PlaceListener(), this);
+        getServer().getPluginManager().registerEvents(new RespawnListener(), this);
         getServer().getPluginManager().registerEvents(new SleepListener(), this);
     }
 
@@ -52,6 +53,7 @@ public class FracturedCore extends JavaPlugin {
         getCommand("regionwand").setExecutor(new RegionWand());
         getCommand("bypassregions").setExecutor(new BypassRegionsCmd());
         getCommand("regioncheck").setExecutor(new RegionCheckCmd());
+        getCommand("spawn").setExecutor(new SpawnCmd());
     }
 
     private void establishDatabase() {

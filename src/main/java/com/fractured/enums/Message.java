@@ -33,6 +33,10 @@ public enum Message {
     CMD_SET_LOCATION_INVALID("&cInvalid location, please double check your arguments!"),
     CMD_SET_LOCATION_SET("&fSuccessfully set location for &b%location%&f!"),
 
+    CMD_SPAWN_NO_TEAM("&cYou cannot run this command without being in a team!"),
+    CMD_SPAWN_NOT_IN_REGION("&cYou must be in your team's region to run this command!"),
+    CMD_SPAWN_TELEPORTED("&fYou have been teleported to %team% team's &fspawn!"),
+
     CMD_GENERATE_BORDER_CONFIRM("&cAre you sure you want to generate world borders at your current location? Doing so will cause lag to the server. Please execute /generateborders confirm to proceed."),
     CMD_GENERATE_BORDER_GENERATING("&7Generating, please wait..."),
     CMD_GENERATE_BORDER_COMPLETE("&aBorder generated successfully!"),

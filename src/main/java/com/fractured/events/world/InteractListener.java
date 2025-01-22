@@ -18,6 +18,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class InteractListener implements Listener {
 
@@ -73,6 +75,7 @@ public class InteractListener implements Listener {
                 if (enemyTeam.getPlayers().size() < 1) {
                     event.setCancelled(true);
                     player.sendMessage(Utils.Color(Message.REGION_TEAM_OFFLINE.getMessage()));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 60 * 20, 0, false, false));
                     return;
                 }
 

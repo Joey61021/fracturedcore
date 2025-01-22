@@ -34,11 +34,10 @@ public class LocationManager {
 
     public static Teams getEnemyTeam(Location loc, @Nullable Teams team) {
         for (Teams teams : Teams.values()) {
-            if ((team == null || teams == team) && isInRegion(loc, teams.getPos1(), teams.getPos2())) {
+            if ((team == null || teams != team) && isInRegion(loc, teams.getPos1(), teams.getPos2())) {
                 return teams;
             }
         }
         return null;
     }
-
 }
