@@ -17,8 +17,8 @@ public class JoinListener implements Listener {
         Player player = event.getPlayer();
 
         // Tab
-        player.setPlayerListHeader(Utils.Color("&eFractured &f| &e1.21.4 SMP"));
-        player.setPlayerListFooter(Utils.Color("&7Your team: None"));
+        player.setPlayerListHeader(Utils.color("&eFractured &f| &e1.21.4 SMP"));
+        player.setPlayerListFooter(Utils.color("&7Your team: None"));
 
         String pooledTeam = FracturedCore.getDatabase.getString("teams." + player.getUniqueId());
         if (pooledTeam == null) {
@@ -27,12 +27,12 @@ public class JoinListener implements Listener {
             player.getInventory().clear();
             player.teleport(LocationManager.getLocation("locations.spawn"));
             TeamManager.displayGUI(player);
-            player.setPlayerListName(Utils.Color("&7" + player.getName()));
-            event.setJoinMessage(Utils.Color("&7" + player.getName() + " &fhas connected"));
+            player.setPlayerListName(Utils.color("&7" + player.getName()));
+            event.setJoinMessage(Utils.color("&7" + player.getName() + " &fhas connected"));
             return;
         }
 
         Teams team = TeamManager.applyTeam(player, pooledTeam);
-        event.setJoinMessage(Utils.Color(team.getColor() + player.getName() + " &fhas connected"));
+        event.setJoinMessage(Utils.color(team.getColor() + player.getName() + " &fhas connected"));
     }
 }

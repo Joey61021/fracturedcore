@@ -3,21 +3,16 @@ package com.fractured.events.world;
 import com.fractured.commands.BuildCmd;
 import com.fractured.commands.BypassRegionsCmd;
 import com.fractured.enums.AlertReason;
-import com.fractured.enums.Message;
 import com.fractured.enums.Teams;
 import com.fractured.managers.LocationManager;
-import com.fractured.managers.RegionManager;
 import com.fractured.managers.TeamManager;
-import com.fractured.utilities.Utils;
+import com.fractured.managers.message.Message;
+import com.fractured.managers.message.MessageManager;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 public class PlaceListener implements Listener {
 
@@ -26,7 +21,7 @@ public class PlaceListener implements Listener {
         Player player = event.getPlayer();
 
         if (!BuildCmd.build.contains(player) && player.getGameMode() == GameMode.CREATIVE) {
-            player.sendMessage(Utils.Color(Message.UNABLE_TO_BUILD.getMessage()));
+            MessageManager.sendMessage(player, Message.UNABLE_TO_BUILD);
             event.setCancelled(true);
             return;
         }
@@ -51,7 +46,7 @@ public class PlaceListener implements Listener {
 
             if (enemyTeam.getPlayers().size() < 1) {
                 event.setCancelled(true);
-                player.sendMessage(Utils.Color(Message.REGION_TEAM_OFFLINE.getMessage()));
+                MessageManager.sendMessage(player, Message.REGION_TEAM_OFFLINE);
                 return;
             }
 

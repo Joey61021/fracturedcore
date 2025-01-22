@@ -1,10 +1,10 @@
 package com.fractured.commands;
 
-import com.fractured.enums.Message;
 import com.fractured.enums.Teams;
 import com.fractured.managers.LocationManager;
 import com.fractured.managers.TeamManager;
-import com.fractured.utilities.Utils;
+import com.fractured.managers.message.Message;
+import com.fractured.managers.message.MessageManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,7 +14,7 @@ public class SpawnCmd implements CommandExecutor {
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
         if (!(sender instanceof Player)) {
-            System.out.println(Utils.Color(Message.CONSOLE_BLOCKED.getMessage()));
+            MessageManager.sendMessage(sender, Message.CONSOLE_BLOCKED);
             return false;
         }
 
@@ -22,17 +22,17 @@ public class SpawnCmd implements CommandExecutor {
         Teams team = TeamManager.getTeam(player);
 
         if (team == null) {
-            player.sendMessage(Utils.Color(Message.CMD_SPAWN_NO_TEAM.getMessage()));
+            MessageManager.sendMessage(player, Message.CMD_SPAWN_NO_TEAM);
             return false;
         }
 
         if (!LocationManager.isInRegion(player.getLocation(), team.getPos1(), team.getPos2())) {
-            player.sendMessage(Utils.Color(Message.CMD_SPAWN_NOT_IN_REGION.getMessage()));
+            MessageManager.sendMessage(player, Message.CMD_SPAWN_NOT_IN_REGION);
             return false;
         }
 
         player.teleport(team.getSpawn());
-        player.sendMessage(Utils.Color(Message.CMD_SPAWN_TELEPORTED.getMessage().replace("%team%", team.getColor() + team.getName())));
+        MessageManager.sendMessage(player, Message.CMD_SPAWN_TELEPORTED, (s) -> s.replace("%team%", team.getColor() + team.getName()));
         return false;
     }
 }

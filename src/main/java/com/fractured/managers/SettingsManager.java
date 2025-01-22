@@ -1,14 +1,14 @@
 package com.fractured.managers;
 
 import com.fractured.FracturedCore;
-import com.fractured.enums.Message;
 import com.fractured.enums.Settings;
+import com.fractured.managers.message.Message;
+import com.fractured.managers.message.MessageManager;
 import com.fractured.utilities.Config;
 import com.fractured.utilities.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -23,7 +23,7 @@ public class SettingsManager {
     }
 
     public static void displayGUI(Player player) {
-        Inventory inv = Bukkit.createInventory(null, 9, Utils.Color("&7Global Settings"));
+        Inventory inv = Bukkit.createInventory(null, 9, Utils.color("&7Global Settings"));
         player.openInventory(inv);
 
         for (Settings setting : Settings.values()) {
@@ -31,9 +31,9 @@ public class SettingsManager {
 
             // Meta data
             ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName(Utils.Color(setting.getDisplay() + "&7 : " + (isToggled(setting) ? "&aON" : "&cOFF")));
+            meta.setDisplayName(Utils.color(setting.getDisplay() + "&7 : " + (isToggled(setting) ? "&aON" : "&cOFF")));
             ArrayList<String> lore = new ArrayList<>();
-            lore.add(Utils.Color("&7Click to toggle setting"));
+            lore.add(Utils.color("&7Click to toggle setting"));
             meta.setLore(lore);
             item.setItemMeta(meta);
 
@@ -48,7 +48,7 @@ public class SettingsManager {
         settings.set("global." + setting.getSettingsValue(), val);
         settings.save();
 
-        player.sendMessage(Utils.Color(Message.CMD_SETTING_TOGGLE.getMessage().replace("%val%", setting.getSettingsValue()).replace("%bool%", val ? "&aON" : "&cOFF")));
+        MessageManager.sendMessage(player, Message.CMD_SETTING_TOGGLE, (s) -> s.replace("%val%", setting.getSettingsValue()).replace("%bool%", val ? "&aON" : "&cOFF"));
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 1.0F);
     }
 

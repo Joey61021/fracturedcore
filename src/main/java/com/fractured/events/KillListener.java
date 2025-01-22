@@ -24,11 +24,11 @@ public class KillListener implements Listener {
             ItemStack item = new ItemStack(Material.PRISMARINE_SHARD);
 
             ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName(Utils.Color("&bFractured Shard"));
+            meta.setDisplayName(Utils.color("&bFractured Shard"));
             meta.addEnchant(Enchantment.DURABILITY, 1, true);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             ArrayList<String> lore = new ArrayList<>();
-            lore.add(Utils.Color("&7Insert this shard into the centre beacon to activate"));
+            lore.add(Utils.color("&7Insert this shard into the centre beacon to activate"));
             meta.setLore(lore);
             item.setItemMeta(meta);
 

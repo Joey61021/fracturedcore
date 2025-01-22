@@ -1,10 +1,10 @@
 package com.fractured.commands;
 
 import com.fractured.FracturedCore;
-import com.fractured.enums.Message;
 import com.fractured.managers.LocationManager;
+import com.fractured.managers.message.Message;
+import com.fractured.managers.message.MessageManager;
 import com.fractured.utilities.Config;
-import com.fractured.utilities.Utils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -18,23 +18,23 @@ public class GenerateBordersCmd implements CommandExecutor {
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
         if (!(sender instanceof Player)) {
-            System.out.println(Utils.Color(Message.CONSOLE_BLOCKED.getMessage()));
+            MessageManager.sendMessage(sender, Message.CONSOLE_BLOCKED);
             return false;
         }
 
         Player player = (Player) sender;
 
         if (!player.hasPermission("fractured.admin")) {
-            player.sendMessage(Utils.Color(Message.NO_PERMISSION.getMessage()));
+            MessageManager.sendMessage(player, Message.NO_PERMISSION);
             return false;
         }
 
         if (args.length < 1 || !Objects.equals(args[0], "confirm")) {
-            player.sendMessage(Utils.Color(Message.CMD_GENERATE_BORDER_CONFIRM.getMessage()));
+            MessageManager.sendMessage(player, Message.CMD_GENERATE_BORDERS_CONFIRM);
             return false;
         }
 
-        player.sendMessage(Utils.Color(Message.CMD_GENERATE_BORDER_GENERATING.getMessage()));
+        MessageManager.sendMessage(player, Message.CMD_GENERATE_BORDERS_GENERATING);
 
         int size = 500;
         int x = (int) player.getLocation().getX();
@@ -78,7 +78,7 @@ public class GenerateBordersCmd implements CommandExecutor {
             }
         }
 
-        player.sendMessage(Utils.Color(Message.CMD_GENERATE_BORDER_COMPLETE.getMessage()));
+        MessageManager.sendMessage(player, Message.CMD_GENERATE_BORDERS_COMPLETE);
 
         Config settings = FracturedCore.getSettings;
         settings.set("locations.beacon", new Location(LocationManager.world, x, y-1, z));

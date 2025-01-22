@@ -1,13 +1,13 @@
 
 package com.fractured.events;
 
-import com.fractured.enums.Message;
 import com.fractured.enums.Settings;
 import com.fractured.enums.Teams;
 import com.fractured.managers.LocationManager;
 import com.fractured.managers.SettingsManager;
 import com.fractured.managers.TeamManager;
-import com.fractured.utilities.Utils;
+import com.fractured.managers.message.Message;
+import com.fractured.managers.message.MessageManager;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -29,7 +29,7 @@ public class EntityDamageListener implements Listener {
         Teams damagerTeam = TeamManager.getTeam((Player) damager);
 
         if (((Player) damager).getGameMode() != GameMode.SURVIVAL && damagerTeam != null && LocationManager.getEnemyTeam(damager.getLocation(), damagerTeam) != null) {
-            damager.sendMessage(Utils.Color(Message.REGION_TEAM_OFFLINE.getMessage()));
+            MessageManager.sendMessage(damager, Message.REGION_TEAM_OFFLINE);
             event.setCancelled(true);
         }
 
@@ -41,7 +41,7 @@ public class EntityDamageListener implements Listener {
 
         if (damagerTeam != null && victimTeam == damagerTeam && !SettingsManager.isToggled(Settings.FRIENDLY_FIRE)) {
             event.setCancelled(true);
-            damager.sendMessage(Utils.Color(Message.FRIENDLY_FIRE_DISABLED.getMessage()));
+            MessageManager.sendMessage(damager, Message.FRIENDLY_FIRE_DISABLED);
         }
     }
 }

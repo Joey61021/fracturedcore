@@ -17,7 +17,7 @@ public class DeathListener implements Listener {
         Player victim = event.getEntity();
         Location loc = victim.getLocation();
 
-        victim.sendMessage(Utils.Color("&7You died at (" + Math.round(loc.getX()) + ", " + Math.round(loc.getY()) + ", " + Math.round(loc.getZ()) + ")"));
+        victim.sendMessage(Utils.color("&7You died at (" + Math.round(loc.getX()) + ", " + Math.round(loc.getY()) + ", " + Math.round(loc.getZ()) + ")"));
 
         for (ItemStack item : event.getDrops()) {
             if (item != null && item.getType().equals(Material.LEATHER_HELMET) && item.hasItemMeta() && item.getItemMeta().hasEnchant(Enchantment.DURABILITY)) {
@@ -26,9 +26,9 @@ public class DeathListener implements Listener {
         }
 
         if (victim.getKiller() != null) {
-            event.setDeathMessage(Utils.Color(victim.getDisplayName() + " &fwas killed by " + victim.getKiller().getDisplayName()));
+            event.setDeathMessage(Utils.color(victim.getDisplayName() + " &fwas killed by " + victim.getKiller().getDisplayName()));
             return;
         }
-        event.setDeathMessage(Utils.Color(victim.getDisplayName() + " &fdied"));
+        event.setDeathMessage(Utils.color(victim.getDisplayName() + " &fdied"));
     }
 }

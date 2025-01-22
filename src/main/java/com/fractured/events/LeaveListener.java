@@ -14,7 +14,7 @@ public class LeaveListener implements Listener {
     public void onLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         Teams team = TeamManager.getTeam(player);
-        event.setQuitMessage(Utils.Color((team != null ? team.getColor() : "&7") + player.getName() + " &fhas disconnected"));
+        event.setQuitMessage(Utils.color((team != null ? team.getColor() : "&7") + player.getName() + " &fhas disconnected"));
 
         if (team != null) {
             team.getPlayers().remove(player);

@@ -1,7 +1,7 @@
 package com.fractured.events.inventory;
 
-import com.fractured.enums.Message;
-import com.fractured.utilities.Utils;
+import com.fractured.managers.message.Message;
+import com.fractured.managers.message.MessageManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,7 +14,7 @@ public class InventoryCloseListener implements Listener {
         Player player = (Player) event.getPlayer();
 
         if (event.getView().getTitle().toLowerCase().contains("select team")) {
-            player.sendMessage(Utils.Color(Message.TEAM_INVENTORY_CLOSED.getMessage()));
+            MessageManager.sendMessage(player, Message.TEAM_INVENTORY_CLOSED);
         }
     }
 }

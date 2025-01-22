@@ -4,11 +4,12 @@ import com.fractured.FracturedCore;
 import com.fractured.commands.BuildCmd;
 import com.fractured.commands.BypassRegionsCmd;
 import com.fractured.enums.AlertReason;
-import com.fractured.enums.Message;
 import com.fractured.enums.Teams;
 import com.fractured.managers.LocationManager;
 import com.fractured.managers.RegionManager;
 import com.fractured.managers.TeamManager;
+import com.fractured.managers.message.Message;
+import com.fractured.managers.message.MessageManager;
 import com.fractured.utilities.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -20,9 +21,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -36,7 +34,7 @@ public class BreakListener implements Listener {
 
         if (player.getGameMode() == GameMode.CREATIVE) {
             if (!BuildCmd.build.contains(player)) {
-                player.sendMessage(Utils.Color(Message.UNABLE_TO_BUILD.getMessage()));
+                MessageManager.sendMessage(player, Message.UNABLE_TO_BUILD);
                 event.setCancelled(true);
                 return;
             }
@@ -44,7 +42,7 @@ public class BreakListener implements Listener {
             if (player.getItemInHand().getType() == Material.BLAZE_ROD && player.getItemInHand().hasItemMeta() && player.getItemInHand().getItemMeta().getDisplayName().toLowerCase().contains("region wand")) {
                 event.setCancelled(true);
                 RegionManager.selectRegion(false, block.getLocation());
-                player.sendMessage(Utils.Color(Message.REGION_SELECTED.getMessage().replace("%pos%", "Pos2").replace("%team%", RegionManager.selectedTeam.getColor() + RegionManager.selectedTeam.getName())));
+                MessageManager.sendMessage(player, Message.REGION_WAND_SELECTED, (s) -> s.replace("%pos%", "Pos2").replace("%team%", RegionManager.selectedTeam.getColor() + RegionManager.selectedTeam.getName()));
             }
             return;
         }
@@ -69,7 +67,7 @@ public class BreakListener implements Listener {
 
             if (enemyTeam.getPlayers().size() < 1) {
                 event.setCancelled(true);
-                player.sendMessage(Utils.Color(Message.REGION_TEAM_OFFLINE.getMessage()));
+                MessageManager.sendMessage(player, Message.REGION_TEAM_OFFLINE);
                 return;
             }
 
@@ -91,7 +89,7 @@ public class BreakListener implements Listener {
 
             for (Player players : Bukkit.getOnlinePlayers()) {
                 if (players.hasPermission("fractured.admin")) {
-                    players.sendMessage(Utils.Color("&c&l[XRAY] " + player.getDisplayName() + " &fhas broken a vein of &b&l" + countedBlocks.size() + " " + block.getType().name() + "&f!"));
+                    players.sendMessage(Utils.color("&c&l[XRAY] " + player.getDisplayName() + " &fhas broken a vein of &b&l" + countedBlocks.size() + " " + block.getType().name() + "&f!"));
                 }
             }
         }

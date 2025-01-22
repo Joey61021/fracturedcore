@@ -1,30 +1,26 @@
 package com.fractured.commands;
 
-import com.fractured.enums.Message;
 import com.fractured.enums.Settings;
 import com.fractured.managers.SettingsManager;
-import com.fractured.utilities.Utils;
+import com.fractured.managers.message.Message;
+import com.fractured.managers.message.MessageManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-
 public class SettingsCmd implements CommandExecutor {
-
-    public static ArrayList<Player> build = new ArrayList<>();
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
         if (!(sender instanceof Player)) {
-            System.out.println(Utils.Color(Message.CONSOLE_BLOCKED.getMessage()));
+            MessageManager.sendMessage(sender, Message.CONSOLE_BLOCKED);
             return false;
         }
 
         Player player = (Player) sender;
 
         if (!player.hasPermission("fractured.admin")) {
-            player.sendMessage(Utils.Color(Message.NO_PERMISSION.getMessage()));
+            MessageManager.sendMessage(player, Message.NO_PERMISSION);
             return false;
         }
 
@@ -40,7 +36,7 @@ public class SettingsCmd implements CommandExecutor {
             }
         }
 
-        player.sendMessage(Utils.Color(Message.INVALID_ARG.getMessage()));
+        MessageManager.sendMessage(player, Message.INVALID_ARG);
         return false;
     }
 }

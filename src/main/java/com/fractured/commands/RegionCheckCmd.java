@@ -1,33 +1,31 @@
 package com.fractured.commands;
 
-import com.fractured.enums.Message;
 import com.fractured.enums.Teams;
 import com.fractured.managers.LocationManager;
-import com.fractured.utilities.Utils;
+import com.fractured.managers.message.Message;
+import com.fractured.managers.message.MessageManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-
 public class RegionCheckCmd implements CommandExecutor {
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
         if (!(sender instanceof Player)) {
-            System.out.println(Utils.Color(Message.CONSOLE_BLOCKED.getMessage()));
+            MessageManager.sendMessage(sender, Message.CONSOLE_BLOCKED);
             return false;
         }
 
         Player player = (Player) sender;
 
         if (!player.hasPermission("fractured.admin")) {
-            player.sendMessage(Utils.Color(Message.NO_PERMISSION.getMessage()));
+            MessageManager.sendMessage(player, Message.NO_PERMISSION);
             return false;
         }
 
         Teams team = LocationManager.getEnemyTeam(player.getLocation(), null);
-        player.sendMessage(Utils.Color(Message.CMD_REGION_CHECK.getMessage().replace("%team%", team == null ? "&7None" : team.getColor() + team.getName())));
+        MessageManager.sendMessage(player, Message.CMD_REGION_CHECK, (s) -> s.replace("%team%", team == null ? "&7None" : team.getColor() + team.getName()));
         return false;
     }
 }

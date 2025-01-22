@@ -19,7 +19,7 @@ public class RegionManager {
         ItemStack item = new ItemStack(Material.BLAZE_ROD);
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName(Utils.Color("&6Region Wand &7: " + team.getColor() + team.getName()));
+        meta.setDisplayName(Utils.color("&6Region Wand &7: " + team.getColor() + team.getName()));
         meta.addEnchant(Enchantment.DURABILITY, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
@@ -32,7 +32,7 @@ public class RegionManager {
         selectedTeam = team;
 
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(Utils.Color("&6Region Wand &7: " + team.getColor() + team.getName()));
+        meta.setDisplayName(Utils.color("&6Region Wand &7: " + team.getColor() + team.getName()));
         item.setItemMeta(meta);
 
         return team;

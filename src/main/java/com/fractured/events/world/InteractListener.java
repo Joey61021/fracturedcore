@@ -3,12 +3,12 @@ package com.fractured.events.world;
 import com.fractured.commands.BuildCmd;
 import com.fractured.commands.BypassRegionsCmd;
 import com.fractured.enums.AlertReason;
-import com.fractured.enums.Message;
 import com.fractured.enums.Teams;
 import com.fractured.managers.LocationManager;
 import com.fractured.managers.RegionManager;
 import com.fractured.managers.TeamManager;
-import com.fractured.utilities.Utils;
+import com.fractured.managers.message.Message;
+import com.fractured.managers.message.MessageManager;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -18,8 +18,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 public class InteractListener implements Listener {
 
@@ -31,22 +29,16 @@ public class InteractListener implements Listener {
             return;
         }
 
-        if (!BuildCmd.build.contains(player) && player.getGameMode() == GameMode.CREATIVE) {
-            player.sendMessage(Utils.Color(Message.UNABLE_TO_BUILD.getMessage()));
-            event.setCancelled(true);
-            return;
-        }
-
         if (player.getGameMode() == GameMode.CREATIVE) {
             if (!BuildCmd.build.contains(player)) {
-                player.sendMessage(Utils.Color(Message.UNABLE_TO_BUILD.getMessage()));
+                MessageManager.sendMessage(player, Message.UNABLE_TO_BUILD);
                 event.setCancelled(true);
                 return;
             }
 
             if (player.getItemInHand().getType() == Material.BLAZE_ROD && player.getItemInHand().hasItemMeta() && player.getItemInHand().getItemMeta().getDisplayName().toLowerCase().contains("region wand") && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                 RegionManager.selectRegion(true, event.getClickedBlock().getLocation());
-                player.sendMessage(Utils.Color(Message.REGION_SELECTED.getMessage().replace("%pos%", "Pos1").replace("%team%", RegionManager.selectedTeam.getColor() + RegionManager.selectedTeam.getName())));
+                MessageManager.sendMessage(player, Message.REGION_WAND_SELECTED, (s) -> s.replace("%pos%", "Pos1").replace("%team%", RegionManager.selectedTeam.getColor() + RegionManager.selectedTeam.getName()));
             }
             return;
         }
@@ -74,7 +66,7 @@ public class InteractListener implements Listener {
 
                 if (enemyTeam.getPlayers().size() < 1) {
                     event.setCancelled(true);
-                    player.sendMessage(Utils.Color(Message.REGION_TEAM_OFFLINE.getMessage()));
+                    MessageManager.sendMessage(player, Message.REGION_TEAM_OFFLINE);
                     return;
                 }
 

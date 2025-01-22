@@ -21,6 +21,7 @@ public class FracturedCore extends JavaPlugin {
     // Databases
     public static Config getDatabase;
     public static Config getSettings;
+    public static Config getMessages;
 
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new BreakListener(), this);
@@ -60,6 +61,7 @@ public class FracturedCore extends JavaPlugin {
     private void establishDatabase() {
         getDatabase = new Config(this, getDataFolder(), "database", "database.yml");
         getSettings = new Config(this, getDataFolder(), "settings", "settings.yml");
+        getMessages = new Config(this, getDataFolder(), "messages", "messages.yml");
     }
 
     @Override
@@ -74,7 +76,7 @@ public class FracturedCore extends JavaPlugin {
     @Override
     public void onDisable() {
         for (Player players : Bukkit.getOnlinePlayers()) {
-            players.kickPlayer(Utils.Color("&eServer restarting..."));
+            players.kickPlayer(Utils.color("&eServer restarting..."));
         }
     }
 }

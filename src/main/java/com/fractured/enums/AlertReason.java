@@ -1,23 +1,16 @@
 package com.fractured.enums;
 
-import com.fractured.managers.LocationManager;
+import com.fractured.managers.message.Message;
 import lombok.Getter;
-import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
 
 public enum AlertReason {
-    BLOCK_PLACE(Message.REGION_ALERT_BLOCK_PLACE.getMessage()),
-    BLOCK_BREAK(Message.REGION_ALERT_BLOCK_BREAK.getMessage()),
-    CHEST_OPEN(Message.REGION_ALERT_CHEST_OPEN.getMessage());
+    BLOCK_PLACE(Message.REGION_ALERT_BLOCK_PLACE),
+    BLOCK_BREAK(Message.REGION_ALERT_BLOCK_BREAK),
+    CHEST_OPEN(Message.REGION_ALERT_CHEST_OPEN);
 
-    @Getter private final String message;
+    @Getter private final Message message;
 
-    AlertReason(String message) {
+    AlertReason(Message message) {
         this.message = message;
     }
 }

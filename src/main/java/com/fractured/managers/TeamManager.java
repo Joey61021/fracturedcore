@@ -2,9 +2,10 @@ package com.fractured.managers;
 
 import com.fractured.FracturedCore;
 import com.fractured.enums.AlertReason;
-import com.fractured.enums.Message;
 import com.fractured.enums.Settings;
 import com.fractured.enums.Teams;
+import com.fractured.managers.message.Message;
+import com.fractured.managers.message.MessageManager;
 import com.fractured.utilities.Utils;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -26,7 +27,7 @@ public class TeamManager {
 
 
     public static void displayGUI(Player player) {
-        Inventory inv = Bukkit.createInventory(null, 9, Utils.Color("&7Select Team"));
+        Inventory inv = Bukkit.createInventory(null, 9, Utils.color("&7Select Team"));
         player.openInventory(inv);
 
         for (Teams team : Teams.values()) {
@@ -36,7 +37,7 @@ public class TeamManager {
             ItemMeta meta = item.getItemMeta();
             meta.setDisplayName(team.getColor() + team.getName() + " team");
             ArrayList<String> lore = new ArrayList<>();
-            lore.add(Utils.Color("&7Online: " + team.getPlayers().size()));
+            lore.add(Utils.color("&7Online: " + team.getPlayers().size()));
             meta.setLore(lore);
             item.setItemMeta(meta);
 
@@ -71,7 +72,7 @@ public class TeamManager {
         meta.addEnchant(Enchantment.DURABILITY, 1, false);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta.setDisplayName(Utils.Color(team.getColor() + team.getName() + " team"));
+        meta.setDisplayName(Utils.color(team.getColor() + team.getName() + " team"));
         item.setItemMeta(meta);
         return item;
     }
@@ -92,7 +93,7 @@ public class TeamManager {
         player.teleport(team.getSpawn());
         player.setBedSpawnLocation(team.getSpawn());
         player.setPlayerListName(team.getColor() + player.getName());
-        player.setPlayerListFooter(Utils.Color("&7Your team: " + team.getColor() + team.getName() + " team"));
+        player.setPlayerListFooter(Utils.color("&7Your team: " + team.getColor() + team.getName() + " team"));
 
         for (Player players : Bukkit.getOnlinePlayers()) {
             players.sendMessage(team.getColor() + player.getName() + " has joined the " + team.getName() + " team!");
@@ -116,21 +117,23 @@ public class TeamManager {
         }
 
         for (Player players : team.getPlayers()) {
-            players.sendMessage(Utils.Color(team.getColor() + "&l[" + team.getName().charAt(0) + "] &r" + player.getName() + ": &f" + message));
+            players.sendMessage(Utils.color(team.getColor() + "&l[" + team.getName().charAt(0) + "] &r" + player.getName() + ": &f" + message));
         }
         return true;
     }
 
     public static void alertTeam(Player player, Teams team, Location location, AlertReason alertReason) {
-        player.sendMessage(Utils.Color(Message.REGION_TEAM_ALERTED.getMessage().replace("%team%", team.getName().toLowerCase())));
+        MessageManager.sendMessage(player, Message.REGION_TEAM_ALERTED, (s) -> s.replace("%team%", team.getName().toLowerCase()));
         player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 60 * 20, 0, false, false));
 
         if (team.getPlayers().size() > 0) {
             for (Player players : team.getPlayers()) {
-                players.sendMessage(Utils.Color(alertReason.getMessage().replace("%player%", player.getName()).replace("%team%", team.getName())
-                        .replace("%locx%", String.valueOf(Math.round(location.getX()))))
-                        .replace("%locy%", String.valueOf(Math.round(location.getY())))
-                        .replace("%locz%", String.valueOf(Math.round(location.getZ()))));
+                MessageManager.sendMessage(players, alertReason.getMessage(),
+                                (s) -> s.replace("%player%", player.getName())
+                                .replace("%team%", team.getName())
+                                .replace("%locx%", String.valueOf(Math.round(location.getX())))
+                                .replace("%locy%", String.valueOf(Math.round(location.getY())))
+                                .replace("%locz%", String.valueOf(Math.round(location.getZ()))));
             }
         }
     }
@@ -140,8 +143,8 @@ public class TeamManager {
         team.getPlayers().add(player);
 
         player.setPlayerListName(team.getColor() + player.getName());
-        player.setDisplayName(Utils.Color(team.getColor() + player.getDisplayName()));
-        player.setPlayerListFooter(Utils.Color("&7Your team: " + team.getColor() + team.getName() + " team"));
+        player.setDisplayName(Utils.color(team.getColor() + player.getDisplayName()));
+        player.setPlayerListFooter(Utils.color("&7Your team: " + team.getColor() + team.getName() + " team"));
         return team;
     }
 }
