@@ -34,7 +34,8 @@ public class InventoryClickListener implements Listener
             {
                 if (clickedItem.getType() == team.material())
                 {
-                    TeamManager.setTeam((Player) player, team);
+                    TeamManager.addTeam((Player) player, team);
+                    player.teleport(team.spawn());
                     event.getView().close();
                 }
             }
