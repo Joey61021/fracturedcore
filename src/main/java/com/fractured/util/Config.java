@@ -1,4 +1,4 @@
-package com.fractured.utilities;
+package com.fractured.util;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -16,15 +16,15 @@ public class Config extends YamlConfiguration {
 
     public Config(JavaPlugin javaPlugin, File path, String name) {
         this.javaPlugin = javaPlugin;
-        setup(path, name);
+        init(path, name);
     }
 
     public Config(JavaPlugin javaPlugin, File path, String name, String def) {
         this.javaPlugin = javaPlugin;
-        setup(path, name, def);
+        init(path, name, def);
     }
 
-    public void loaddefaults(String def) {
+    public void copyDefaults(String def) {
         load();
         InputStream is = this.javaPlugin.getResource(def);
         if (is != null) {
@@ -37,7 +37,7 @@ public class Config extends YamlConfiguration {
         save();
     }
 
-    public boolean setup(File path, String name) {
+    public boolean init(File path, String name) {
         path.mkdirs();
         this.file = new File(path, name.endsWith(".yml") ? name : name + ".yml");
         if (!this.file.exists()) {
@@ -53,8 +53,8 @@ public class Config extends YamlConfiguration {
         return false;
     }
 
-    public void setup(File path, String name, String def) {
-        if (setup(path, name)) loaddefaults(def);
+    public void init(File path, String name, String def) {
+        if (init(path, name)) copyDefaults(def);
     }
 
     public void load() {

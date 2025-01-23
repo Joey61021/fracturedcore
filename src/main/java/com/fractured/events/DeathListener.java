@@ -1,6 +1,6 @@
 package com.fractured.events;
 
-import com.fractured.utilities.Utils;
+import com.fractured.util.Utils;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,6 +14,6 @@ public class DeathListener implements Listener {
         Player player = event.getEntity();
         Location loc = player.getLocation();
 
-        player.sendMessage(Utils.Color("&7You died at (" + Math.round(loc.getX()) + ", " + Math.round(loc.getY()) + ", " + Math.round(loc.getZ()) + ")"));
+        player.sendMessage(Utils.color("&7You died at (" + Math.round(loc.getX()) + ", " + Math.round(loc.getY()) + ", " + Math.round(loc.getZ()) + ")"));
     }
 }

@@ -1,8 +1,6 @@
 package com.fractured.commands;
 
-import com.fractured.enums.Message;
-import com.fractured.enums.Teams;
-import com.fractured.utilities.Utils;
+import com.fractured.util.globals.Messages;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,23 +11,23 @@ public class GmCmd implements CommandExecutor {
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
         if (!(sender instanceof Player)) {
-            System.out.println(Utils.Color(Message.CONSOLE_BLOCKED.getMessage()));
+            System.out.println(Messages.CONSOLE_BLOCKED);
             return false;
         }
 
         Player player = (Player) sender;
 
         if (!player.hasPermission("fractured.admin")) {
-            player.sendMessage(Utils.Color(Message.NO_PERMISSION.getMessage()));
+            player.sendMessage(Messages.NO_PERMISSION);
             return false;
         }
 
         if (player.getGameMode() == GameMode.SURVIVAL) {
             player.setGameMode(GameMode.CREATIVE);
-            player.sendMessage(Utils.Color(Message.CMD_GM_CREATIVE.getMessage()));
+            player.sendMessage(Messages.CMD_GM_CREATIVE);
         } else {
             player.setGameMode(GameMode.SURVIVAL);
-            player.sendMessage(Utils.Color(Message.CMD_GM_SURVIVAL.getMessage()));
+            player.sendMessage(Messages.CMD_GM_SURVIVAL);
         }
         return false;
     }

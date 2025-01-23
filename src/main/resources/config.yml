@@ -1,0 +1,18 @@
+storage:
+  # Currently recognized storage methods: {'mysql'}
+  type: 'mysql'
+  # Never publish database login info to the github
+  mysql:
+    database: 'test'
+    username: 'root'
+    password: 'Password1!'
+    host: '127.0.0.1'
+    port: 3306
+locations:
+  over_world: "world"
+  spawn:
+    x: 0.5
+    y: 0.5
+    z: 0.5
+    yaw: 0.0
+    pitch: 90.0

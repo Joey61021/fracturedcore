@@ -1,30 +1,42 @@
 package com.fractured.events.inventory;
 
-import com.fractured.managers.TeamManager;
-import com.fractured.enums.Teams;
+import com.fractured.team.TeamCache;
+import com.fractured.team.TeamManager;
+import com.fractured.team.Team;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Objects;
 
-public class InventoryClickListener implements Listener {
+public class InventoryClickListener implements Listener
+{
 
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent event) {
+    public void onInventoryClick(InventoryClickEvent event)
+    {
         Entity player = event.getWhoClicked();
-        if (!event.getView().getTitle().toLowerCase().contains("select team")) {
+        if (!event.getView().getTitle().toLowerCase().contains("select team"))
+        {
             return;
         }
 
         event.setCancelled(true);
 
-        for (Teams team : Teams.values()) {
-            if (Objects.equals(event.getCurrentItem(), team.getItem())) {
-                TeamManager.establishTeam((Player) player, team);
-                event.getView().close();
+        ItemStack clickedItem = event.getCurrentItem();
+
+        if (clickedItem != null)
+        {
+            for (Team team : TeamCache.teams())
+            {
+                if (clickedItem.getType() == team.material())
+                {
+                    TeamManager.setTeam((Player) player, team);
+                    event.getView().close();
+                }
             }
         }
     }

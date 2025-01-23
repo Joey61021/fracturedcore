@@ -1,17 +1,13 @@
 package com.fractured.events;
 
 import com.fractured.FracturedCore;
-import com.fractured.enums.Teams;
-import com.fractured.managers.LocationManager;
-import com.fractured.managers.TeamManager;
-import com.fractured.utilities.Utils;
-import org.bukkit.GameMode;
-import org.bukkit.entity.Entity;
+import com.fractured.team.Team;
+import com.fractured.team.TeamManager;
+import com.fractured.user.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 
 public class HungerListener implements Listener {
 
@@ -22,7 +18,8 @@ public class HungerListener implements Listener {
         }
 
         Player player = (Player) event.getEntity();
-        Teams team = TeamManager.getTeam(player);
+        User user = FracturedCore.getUserManager().getUser(player.getUniqueId());
+        Team team = user.getTeam();
 
         if (team == null) {
             player.setFoodLevel(20);

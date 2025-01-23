@@ -4,29 +4,85 @@ import com.fractured.commands.*;
 import com.fractured.events.*;
 import com.fractured.events.inventory.InventoryClickListener;
 import com.fractured.events.inventory.InventoryCloseListener;
-import com.fractured.events.world.BreakListener;
-import com.fractured.events.world.PlaceListener;
-import com.fractured.utilities.Config;
-import com.fractured.utilities.Utils;
+import com.fractured.events.world.WorldManager;
+import com.fractured.storage.Storage;
+import com.fractured.team.ClaimManager;
+import com.fractured.team.TeamCache;
+import com.fractured.user.UserManager;
+import com.fractured.util.Config;
+import com.fractured.util.globals.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class FracturedCore extends JavaPlugin {
+public final class FracturedCore extends JavaPlugin {
+    /* I've switched this to a more functional design. Instead of relying on the
+       FracturedCore plugin instance to gain access to these, or just passing an
+       instance of these to where ever it's needed during initialization, and
+       then storing those references in the class that it's passed to (dependency
+       injection), I've made all of these static, since there only ever needs
+       to exist one of these objects in the code at a time. */
 
-    public static FracturedCore instance;
-    public static Config getDatabase;
+    private static Config config;
+    private static Storage storage;
+    private static TeamCache teamCache;
+    /**
+     * Each {@link Player} has associated a {@link com.fractured.user.User} object.
+     * This is to store additional data about the Player. This User object is
+     * guaranteed to exist if the Player is online.
+     */
+    private static UserManager userManager;
+    private static ClaimManager claimManager;
+
+    /**
+     * This is just used for scheduling, please don't access this anywhere outside of this class.
+     */
+    private static FracturedCore plugin;
+
+    public FracturedCore()
+    {
+        plugin = this;
+    }
+
+    // You no longer need to pass the plugin to the scheduler
+    public static void runAsync(Runnable runnable)
+    {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, runnable);
+    }
+
+    public static Config getFracturedConfig()
+    {
+        return config;
+    }
+
+    public static Storage getStorage()
+    {
+        return storage;
+    }
+
+    public static UserManager getUserManager()
+    {
+        return userManager;
+    }
+
+    public static ClaimManager getClaimManager()
+    {
+        return claimManager;
+    }
 
     private void registerEvents() {
-        getServer().getPluginManager().registerEvents(new BreakListener(), this);
-        getServer().getPluginManager().registerEvents(new ChatListener(), this);
-        getServer().getPluginManager().registerEvents(new DeathListener(), this);
-        getServer().getPluginManager().registerEvents(new HungerListener(), this);
-        getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
-        getServer().getPluginManager().registerEvents(new InventoryCloseListener(), this);
-        getServer().getPluginManager().registerEvents(new JoinListener(), this);
-        getServer().getPluginManager().registerEvents(new LeaveListener(), this);
-        getServer().getPluginManager().registerEvents(new PlaceListener(), this);
+        final PluginManager manager = getServer().getPluginManager();
+
+        manager.registerEvents(userManager = new UserManager(), this);
+        manager.registerEvents(new WorldManager(), this);
+        manager.registerEvents(new ChatListener(), this);
+        manager.registerEvents(new DeathListener(), this);
+        manager.registerEvents(new HungerListener(), this);
+        manager.registerEvents(new InventoryClickListener(), this);
+        manager.registerEvents(new InventoryCloseListener(), this);
+        manager.registerEvents(new JoinListener(), this);
+        manager.registerEvents(new LeaveListener(), this);
     }
 
     private void registerCommands() {
@@ -38,22 +94,35 @@ public class FracturedCore extends JavaPlugin {
     }
 
     private void establishDatabase() {
-        getDatabase = new Config(this, getDataFolder(), "database", "database.yml");
+        //database = new Config(this, getDataFolder(), "database", "config.yml");
+    }
+
+    @Override
+    public void onLoad()
+    {
+
     }
 
     @Override
     public void onEnable() {
-        instance = this;
+        // fixme why pass the plugin and the datafolder? You can derive the datafolder from the plugin
+        config = new Config(this, getDataFolder(), "config.yml");
+        storage = Storage.newStorage(config);
+        storage.initServerResources();
 
         registerEvents();
         registerCommands();
-        establishDatabase();
+        //establishDatabase();
     }
 
     @Override
-    public void onDisable() {
-        for (Player players : Bukkit.getOnlinePlayers()) {
-            players.kickPlayer(Utils.Color("&eServer restarting..."));
+    public void onDisable()
+    {
+        // fixme wait for db to flush? Consult the bukkit async scheduler probably
+
+        for (Player players : Bukkit.getOnlinePlayers())
+        {
+            players.kickPlayer(Messages.PLUGIN_RESTARTING);
         }
     }
 }

@@ -1,9 +1,9 @@
-package com.fractured.utilities;
+package com.fractured.util;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class Utils {
-    public static String Color(String s) {
+    public static String color(String s) {
         return ChatColor.translateAlternateColorCodes('&', s);
     }
 }
