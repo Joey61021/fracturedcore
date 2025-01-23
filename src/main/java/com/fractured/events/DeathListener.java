@@ -20,7 +20,7 @@ public class DeathListener implements Listener {
         victim.sendMessage(Utils.color("&7You died at (" + Math.round(loc.getX()) + ", " + Math.round(loc.getY()) + ", " + Math.round(loc.getZ()) + ")"));
 
         for (ItemStack item : event.getDrops()) {
-            if (item != null && item.getType().equals(Material.LEATHER_HELMET) && item.hasItemMeta() && item.getItemMeta().hasEnchant(Enchantment.DURABILITY)) {
+            if (item != null && item.getType().equals(Material.LEATHER_HELMET) && item.hasItemMeta() && item.getItemMeta().hasEnchant(Enchantment.PROTECTION_ENVIRONMENTAL)) {
                 item.setType(Material.AIR);
             }
         }
