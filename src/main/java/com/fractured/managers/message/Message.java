@@ -47,7 +47,9 @@ public enum Message {
     CMD_GENERATE_BORDERS_GENERATING("commands.generate-borders.generating"),
     CMD_GENERATE_BORDERS_COMPLETE("commands.generate-borders.complete"),
 
-    CMD_REGION_CHECK("commands.region-check");
+    CMD_REGION_CHECK("commands.region-check"),
+
+    CMD_DISCORD("commands.discord");
 
     @Getter
     @NonNull

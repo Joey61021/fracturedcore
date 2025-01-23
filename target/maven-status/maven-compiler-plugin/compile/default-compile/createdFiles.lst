@@ -1,6 +1,5 @@
 com\fractured\commands\TeamChatCmd.class
 com\fractured\events\world\PlaceListener.class
-com\fractured\enums\Message.class
 com\fractured\events\inventory\InventoryClickListener.class
 com\fractured\events\HungerListener.class
 com\fractured\commands\GenerateBordersCmd.class
@@ -10,6 +9,7 @@ com\fractured\commands\BypassRegionsCmd.class
 com\fractured\commands\TeamCmd.class
 com\fractured\commands\RegionWand.class
 com\fractured\events\ChatListener.class
+com\fractured\managers\message\Message.class
 com\fractured\events\DeathListener.class
 com\fractured\managers\RegionManager.class
 com\fractured\events\world\BreakListener.class
@@ -31,6 +31,7 @@ com\fractured\enums\AlertReason.class
 com\fractured\events\DamageListener.class
 com\fractured\events\LeaveListener.class
 com\fractured\commands\SettingsCmd.class
+com\fractured\managers\message\MessageManager.class
 com\fractured\events\EntityDamageListener.class
 com\fractured\utilities\Utils.class
 com\fractured\enums\Settings.class

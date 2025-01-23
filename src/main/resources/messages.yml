@@ -39,3 +39,4 @@ commands:
     generating: "&7Generating, please wait..."
     complete: "&aBorder generated successfully!"
   region-check: "&fYou are currently in %team% team's &fregion!"
+  discord: "&fJoin our Discord server at: &bhttps://discord.gg/2JTY7Fffjs"
