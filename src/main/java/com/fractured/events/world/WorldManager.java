@@ -1,6 +1,7 @@
 package com.fractured.events.world;
 
 import com.fractured.FracturedCore;
+import com.fractured.team.ClaimManager;
 import com.fractured.team.TeamClaim;
 import com.fractured.user.User;
 import com.fractured.util.Config;
@@ -19,8 +20,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class WorldManager implements Listener
 {
-    private static World OVER_WORLD;
-    private static Location SPAWN;
+    private static final World OVER_WORLD;
+    private static final Location SPAWN;
 
     static
     {
@@ -66,7 +67,7 @@ public class WorldManager implements Listener
 
         Location loc = event.getBlock().getLocation();
 
-        TeamClaim claim = FracturedCore.getClaimManager().getClaim(loc.getBlockX(), loc.getBlockZ());
+        TeamClaim claim = ClaimManager.getClaim(loc.getBlockX(), loc.getBlockZ());
 
         // The behavior here is changed slightly from the original.
         // If the enemy team is null, the event will not be cancelled, the original did cancel these events.
@@ -124,7 +125,7 @@ public class WorldManager implements Listener
 
         Location loc = event.getClickedBlock().getLocation();
 
-        TeamClaim claim = FracturedCore.getClaimManager().getClaim(loc.getBlockX(), loc.getBlockZ());
+        TeamClaim claim = ClaimManager.getClaim(loc.getBlockX(), loc.getBlockZ());
 
         // The behavior here is changed slightly from the original.
         // If the enemy team is null, the event will not be cancelled, the original did cancel these events.
