@@ -26,14 +26,12 @@ public final class FracturedCore extends JavaPlugin {
 
     private static Config config;
     private static Storage storage;
-    private static TeamCache teamCache;
     /**
      * Each {@link Player} has associated a {@link com.fractured.user.User} object.
      * This is to store additional data about the Player. This User object is
      * guaranteed to exist if the Player is online.
      */
     private static UserManager userManager;
-    private static ClaimManager claimManager;
 
     /**
      * This is just used for scheduling, please don't access this anywhere outside of this class.
@@ -66,11 +64,6 @@ public final class FracturedCore extends JavaPlugin {
         return userManager;
     }
 
-    public static ClaimManager getClaimManager()
-    {
-        return claimManager;
-    }
-
     private void registerEvents() {
         final PluginManager manager = getServer().getPluginManager();
 
@@ -93,10 +86,6 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("team").setExecutor(new TeamCmd());
     }
 
-    private void establishDatabase() {
-        //database = new Config(this, getDataFolder(), "database", "config.yml");
-    }
-
     @Override
     public void onLoad()
     {
@@ -106,19 +95,19 @@ public final class FracturedCore extends JavaPlugin {
     @Override
     public void onEnable() {
         // fixme why pass the plugin and the datafolder? You can derive the datafolder from the plugin
-        config = new Config(this, getDataFolder(), "config.yml");
+        config = new Config(this, getDataFolder(), "config.yml", "config.yml");
         storage = Storage.newStorage(config);
         storage.initServerResources();
 
         registerEvents();
         registerCommands();
-        //establishDatabase();
     }
 
     @Override
     public void onDisable()
     {
         // fixme wait for db to flush? Consult the bukkit async scheduler probably
+        // Also make any additional db updates for saving like the team cache maybe? Anything
 
         for (Player players : Bukkit.getOnlinePlayers())
         {
