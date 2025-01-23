@@ -25,6 +25,6 @@ public class ChatListener implements Listener
             team.alert(Utils.color(team.color() + "&l[" + team.getName().charAt(0) + "] &r" + player.getName() + ": &f" + event.getMessage()));
             return;
         }
-        event.setFormat((team != null ? team.color() : ChatColor.GRAY) + Utils.color("%1$s: &f%2$s"));
+        event.setFormat((team != null ? team.color() : ChatColor.GRAY) + Utils.color("%1$s&f: %2$s"));
     }
 }
