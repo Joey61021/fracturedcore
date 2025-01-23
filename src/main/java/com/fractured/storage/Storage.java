@@ -8,17 +8,18 @@ public interface Storage
 {
     static Storage newStorage(Config config)
     {
-        String database_type = config.getString("storage.type");
+        String type = config.getString("storage.type");
 
-        return switch (database_type)
+        return switch (type)
         {
+            case "test" -> new TestStorage();
             case "mysql" -> new HikariStorage(
                     config.getString("storage.mysql.database"),
                     config.getString("storage.mysql.username"),
                     config.getString("storage.mysql.password"),
                     config.getString("storage.mysql.host"),
                     config.getInt("storage.mysql.port"));
-            case null, default -> throw new IllegalArgumentException("Unknown database type: " + database_type);
+            case null, default -> throw new IllegalArgumentException("Unknown database type: " + type);
         };
     }
 
