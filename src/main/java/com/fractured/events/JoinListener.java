@@ -2,9 +2,11 @@ package com.fractured.events;
 
 import com.fractured.FracturedCore;
 import com.fractured.events.world.WorldManager;
+import com.fractured.team.Team;
 import com.fractured.team.TeamCache;
 import com.fractured.user.User;
 import com.fractured.util.Utils;
+import com.fractured.util.globals.Messages;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -21,19 +23,22 @@ public class JoinListener implements Listener
         player.setGameMode(GameMode.SURVIVAL);
 
         // Tab
-        player.setPlayerListHeader(Utils.color("&eFractured &f| &e1.21.4 SMP"));
-        player.setPlayerListFooter(Utils.color("&7Your team: None")); // fixme
+        player.setPlayerListHeader(Messages.TAB_LIST_HEADER);
 
         User user = FracturedCore.getUserManager().getUser(player.getUniqueId());
+        Team team = user.getTeam();
 
-        if (user.getTeam() == null)
+        if (team == null)
         {
             player.teleport(WorldManager.getSpawn());
             TeamCache.openMenu(player); // open team menu
             event.setJoinMessage(ChatColor.GRAY + player.getName() + ChatColor.WHITE + " has connected");
+            player.setPlayerListFooter(Messages.NO_TEAM_TAB_LIST_FOOTER);
         } else
         {
-            event.setJoinMessage(user.getTeam().color() + player.getName() + ChatColor.WHITE + " has connected");
+            event.setJoinMessage(team.color() + player.getName() + ChatColor.WHITE + " has connected");
+            player.setPlayerListFooter(Utils.color("&7Your team: " +  team.color() + team.getName() + " team"));
+            team.getOnlineMembers().add(player);
         }
     }
 }
