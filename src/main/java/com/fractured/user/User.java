@@ -51,7 +51,7 @@ public class User
     }
 
     /**
-     * Use {@link com.fractured.team.TeamManager#setTeam(Player, Team)}
+     * Use {@link com.fractured.team.TeamManager#addTeam(Player, Team)} or {@link com.fractured.team.TeamManager#removeTeam(Player)}
      */
     public void setTeam(Team team)
     {
