@@ -34,7 +34,7 @@ public class UpgradesManager {
             ArrayList<String> lore = new ArrayList<>();
 
             int level = FracturedCore.getSettings.getInt("upgrades." + team.getName().toLowerCase() + "." + upgrade.getUpgradeValue(), 1);
-            lore.add(Utils.color(level > upgrade.getMaxVal() ? "&cMaximum level has been reached!" : "&7Cost: &e" + level * upgrade.getCostIncrement() + " " + upgrade.getCostItem().toString()));
+            lore.add(Utils.color(level >= upgrade.getMaxVal() ? "&cMaximum level has been reached!" : "&7Cost: &e" + level * upgrade.getCostIncrement() + " " + upgrade.getCostItem().toString()));
 
             meta.setLore(lore);
             item.setItemMeta(meta);
