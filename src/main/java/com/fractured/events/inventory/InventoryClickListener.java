@@ -30,14 +30,21 @@ public class InventoryClickListener implements Listener {
             return;
         }
 
+        ItemStack clickedItem = event.getCurrentItem();
+
         if (event.getView().getTitle().toLowerCase().contains("select team")) {
             event.setCancelled(true);
 
-            for (Teams team : Teams.values()) {
-                if (Objects.equals(event.getCurrentItem(), team.getItem())) {
-                    TeamManager.establishTeam((Player) player, team);
-                    event.getView().close();
-                    return;
+            if (clickedItem != null)
+            {
+                for (Team team : TeamCache.teams())
+                {
+                    if (clickedItem.getType() == team.material())
+                    {
+                        TeamManager.addTeam((Player) player, team);
+                        event.getView().close();
+                        return;
+                    }
                 }
             }
             return;
@@ -58,31 +65,17 @@ public class InventoryClickListener implements Listener {
 
         Teams team = TeamManager.getTeam((Player) player);
 
-        if (team != null && event.getView().getTitle().toLowerCase().contains("team upgrades")) {
+        if (team != null && event.getView().getTitle().toLowerCase().contains("team upgrades"))
+        {
             event.setCancelled(true);
 
-            for (Upgrades upgrade : Upgrades.values()) {
-                if (Objects.equals(event.getCurrentItem(), upgrade.getItem())) {
+            for (Upgrades upgrade : Upgrades.values())
+            {
+                if (Objects.equals(event.getCurrentItem(), upgrade.getItem()))
+                {
 
                     int upgradeLevel = FracturedCore.getSettings.getInt("upgrades." + team.getName().toLowerCase() + "." + upgrade.getUpgradeValue(), 1);
                     int amountRequired = upgrade.getCostIncrement() * upgradeLevel;
-
-                    if (upgradeLevel >= upgrade.getMaxVal()) {
-                        MessageManager.sendMessage(player, Message.UPGRADES_REACH_MAX_VAL);
-                        return;
-                    }
-
-                    for (ItemStack item : ((Player) player).getInventory().getContents()) {
-                        if (item != null && item.getType().equals(upgrade.getCostItem()) && item.getAmount() >= amountRequired) {
-                            item.setAmount(item.getAmount() - amountRequired);
-                            UpgradesManager.upgrade((Player) player, team, upgrade);
-                            event.getView().close();
-                            return;
-                        }
-                    }
-
-                    MessageManager.sendMessage(player, Message.UPGRADES_NOT_ENOUGH);
-                    return;
                 }
             }
         }
