@@ -13,14 +13,16 @@ public class Team
      * As in the database
      */
     private final int teamId;
+    private int totalMembers;
     private final String name;
     private final String color;
     private final Material item;
     private final Location spawn;
     private final List<Player> onlineTeamMembers;
 
-    public Team(int teamId, String name, String color, Material item, Location spawn) {
+    public Team(int teamId, int totalMembers, String name, String color, Material item, Location spawn) {
         this.teamId = teamId;
+        this.totalMembers = totalMembers;
         this.name = name;
         this.color = color;
         this.item = item;
@@ -39,6 +41,19 @@ public class Team
         {
             player.sendMessage(message);
         }
+    }
+
+    /**
+     * Total members, online or offline.
+     */
+    public int getTotalMembers()
+    {
+        return totalMembers;
+    }
+
+    public int getTeamId()
+    {
+        return teamId;
     }
 
     public String getName()
