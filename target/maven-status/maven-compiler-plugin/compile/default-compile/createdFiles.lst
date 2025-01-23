@@ -3,6 +3,9 @@ com\fractured\events\world\PlaceListener.class
 com\fractured\events\inventory\InventoryClickListener.class
 com\fractured\events\HungerListener.class
 com\fractured\commands\GenerateBordersCmd.class
+com\fractured\enums\Upgrades.class
+com\fractured\managers\UpgradesManager.class
+com\fractured\commands\DiscordCmd.class
 com\fractured\events\JoinListener.class
 com\fractured\commands\MeCmd.class
 com\fractured\commands\BypassRegionsCmd.class
@@ -15,6 +18,7 @@ com\fractured\managers\RegionManager.class
 com\fractured\events\world\BreakListener.class
 com\fractured\managers\TeamManager.class
 com\fractured\commands\CoordsCmd.class
+com\fractured\commands\UpgradesCmd.class
 com\fractured\commands\RegionCheckCmd.class
 com\fractured\events\inventory\InventoryCloseListener.class
 com\fractured\utilities\Config.class

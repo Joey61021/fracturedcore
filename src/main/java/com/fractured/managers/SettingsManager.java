@@ -23,7 +23,7 @@ public class SettingsManager {
     }
 
     public static void displayGUI(Player player) {
-        Inventory inv = Bukkit.createInventory(null, 9, Utils.color("&7Global Settings"));
+        Inventory inv = Bukkit.createInventory(null, 9, Utils.color("&8Global Settings"));
         player.openInventory(inv);
 
         for (Settings setting : Settings.values()) {

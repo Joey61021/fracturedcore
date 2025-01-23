@@ -30,3 +30,5 @@ commands:
     aliases: []
   discord:
     aliases: []
+  upgrades:
+    aliases: []

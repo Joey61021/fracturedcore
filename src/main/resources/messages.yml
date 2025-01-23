@@ -6,6 +6,7 @@ generic:
   friendly-fire-disabled: "&cYou cannot attack your own team!"
   unable-to-build: "&cYou are unable to build without enabling build mode with /build first!"
   already-in-team: "&cYou are already in a team!"
+  no-team: "&cYou cannot run this command without being in a team!"
   region:
     team-alerted: "&4The %team% team has been alerted of your location."
     team-offline: "&cYou are unable to complete this action while this team is offline!"
@@ -15,6 +16,10 @@ generic:
   region-wand:
     selected: "&f%pos% has been selected at your location for %team%&f!"
     cycled: "&fTeam cycled to %team%&f!"
+  upgrades:
+    reached-max-val: "&cThis upgrade has already reached the maximum value!"
+    not-enough: "&cYou do not have enough to purchase this upgrade!"
+    upgraded: "&fYou have successfully upgraded %upgrade% &fto &6level %level%&f!"
 commands:
   team-chat:
     toggle-on: "&fTeam chat has been toggled &aON&f!"
@@ -31,7 +36,6 @@ commands:
     invalid: "&cInvalid location, please double check your arguments!"
     set: "&fSuccessfully set location for &b%location%&f!"
   spawn:
-    no-team: "&cYou cannot run this command without being in a team!"
     not-in-region: "&cYou must be in your team's region to run this comm and!"
     teleported: "&fYou have been teleported to %team% team's &fspawn!"
   generate-borders:

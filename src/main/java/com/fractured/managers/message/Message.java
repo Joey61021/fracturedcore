@@ -14,6 +14,7 @@ public enum Message {
     FRIENDLY_FIRE_DISABLED("generic.friendly-fire-disabled"),
     UNABLE_TO_BUILD("generic.unable-to-build"),
     ALREADY_IN_TEAM("generic.already-in-team"),
+    NO_TEAM("commands.spawn.no-team"),
 
     REGION_TEAM_ALERTED("generic.region.team-alerted"),
     REGION_TEAM_OFFLINE("generic.region.team-offline"),
@@ -23,6 +24,10 @@ public enum Message {
 
     REGION_WAND_SELECTED("generic.region-wand.selected"),
     REGION_WAND_CYCLED("generic.region-wand.cycled"),
+
+    UPGRADES_REACH_MAX_VAL("generic.upgrades.reached-max-val"),
+    UPGRADES_NOT_ENOUGH("generic.upgrades.not-enough"),
+    UPGRADES_UPGRADED("generic.upgrades.upgraded"),
 
     CMD_TC_TOGGLE_ON("commands.team-chat.toggle-on"),
     CMD_TC_TOGGLE_OFF("commands.team-chat.toggle-off"),
@@ -39,7 +44,6 @@ public enum Message {
     CMD_SET_LOCATION_INVALID("commands.set-location.invalid"),
     CMD_SET_LOCATION_SET("commands.set-location.set"),
 
-    CMD_SPAWN_NO_TEAM("commands.spawn.no-team"),
     CMD_SPAWN_NOT_IN_REGION("commands.spawn.not-in-region"),
     CMD_SPAWN_TELEPORTED("commands.spawn.teleported"),
 

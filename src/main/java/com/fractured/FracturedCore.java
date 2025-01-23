@@ -57,6 +57,7 @@ public class FracturedCore extends JavaPlugin {
         getCommand("regioncheck").setExecutor(new RegionCheckCmd());
         getCommand("spawn").setExecutor(new SpawnCmd());
         getCommand("discord").setExecutor(new DiscordCmd());
+        getCommand("upgrades").setExecutor(new UpgradesCmd());
     }
 
     private void establishDatabase() {

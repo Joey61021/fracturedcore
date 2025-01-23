@@ -4,6 +4,7 @@ import com.fractured.FracturedCore;
 import com.fractured.enums.AlertReason;
 import com.fractured.enums.Settings;
 import com.fractured.enums.Teams;
+import com.fractured.enums.Upgrades;
 import com.fractured.managers.message.Message;
 import com.fractured.managers.message.MessageManager;
 import com.fractured.utilities.Utils;
@@ -11,7 +12,6 @@ import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -27,7 +27,7 @@ public class TeamManager {
 
 
     public static void displayGUI(Player player) {
-        Inventory inv = Bukkit.createInventory(null, 9, Utils.color("&7Select Team"));
+        Inventory inv = Bukkit.createInventory(null, 9, Utils.color("&8Select Team"));
         player.openInventory(inv);
 
         for (Teams team : Teams.values()) {
@@ -69,9 +69,8 @@ public class TeamManager {
         ChatColor color = team.getColor();
         meta.setColor(colorMap.getOrDefault(color, Color.YELLOW));
 
-        meta.addEnchant(Enchantment.DURABILITY, 1, false);
+        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, FracturedCore.getSettings.getInt("upgrades." + team.getName().toLowerCase() + "." + Upgrades.HELMET_PROTECTION.getUpgradeValue(), 1), true);
         meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.setDisplayName(Utils.color(team.getColor() + team.getName() + " team"));
         item.setItemMeta(meta);
         return item;
@@ -145,6 +144,7 @@ public class TeamManager {
         player.setPlayerListName(team.getColor() + player.getName());
         player.setDisplayName(Utils.color(team.getColor() + player.getDisplayName()));
         player.setPlayerListFooter(Utils.color("&7Your team: " + team.getColor() + team.getName() + " team"));
+        player.getInventory().setHelmet(TeamManager.getHelmet(team));
         return team;
     }
 }

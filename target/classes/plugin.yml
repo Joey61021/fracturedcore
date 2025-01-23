@@ -28,3 +28,7 @@ commands:
     aliases: []
   spawn:
     aliases: []
+  discord:
+    aliases: []
+  upgrades:
+    aliases: []
