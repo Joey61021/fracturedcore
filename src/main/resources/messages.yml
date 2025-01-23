@@ -36,7 +36,7 @@ commands:
     invalid: "&cInvalid location, please double check your arguments!"
     set: "&fSuccessfully set location for &b%location%&f!"
   spawn:
-    not-in-region: "&cYou must be in your team's region to run this comm and!"
+    not-in-region: "&cYou must be in your team's region to run this command!"
     teleported: "&fYou have been teleported to %team% team's &fspawn!"
   generate-borders:
     confirm: "&cAre you sure you want to generate world borders at your current location? Doing so will cause lag to the server. Please execute /generateborders confirm to proceed."
