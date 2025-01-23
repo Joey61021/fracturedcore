@@ -1,23 +1,32 @@
 package com.fractured.events;
 
-import com.fractured.enums.Teams;
-import com.fractured.managers.TeamManager;
-import com.fractured.utilities.Utils;
+import com.fractured.FracturedCore;
+import com.fractured.team.Team;
+import com.fractured.user.User;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class LeaveListener implements Listener {
+import static com.fractured.util.Utils.color;
 
+public class LeaveListener implements Listener
+{
     @EventHandler
-    public void onLeave(PlayerQuitEvent event) {
+    public void onLeave(PlayerQuitEvent event)
+    {
         Player player = event.getPlayer();
-        Teams team = TeamManager.getTeam(player);
-        event.setQuitMessage(Utils.color((team != null ? team.getColor() : "&7") + player.getName() + " &fhas disconnected"));
+        User user = FracturedCore.getUserManager().getUser(player.getUniqueId());
+        Team team = user.getTeam();
 
-        if (team != null) {
-            team.getPlayers().remove(player);
+        if (team == null)
+        {
+            event.setQuitMessage(color("&7" + player.getName() + " &fhas disconnected"));
+        } else
+        {
+            team.getOnlineMembers().remove(player);
+            event.setQuitMessage(team.color() + player.getName() + ChatColor.WHITE + " has disconnected");
         }
     }
 }
