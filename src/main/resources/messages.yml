@@ -12,7 +12,7 @@ generic:
     team-offline: "&cYou are unable to complete this action while this team is offline!"
     block-place: "&4&l!!! &c%player% has placed a block in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% &4&l!!!"
     block-break: "&4&l!!! &c%player% has broken a block in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% &4&l!!!"
-    chest-open: "&4&l!!! &c%player% has chest has been opened in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% &4&l!!!"
+    chest-open: "&4&l!!! &c%player% has opened a chest in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% &4&l!!!"
   region-wand:
     selected: "&f%pos% has been selected at your location for %team%&f!"
     cycled: "&fTeam cycled to %team%&f!"
