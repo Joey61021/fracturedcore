@@ -159,7 +159,7 @@ public class HikariStorage implements Storage
 
                 while (rs.next())
                 {
-                    team = new Team(rs.getInt("id"), rs.getString("name"), rs.getString("color"), Material.valueOf(rs.getString("material")),
+                    team = new Team(rs.getInt("id"), rs.getInt("members"), rs.getString("name"), rs.getString("color"), Material.valueOf(rs.getString("material")),
                             new Location(Bukkit.getWorld(rs.getString("sWorld")), rs.getDouble("sX"), rs.getDouble("sY"), rs.getDouble("sZ"), rs.getFloat("sY"), rs.getFloat("sP")));
                     rax.put(rs.getInt("id"), team);
                 }
