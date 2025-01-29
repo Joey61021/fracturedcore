@@ -2,13 +2,10 @@ package com.fractured.events.inventory;
 
 import com.fractured.FracturedCore;
 import com.fractured.enums.Settings;
-import com.fractured.enums.Teams;
 import com.fractured.enums.Upgrades;
-import com.fractured.managers.SettingsManager;
-import com.fractured.managers.TeamManager;
-import com.fractured.managers.UpgradesManager;
-import com.fractured.managers.message.Message;
-import com.fractured.managers.message.MessageManager;
+import com.fractured.team.Team;
+import com.fractured.team.TeamCache;
+import com.fractured.team.TeamManager;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

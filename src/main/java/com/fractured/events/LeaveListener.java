@@ -1,8 +1,7 @@
 package com.fractured.events;
 
-import com.fractured.FracturedCore;
 import com.fractured.team.Team;
-import com.fractured.user.User;
+import com.fractured.user.UserManager;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,8 +16,7 @@ public class LeaveListener implements Listener
     public void onLeave(PlayerQuitEvent event)
     {
         Player player = event.getPlayer();
-        User user = FracturedCore.getUserManager().getUser(player.getUniqueId());
-        Team team = user.getTeam();
+        Team team = UserManager.getUser(player.getUniqueId()).getTeam();
 
         if (team == null)
         {

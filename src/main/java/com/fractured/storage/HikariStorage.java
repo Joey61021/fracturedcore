@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import com.fractured.team.ClaimManager;
 import com.fractured.team.Team;
 import com.fractured.team.TeamCache;
-import com.fractured.team.TeamClaim;
+import com.fractured.team.Claim;
 import com.fractured.user.User;
 import com.fractured.util.Throw;
 import com.zaxxer.hikari.HikariConfig;
@@ -19,6 +19,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 
 public class HikariStorage implements Storage
 {
@@ -146,6 +147,7 @@ public class HikariStorage implements Storage
      */
     private static final String ADD_TO_TEAM_ASSIGNMENT = "INSERT INTO team_assignment (id, user_id) VALUES (?, ?);";
 
+    @Override
     public void initServerResources()
     {
         Map<Integer, Team> rax = new HashMap<>();
@@ -160,7 +162,7 @@ public class HikariStorage implements Storage
                 while (rs.next())
                 {
                     team = new Team(rs.getInt("id"), rs.getInt("members"), rs.getString("name"), rs.getString("color"), Material.valueOf(rs.getString("material")),
-                            new Location(Bukkit.getWorld(rs.getString("sWorld")), rs.getDouble("sX"), rs.getDouble("sY"), rs.getDouble("sZ"), rs.getFloat("sY"), rs.getFloat("sP")));
+                            new Location(Bukkit.getWorld(rs.getString("s_world")), rs.getDouble("s_x"), rs.getDouble("s_y"), rs.getDouble("s_z"), rs.getFloat("s_ya"), rs.getFloat("s_pi")));
                     rax.put(rs.getInt("id"), team);
                 }
             });
@@ -173,12 +175,47 @@ public class HikariStorage implements Storage
                 while (rs.next())
                 {
                     Team team = TeamCache.getTeam(rs.getInt("team_id"));
-                    TeamClaim claim = new TeamClaim(team,
+                    // get world
+                    Claim claim = new Claim(team,
                             rs.getInt("x0"), rs.getInt("z0"),
                             rs.getInt("x1"), rs.getInt("z1"));
                     ClaimManager.addClaim(claim);
                 }
             });
+        });
+    }
+
+    private static final String UPSERT_CLAIM = """
+                                               INSERT INTO claim_entries (team_id, world_id, x0, z0, x1, z1)
+                                               VALUES (?, (SELECT id FROM world_entries WHERE world_uid = ?), ?, ?, ?, ?);
+                                               """;
+
+    private void saveClaim(Connection conn, World world, Claim claim) throws SQLException
+    {
+        PreparedStatement stmt = conn.prepareStatement(UPSERT_CLAIM);
+
+        stmt.setInt(1, claim.getTeam().getId());
+        stmt.setString(2, world.getUID().toString());
+        stmt.setInt(3, claim.getX0());
+        stmt.setInt(4, claim.getZ0());
+        stmt.setInt(5, claim.getX1());
+        stmt.setInt(6, claim.getZ1());
+
+        update(stmt);
+    }
+
+    @Override
+    public void saveClaim(World world, Claim claim)
+    {
+        open(conn -> saveClaim(conn, world, claim));
+    }
+
+    @Override
+    public void setClaims(Claim yellow, Claim green, Claim red, Claim blue)
+    {
+        open(conn ->
+        {
+
         });
     }
 

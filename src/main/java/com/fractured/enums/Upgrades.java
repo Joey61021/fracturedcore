@@ -5,7 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public enum Upgrades {
-    HELMET_PROTECTION(4, "&bHelmet Protection", new ItemStack(Material.IRON_HELMET), "helmet-protection", 5, Material.DIAMOND, 1);
+    HELMET_PROTECTION(0, "&bHelmet Protection", new ItemStack(Material.IRON_HELMET), "helmet-protection", 5, Material.DIAMOND, 1);
 
     @Getter private final String display;
     @Getter private final ItemStack item;

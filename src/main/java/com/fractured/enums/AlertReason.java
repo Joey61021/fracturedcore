@@ -1,6 +1,5 @@
 package com.fractured.enums;
 
-import com.fractured.managers.message.Message;
 import lombok.Getter;
 
 public enum AlertReason {

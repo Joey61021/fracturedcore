@@ -1,8 +1,12 @@
 package com.fractured.storage;
 
+import com.fractured.config.Config;
+import com.fractured.team.Claim;
 import com.fractured.team.Team;
 import com.fractured.user.User;
-import com.fractured.util.Config;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.PlayerDeathEvent;
 
 public interface Storage
 {
@@ -23,7 +27,13 @@ public interface Storage
         };
     }
 
+    void saveClaim(World world, Claim claim);
+
     void initServerResources();
+
+    //void saveDeath(PlayerDeathEvent event);
+
+    void setClaims(Claim yellow, Claim green, Claim red, Claim blue);
 
     void assignTeam(User user, Team team);
 

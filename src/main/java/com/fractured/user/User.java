@@ -3,7 +3,7 @@ package com.fractured.user;
 import com.fractured.team.Team;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
+import java.util.*;
 
 public class User
 {
@@ -14,10 +14,15 @@ public class User
     private int userId;
     private boolean inTeamChat;
     private Team team;
+    /**
+     * Mapping the upgrade_id to the upgrade level
+     */
+    private final Map<Integer, Integer> upgrades;
 
     public User(UUID uuid)
     {
         this.uuid = uuid;
+        upgrades = new HashMap<>();
     }
 
     public UUID getUuid()

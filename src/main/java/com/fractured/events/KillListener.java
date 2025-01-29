@@ -1,6 +1,6 @@
 package com.fractured.events;
 
-import com.fractured.utilities.Utils;
+import com.fractured.util.Utils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class KillListener implements Listener {
 
     @EventHandler
-    public void onJoin(EntityDeathEvent event) {
+    public void onDeath(EntityDeathEvent event) {
         Entity victim = event.getEntity();
 
         if (victim instanceof Wither) {
@@ -25,7 +25,7 @@ public class KillListener implements Listener {
 
             ItemMeta meta = item.getItemMeta();
             meta.setDisplayName(Utils.color("&bFractured Shard"));
-            meta.addEnchant(Enchantment.DURABILITY, 1, true);
+            meta.addEnchant(Enchantment.UNBREAKING, 1, true);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             ArrayList<String> lore = new ArrayList<>();
             lore.add(Utils.color("&7Insert this shard into the centre beacon to activate"));

@@ -18,8 +18,8 @@ commands:
     aliases: [setting]
   setlocation:
     aliases: [setloc]
-  generateborders:
-    aliases: [generateborder]
+  borders:
+    aliases: [border]
   regionwand:
     aliases: [region]
   bypassregions:

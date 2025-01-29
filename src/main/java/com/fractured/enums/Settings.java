@@ -6,7 +6,6 @@ import org.bukkit.inventory.ItemStack;
 
 public enum Settings {
     FRIENDLY_FIRE(1, "&bFriendly Fire", new ItemStack(Material.BOW), "friendly-fire"),
-    ONE_PLAYER_SLEEP(4, "&dOne Player Sleep", new ItemStack(Material.RED_BED), "one-player-sleep"),
     STARTER_ITEMS(7, "&6Starter Items", new ItemStack(Material.WOODEN_AXE), "starter-items");
 
     @Getter private final String display;

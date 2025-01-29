@@ -4,7 +4,8 @@ import com.fractured.FracturedCore;
 import com.fractured.events.world.WorldManager;
 import com.fractured.team.TeamCache;
 import com.fractured.user.User;
-import com.fractured.util.Utils;
+import com.fractured.user.UserManager;
+import com.fractured.util.globals.Messages;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -21,15 +22,16 @@ public class JoinListener implements Listener
         player.setGameMode(GameMode.SURVIVAL);
 
         // Tab
-        player.setPlayerListHeader(Utils.color("&eFractured &f| &e1.21.4 SMP"));
-        player.setPlayerListFooter(Utils.color("&7Your team: None")); // fixme
+        player.setPlayerListHeader(Messages.TAB_LIST_HEADER);
 
-        User user = FracturedCore.getUserManager().getUser(player.getUniqueId());
+        User user = UserManager.getUser(player.getUniqueId());
 
         if (user.getTeam() == null)
         {
+            player.setPlayerListFooter(Messages.NO_TEAM_TAB_LIST_FOOTER);
             player.setHealth(player.getMaxHealth());
             player.setFoodLevel(20);
+            player.setFireTicks(0);
             // don't do this because players already established will have their inventories cleared. They wont have a team because of the new database schema
             // player.getInventory().clear();
             player.teleport(WorldManager.getSpawn());
@@ -38,6 +40,7 @@ public class JoinListener implements Listener
         } else
         {
             event.setJoinMessage(user.getTeam().color() + player.getName() + ChatColor.WHITE + " has connected");
+            // add member? What happened to that here
         }
     }
 }

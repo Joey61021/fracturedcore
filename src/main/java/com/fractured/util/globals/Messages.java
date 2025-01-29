@@ -1,7 +1,10 @@
 package com.fractured.util.globals;
 
+import com.fractured.config.keys.TextConfigKey;
 import com.fractured.util.Utils;
 import net.md_5.bungee.api.ChatColor;
+
+import static com.fractured.config.DataSupplier.textKey;
 
 public final class Messages
 {
@@ -9,6 +12,50 @@ public final class Messages
     {
 
     }
+
+    public static final TextConfigKey TEAM_INVENTORY_CLOSED = textKey("generic.team_inventory_closed");
+    public static final TextConfigKey INVALID_ARG = textKey("generic.invalid_arg");
+    public static final TextConfigKey FRIENDLY_FIRE_DISABLED = textKey("generic.friendly_fire_disabled");
+    public static final TextConfigKey ALREADY_IN_TEAM = textKey("generic.already_in_team");
+
+    public static final TextConfigKey NO_PERMISSION = textKey("commands.no_permission");
+    public static final TextConfigKey CONSOLE_BLOCKED = textKey("commands.console-blocked");
+    public static final TextConfigKey NO_TEAM_BLOCKED = textKey("commands.spawn.no_team");
+
+    public static final TextConfigKey REGION_TEAM_ALERTED = textKey("generic.region.team-alerted");
+    public static final TextConfigKey REGION_TEAM_OFFLINE = textKey("generic.region.team-offline");
+    public static final TextConfigKey REGION_ALERT_BLOCK_PLACE = textKey("generic.region.block-place");
+    public static final TextConfigKey REGION_ALERT_BLOCK_BREAK = textKey("generic.region.block-break");
+    public static final TextConfigKey REGION_ALERT_CHEST_OPEN = textKey("generic.region.chest-open");
+
+    public static final TextConfigKey UPGRADES_MAX_LEVEL = textKey("upgrades.max_level");
+    public static final TextConfigKey UPGRADES_NOT_ENOUGH = textKey("upgrades.not_enough");
+    public static final TextConfigKey UPGRADES_UPGRADED = textKey("upgrades.upgraded");
+
+    public static final TextConfigKey CMD_TC_TOGGLE_ON = textKey("commands.team_chat.toggle_on");
+    public static final TextConfigKey CMD_TC_TOGGLE_OFF = textKey("commands.team_chat.toggle_off");
+    public static final TextConfigKey CMD_TC_NOT_IN_TEAM = textKey("commands.not_team_blocked");
+
+    public static final TextConfigKey CMD_SET_LOCATION_INVALID = textKey("commands.set-location.invalid");
+    public static final TextConfigKey CMD_SET_LOCATION_SET = textKey("commands.set-location.set");
+
+    public static final TextConfigKey CMD_SPAWN_NOT_IN_REGION = textKey("commands.spawn.not-in-region");
+    public static final TextConfigKey CMD_SPAWN_TELEPORTED = textKey("commands.spawn.teleported");
+
+    public static final TextConfigKey COMMAND_BORDERS_USAGE = textKey("commands.borders.usage");
+    public static final TextConfigKey COMMAND_BORDERS_GENERATE_CONFIRM = textKey("commands.borders.generate.confirm");
+    public static final TextConfigKey COMMAND_BORDERS_GENERATE_START = textKey("commands.borders.generate.generating");
+    public static final TextConfigKey COMMAND_BORDERS_GENERATE_END = textKey("commands.borders.generate.complete");
+    public static final TextConfigKey COMMAND_BORDERS_EXTEND_CONFIRM = textKey("commands.borders.extend.confirm");
+    public static final TextConfigKey COMMAND_BORDERS_EXTEND_START = textKey("commands.borders.generate.generating");
+    public static final TextConfigKey COMMAND_BORDERS_EXTEND_END = textKey("commands.borders.generate.complete");
+
+    public static final TextConfigKey COMMAND_SETTINGS_CONSOLE_USAGE = textKey("commands.settings.console_usage");
+    public static final TextConfigKey COMMAND_SETTINGS_PLAYER_USAGE = textKey("commands.settings.player_usage");
+    public static final TextConfigKey COMMAND_SETTINGS_SET = textKey("commands.settings.set");
+    public static final TextConfigKey COMMAND_SETTINGS_SET_INVALID_PATH = textKey("commands.settings.set.invalid_path");
+
+    public static final TextConfigKey COMMAND_DISCORD = textKey("commands.discord");
 
     public static final String TAB_LIST_HEADER = Utils.color("&eFractured &f| &e1.21.4 SMP");
     public static final String NO_TEAM_TAB_LIST_FOOTER = Utils.color("&7Your team: None");
@@ -24,24 +71,4 @@ public final class Messages
     public static final String COMMAND_INVALID_TEAM = ChatColor.RED + "Unable to find the specified team.";
 
     public static final String PLUGIN_RESTARTING = ChatColor.YELLOW + "Server Restarting...";
-    public static final String NO_PERMISSION = ChatColor.RED + "You do not have permission to run this command!";
-    public static final String CONSOLE_BLOCKED = ChatColor.RED + "This command cannot be run through console!";
-    public static final String TEAM_INVENTORY_CLOSED = ChatColor.RED + "To get started, join a team with /team";
-
-    public static final String CMD_GM_SURVIVAL = ChatColor.WHITE + "Your gamemode has been changed to " + ChatColor.GREEN + "Survival" + ChatColor.WHITE + "!";
-    public static final String CMD_GM_CREATIVE = ChatColor.WHITE + "Your gamemode has been changed to " + ChatColor.RED + "Creative" + ChatColor.WHITE + "!";
-
-    public static final String CMD_TC_TOGGLE_ON = ChatColor.WHITE + "Team chat has been toggled " + ChatColor.GREEN + "ON";
-    public static final String CMD_TC_TOGGLE_OFF = ChatColor.WHITE + "Team chat has been toggled " + ChatColor.RED + "OFF";
-    public static final String CMD_TC_NOT_IN_TEAM = ChatColor.RED + "Please join a team before connecting to a team chat!";
-
-    public static final String REGION_TEAM_ALERTED = ChatColor.DARK_RED + "The %team% team has been alerted of your location.";
-    public static final String REGION_TEAM_OFFLINE = ChatColor.RED + "You are unable to complete this action while this team is offline!";
-    public static final String REGION_ALERT_BLOCK_PLACE = ChatColor.DARK_RED + ChatColor.BOLD.toString() + "!!! " +
-            ChatColor.RED + "%player% has placed a block in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% " +
-            ChatColor.DARK_RED + ChatColor.BOLD + "!!!";
-    public static final String REGION_ALERT_BLOCK_BREAK = ChatColor.DARK_RED + ChatColor.BOLD.toString() + "!!! " +
-            ChatColor.RED + "%player% has broken a block in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% " +
-            ChatColor.DARK_RED + ChatColor.BOLD + "!!!";
-
 }

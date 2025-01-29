@@ -1,16 +1,47 @@
 package com.fractured.team;
 
 import com.fractured.FracturedCore;
+import com.fractured.enums.Upgrades;
 import com.fractured.user.User;
+import com.fractured.user.UserManager;
 import com.fractured.util.globals.Messages;
 import com.fractured.util.Utils;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+
+import java.util.Map;
 
 public class TeamManager
 {
-    public static void toggleTeamChat(Player player, User user)
+    public static ItemStack getHelmet(Teams team)
     {
+        ItemStack item = new ItemStack(Material.LEATHER_HELMET);
+        LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
+
+        Map<ChatColor, Color> colorMap = Map.of(
+                ChatColor.RED, Color.RED,
+                ChatColor.BLUE, Color.BLUE,
+                ChatColor.GREEN, Color.GREEN
+        );
+
+        ChatColor color = team.getColor();
+        meta.setColor(colorMap.getOrDefault(color, Color.YELLOW));
+
+        meta.addEnchant(Enchantment.PROTECTION, FracturedCore.getSettings.getInt("upgrades." + team.getName().toLowerCase() + "." + Upgrades.HELMET_PROTECTION.getUpgradeValue(), 1), true);
+        meta.setUnbreakable(true);
+        meta.setDisplayName(Utils.color(team.color() + team.getName() + " team"));
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    public static void toggleTeamChat(Player player)
+    {
+        User user = UserManager.getUser(player.getUniqueId());
         Team team = user.getTeam();
 
         if (team == null)

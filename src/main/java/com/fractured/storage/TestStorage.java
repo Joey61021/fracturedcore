@@ -3,7 +3,7 @@ package com.fractured.storage;
 import com.fractured.team.ClaimManager;
 import com.fractured.team.Team;
 import com.fractured.team.TeamCache;
-import com.fractured.team.TeamClaim;
+import com.fractured.team.Claim;
 import com.fractured.user.User;
 import org.bukkit.*;
 
@@ -34,10 +34,10 @@ public class TestStorage implements Storage
         Bukkit.getLogger().info(Integer.toString(teams.size()));
         TeamCache.init(teams);
 
-        ClaimManager.addClaim(new TeamClaim(red, -1, 1, -1000, 1000));
-        ClaimManager.addClaim(new TeamClaim(yellow, -1, -1, -1000, -1000));
-        ClaimManager.addClaim(new TeamClaim(green, 1, 1, 1000, 1000));
-        ClaimManager.addClaim(new TeamClaim(blue, 1, -1, 1000, -1000));
+        ClaimManager.addClaim(new Claim(red, -1, 1, -1000, 1000));
+        ClaimManager.addClaim(new Claim(yellow, -1, -1, -1000, -1000));
+        ClaimManager.addClaim(new Claim(green, 1, 1, 1000, 1000));
+        ClaimManager.addClaim(new Claim(blue, 1, -1, 1000, -1000));
     }
 
     @Override
