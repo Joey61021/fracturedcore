@@ -92,7 +92,7 @@ public final class FracturedCore extends JavaPlugin {
     @Override
     public void onLoad()
     {
-
+        // load
     }
 
     @Override
