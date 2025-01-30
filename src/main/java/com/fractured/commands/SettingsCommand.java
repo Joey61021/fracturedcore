@@ -6,6 +6,7 @@ import com.fractured.menu.MenuManager;
 import com.fractured.util.globals.ConfigKeys;
 import com.fractured.util.globals.Messages;
 import com.fractured.util.globals.Permissions;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -36,10 +37,7 @@ public final class SettingsCommand
         settingsSubCommands.register("set", SettingsCommand::settingsSet, "s");
         settingsSubCommands.register("refresh", SettingsCommand::settingsRefresh, "reload", "rl", "r");
 
-        inventory = MenuManager.register(3 * 9, color("&9Settings"), event ->
-        {
-
-        });
+        inventory = Bukkit.createInventory(null, 3 * 9, "Settings");
 
         // todo Perhaps make a config key which stores an itemstack or callback or something of the sort to modify the config?
         ItemStack item = new ItemStack(FracturedCore.getFracturedConfig().get(ConfigKeys.FRIENDLY_FIRE) ? Material.GREEN_CONCRETE : Material.RED_CONCRETE);

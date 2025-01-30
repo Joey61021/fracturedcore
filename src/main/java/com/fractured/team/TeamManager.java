@@ -1,7 +1,6 @@
 package com.fractured.team;
 
 import com.fractured.FracturedCore;
-import com.fractured.enums.Upgrades;
 import com.fractured.user.User;
 import com.fractured.user.UserManager;
 import com.fractured.util.globals.Messages;
@@ -18,25 +17,25 @@ import java.util.Map;
 
 public class TeamManager
 {
-    public static ItemStack getHelmet(Teams team)
+    public static ItemStack getHelmet(Team team)
     {
-        ItemStack item = new ItemStack(Material.LEATHER_HELMET);
-        LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
-
-        Map<ChatColor, Color> colorMap = Map.of(
-                ChatColor.RED, Color.RED,
-                ChatColor.BLUE, Color.BLUE,
-                ChatColor.GREEN, Color.GREEN
-        );
-
-        ChatColor color = team.getColor();
-        meta.setColor(colorMap.getOrDefault(color, Color.YELLOW));
-
-        meta.addEnchant(Enchantment.PROTECTION, FracturedCore.getSettings.getInt("upgrades." + team.getName().toLowerCase() + "." + Upgrades.HELMET_PROTECTION.getUpgradeValue(), 1), true);
-        meta.setUnbreakable(true);
-        meta.setDisplayName(Utils.color(team.color() + team.getName() + " team"));
-        item.setItemMeta(meta);
-        return item;
+//        ItemStack item = new ItemStack(Material.LEATHER_HELMET);
+//        LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
+//
+//        Map<ChatColor, Color> colorMap = Map.of(
+//                ChatColor.RED, Color.RED,
+//                ChatColor.BLUE, Color.BLUE,
+//                ChatColor.GREEN, Color.GREEN
+//        );
+//
+//        ChatColor color = team.getColor();
+//        meta.setColor(colorMap.getOrDefault(color, Color.YELLOW));
+//
+//        meta.addEnchant(Enchantment.PROTECTION, FracturedCore.getSettings.getInt("upgrades." + team.getName().toLowerCase() + "." + Upgrades.HELMET_PROTECTION.getUpgradeValue(), 1), true);
+//        meta.setUnbreakable(true);
+//        meta.setDisplayName(Utils.color(team.color() + team.getName() + " team"));
+//        item.setItemMeta(meta);
+        return null; // return item
     }
 
     public static void toggleTeamChat(Player player)
@@ -46,15 +45,15 @@ public class TeamManager
 
         if (team == null)
         {
-            player.sendMessage(Messages.CMD_TC_NOT_IN_TEAM);
+            player.sendMessage(FracturedCore.getMessages().get(Messages.CMD_TC_NOT_IN_TEAM));
         } else if (user.isInTeamChat())
         {
             user.setInTeamChat(false);
-            player.sendMessage(Messages.CMD_TC_TOGGLE_OFF);
+            player.sendMessage(FracturedCore.getMessages().get(Messages.CMD_TC_TOGGLE_OFF));
         } else
         {
             user.setInTeamChat(true);
-            player.sendMessage(Messages.CMD_TC_TOGGLE_ON);
+            player.sendMessage(FracturedCore.getMessages().get(Messages.CMD_TC_TOGGLE_ON));
         }
     }
 
@@ -121,12 +120,12 @@ public class TeamManager
 
     public static void removeTeam(Player player)
     {
-        removeTeam(player, FracturedCore.getUserManager().getUser(player.getUniqueId()));
+        removeTeam(player, UserManager.getUser(player.getUniqueId()));
     }
 
     public static void addTeam(Player player, Team team)
     {
-        addTeam(player, FracturedCore.getUserManager().getUser(player.getUniqueId()), team);
+        addTeam(player, UserManager.getUser(player.getUniqueId()), team);
     }
 
     /**

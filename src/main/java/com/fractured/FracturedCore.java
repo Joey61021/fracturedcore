@@ -3,7 +3,6 @@ package com.fractured;
 import com.fractured.commands.*;
 import com.fractured.config.Config;
 import com.fractured.events.*;
-import com.fractured.events.inventory.InventoryClickListener;
 import com.fractured.events.inventory.InventoryCloseListener;
 import com.fractured.events.world.WorldManager;
 import com.fractured.menu.MenuManager;
@@ -65,12 +64,11 @@ public final class FracturedCore extends JavaPlugin {
     private void registerEvents() {
         final PluginManager manager = getServer().getPluginManager();
 
-        manager.registerEvents(menuManager, this);
         manager.registerEvents(new UserManager(), this);
+        manager.registerEvents(menuManager, this);
         manager.registerEvents(new WorldManager(), this);
         manager.registerEvents(new ChatListener(), this);
         manager.registerEvents(new DeathListener(), this);
-        manager.registerEvents(new InventoryClickListener(), this);
         manager.registerEvents(new InventoryCloseListener(), this);
         manager.registerEvents(new JoinListener(), this);
         manager.registerEvents(new LeaveListener(), this);
@@ -85,7 +83,7 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("teamchat").setExecutor(TeamChatCommand::teamchat);
         getCommand("team").setExecutor(TeamCommand::team);
         getCommand("settings").setExecutor(SettingsCommand::settings);
-        getCommand("borders").setExecutor(GenerateBordersCommand::borders);
+        getCommand("borders").setExecutor(BordersCommand::borders);
         getCommand("discord").setExecutor(DiscordCommand::discord);
         getCommand("upgrades").setExecutor(UpgradesCommand::upgrades);
         getCommand("confirm").setExecutor(ConfirmationManager::confirm);

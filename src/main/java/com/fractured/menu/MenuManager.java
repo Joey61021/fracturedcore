@@ -1,22 +1,20 @@
 package com.fractured.menu;
 
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class MenuManager implements Listener
 {
-    private static Map<String, Consumer<InventoryClickEvent>> callbacks;
+    private static Map<String, InventoryCallback> callbacks;
 
     public MenuManager()
     {
+        // smh spigot
         if (callbacks != null)
         {
             throw new IllegalStateException("MenuManager has already been initialized");
@@ -24,17 +22,16 @@ public class MenuManager implements Listener
         callbacks = new HashMap<>();
     }
 
-    public static Inventory register(int size, String title, Consumer<InventoryClickEvent> callback)
+    /**
+     * Register an inventory title to a callback that allows each slot to have an action
+     */
+    public static void register(String title, InventoryCallback callback)
     {
-        Inventory inventory = Bukkit.createInventory(null, size, title);
-
         callbacks.put(title, callback);
-
-        return inventory;
     }
 
     @EventHandler
-    public void onClick(InventoryClickEvent event)
+    public static void onClick(InventoryClickEvent event)
     {
         InventoryView inventory = event.getView();
 
@@ -42,7 +39,7 @@ public class MenuManager implements Listener
 
         if (foo != null)
         {
-            foo.accept(event);
+            foo.onClick(event);
         }
     }
 }

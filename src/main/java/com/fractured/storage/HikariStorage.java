@@ -176,10 +176,10 @@ public class HikariStorage implements Storage
                 {
                     Team team = TeamCache.getTeam(rs.getInt("team_id"));
                     // get world
-                    Claim claim = new Claim(team,
-                            rs.getInt("x0"), rs.getInt("z0"),
-                            rs.getInt("x1"), rs.getInt("z1"));
-                    ClaimManager.addClaim(claim);
+//                    Claim claim = new Claim(team,
+//                            rs.getInt("x0"), rs.getInt("z0"),
+//                            rs.getInt("x1"), rs.getInt("z1"));
+//                    ClaimManager.addClaim(claim);
                 }
             });
         });

@@ -16,6 +16,12 @@ public class TestStorage implements Storage
     private final Team green = new Team(1, 2, "Green", "§a", Material.GREEN_CONCRETE, new Location(world, 0, 200, 0));
 
     @Override
+    public void saveClaim(World world, Claim claim)
+    {
+
+    }
+
+    @Override
     public void initServerResources()
     {
         Bukkit.getLogger().info("Initializing server resources");
@@ -34,10 +40,16 @@ public class TestStorage implements Storage
         Bukkit.getLogger().info(Integer.toString(teams.size()));
         TeamCache.init(teams);
 
-        ClaimManager.addClaim(new Claim(red, -1, 1, -1000, 1000));
-        ClaimManager.addClaim(new Claim(yellow, -1, -1, -1000, -1000));
-        ClaimManager.addClaim(new Claim(green, 1, 1, 1000, 1000));
-        ClaimManager.addClaim(new Claim(blue, 1, -1, 1000, -1000));
+//        ClaimManager.addClaim(new Claim(red, -1, 1, -1000, 1000));
+//        ClaimManager.addClaim(new Claim(yellow, -1, -1, -1000, -1000));
+//        ClaimManager.addClaim(new Claim(green, 1, 1, 1000, 1000));
+//        ClaimManager.addClaim(new Claim(blue, 1, -1, 1000, -1000));
+    }
+
+    @Override
+    public void setClaims(Claim yellow, Claim green, Claim red, Claim blue)
+    {
+
     }
 
     @Override

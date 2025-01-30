@@ -1,6 +1,7 @@
 package com.fractured.user;
 
 import com.fractured.FracturedCore;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -31,7 +32,7 @@ public final class UserManager implements Listener
         return users.get(uid);
     }
 
-    public static User getUser(Player player)
+    public static User getUser(HumanEntity player)
     {
         return getUser(player.getUniqueId());
     }

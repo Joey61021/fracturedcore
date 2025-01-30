@@ -11,9 +11,9 @@ import org.bukkit.entity.Player;
 
 import java.util.function.Consumer;
 
-public final class GenerateBordersCommand
+public final class BordersCommand
 {
-    private GenerateBordersCommand()
+    private BordersCommand()
     {
     }
 
@@ -21,8 +21,8 @@ public final class GenerateBordersCommand
 
     static
     {
-        generateSubCommands.register("generate", GenerateBordersCommand::generate, "gen", "g");
-        generateSubCommands.register("extend", GenerateBordersCommand::generate, "ext", "e");
+        generateSubCommands.register("generate", BordersCommand::generate, "gen", "g");
+        generateSubCommands.register("extend", BordersCommand::generate, "ext", "e");
     }
 
     private record GenerateBordersConfirmation(int size) implements Consumer<CommandSender>
@@ -47,11 +47,11 @@ public final class GenerateBordersCommand
         {
             Player player = (Player) sender;
 
-            player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_BORDERS_GENERATE_START));
+            player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_BORDERS_EXTEND_START));
 
             WorldManager.extendTeamBorders(size);
 
-            player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_BORDERS_GENERATE_END));
+            player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_BORDERS_EXTEND_END));
         }
     }
 
