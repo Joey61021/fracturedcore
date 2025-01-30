@@ -11,11 +11,11 @@ CREATE TABLE team_entries
     -- Number of members in the team, dynamically updated as players join and leave
     members INT   NOT NULL,
     -- Spawn location
-    sX DOUBLE NOT NULL,
-    sY DOUBLE NOT NULL,
-    sZ DOUBLE NOT NULL,
-    sPi     FLOAT NOT NULL,
-    sYa     FLOAT NOT NULL
+    s_x DOUBLE NOT NULL,
+    s_y DOUBLE NOT NULL,
+    s_z DOUBLE NOT NULL,
+    s_pi     FLOAT NOT NULL,
+    s_ya     FLOAT NOT NULL
 );
 
 -- A list of all the claims. Each claim has a corresponding team to which it
@@ -29,7 +29,7 @@ CREATE TABLE claim_entries
     z0      INT NOT NULL,
     x1      INT NOT NULL,
     z1      INT NOT NULL,
-    FOREIGN KEY (team_id) REFERENCES team (id)
+    FOREIGN KEY (team_id) REFERENCES team_entries (id)
 );
 
 CREATE TABLE team_member_changes
@@ -47,9 +47,17 @@ CREATE TABLE team_member_changes
 
 CREATE TABLE team_members
 (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id      INT AUTO_INCREMENT PRIMARY KEY,
     team_id INT NOT NULL,
     user_id INT NOT NULL,
-    FOREIGN KEY (team_id) REFERENCES team (id),
+    FOREIGN KEY (team_id) REFERENCES team_entries (id),
     FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
+CREATE TABLE beacons
+(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    x int NOT NULL,
+    y int NOT NULL,
+    z int NOT NULL
 );

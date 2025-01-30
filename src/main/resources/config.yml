@@ -1,6 +1,6 @@
 storage:
   # Currently recognized storage methods: {'mysql'}
-  type: 'mysql'
+  type: 'test'
   # Never publish database login info to the github
   mysql:
     database: 'test'
@@ -9,10 +9,25 @@ storage:
     host: '127.0.0.1'
     port: 3306
 locations:
-  over_world: "world"
+  default_world: "world"
   spawn:
     x: 0.5
     y: 0.5
     z: 0.5
     yaw: 0.0
     pitch: 90.0
+  beacon:
+    x: 0.5
+    y: 64.0
+    z: 0.5
+    yaw: 0.0
+    pitch: 0.0
+command:
+  stuck:
+    enabled: true
+    duration: 60
+  spawn:
+    enabled: true
+    duration: 60
+friendly_fire: true
+starter_items: true

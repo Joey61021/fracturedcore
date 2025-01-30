@@ -1,6 +1,7 @@
 package com.fractured.user;
 
 import com.fractured.FracturedCore;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -8,26 +9,36 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class UserManager implements Listener
+/**
+ * Each {@link Player} has associated a {@link com.fractured.user.User} object.
+ * This is to store additional data about the Player. This User object is
+ * guaranteed to exist if the Player is online.
+ */
+public final class UserManager implements Listener
 {
-    private final Map<UUID, User> users;
+    private static final Map<UUID, User> users;
 
-    public UserManager()
+    static
     {
-        users = new HashMap<>();
+        users = new ConcurrentHashMap<>(); // concurrent for async reading and writing (onPreLogin for example)
     }
 
-    public User getUser(UUID uid)
+    public static User getUser(UUID uid)
     {
         return users.get(uid);
     }
 
+    public static User getUser(HumanEntity player)
+    {
+        return getUser(player.getUniqueId());
+    }
+
     @EventHandler(priority = EventPriority.LOWEST) // run first
-    public void onPreLogin(AsyncPlayerPreLoginEvent event)
+    public static void onPreLogin(AsyncPlayerPreLoginEvent event)
     {
         UUID uid = event.getUniqueId();
         User user = new User(uid);
@@ -39,7 +50,7 @@ public class UserManager implements Listener
     }
 
     @EventHandler(priority = EventPriority.HIGHEST) // run last
-    public void onQuit(PlayerQuitEvent event)
+    public static void onQuit(PlayerQuitEvent event)
     {
         Player player = event.getPlayer();
 

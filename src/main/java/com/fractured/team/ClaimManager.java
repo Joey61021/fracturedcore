@@ -1,22 +1,83 @@
 package com.fractured.team;
 
-import org.bukkit.event.Listener;
+import com.fractured.FracturedCore;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class ClaimManager implements Listener
+public final class ClaimManager
 {
-    private static final List<TeamClaim> claims = new ArrayList<>();
+    private ClaimManager()
+    {}
 
-    public static void addClaim(TeamClaim claim)
+    // Each world gets its own ClaimManager. This allows for claiming in multiple worlds.
+    private static final Map<UUID, ClaimManager> worlds = new HashMap<>();
+
+    static
+    {
+        // fixme only worlds on startup can have claims
+        for (World world : Bukkit.getWorlds())
+        {
+            worlds.put(world.getUID(), new ClaimManager());
+        }
+    }
+
+    /**
+     * Creates a new claim and registers it to the claim manager. The claim that is created
+     * here is, and cannot be saved in the database. For that, refer to
+     * {@link ClaimManager#newStoredClaim(World, Team, int, int, int, int)}
+     */
+    public static Claim newClaim(World world, Team team, int x0, int z0, int x1, int z1)
+    {
+        if (team == null)
+        {
+            throw new IllegalArgumentException("team cannot be null");
+        }
+
+        Claim rax = new Claim(team, x0, z0, x1, z1);
+
+        worlds.get(world.getUID()).addClaim(rax);
+
+        return rax;
+    }
+
+    public static Claim newStoredClaim(World world, Team team, int x0, int z0, int x1, int z1)
+    {
+        Claim claim = newClaim(world, team, x0, z0, x1, z1);
+
+        FracturedCore.getStorage().saveClaim(world, claim);
+
+        return claim;
+    }
+
+    /**
+     * Gets the claim at the location, taking into account the world of the location
+     */
+    public static Claim getClaim(Location loc)
+    {
+        World world = loc.getWorld();
+
+        if (world != null)
+        {
+            ClaimManager manager = worlds.get(world.getUID());
+
+            return manager.getClaim(loc.getBlockX(), loc.getBlockZ());
+        }
+        return null;
+    }
+
+    private final List<Claim> claims = new ArrayList<>();
+
+    public void addClaim(Claim claim)
     {
         claims.add(claim);
     }
 
-    public static TeamClaim getClaim(int x, int z)
+    public Claim getClaim(int x, int z)
     {
-        for (TeamClaim claim : claims)
+        for (Claim claim : claims)
         {
             if (claim.contains(x, z))
             {

@@ -1,11 +1,23 @@
 package com.fractured.team;
 
+import com.fractured.menu.Menu;
+import com.fractured.menu.MenuManager;
+import com.fractured.team.upgrades.Upgrades;
+import com.fractured.team.upgrades.UpgradeRequisite;
+import com.fractured.user.User;
+import com.fractured.user.UserManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Team
 {
@@ -13,24 +25,68 @@ public class Team
      * As in the database
      */
     private final int teamId;
+    private int totalMembers;
     private final String name;
     private final String color;
-    private final Material item;
+    private final Material beacon;
     private final Location spawn;
     private final List<Player> onlineTeamMembers;
+    private ItemStack helmet;
+    private final Map<Integer, UpgradeRequisite> upgrades;
+    private final Inventory upgradesMenu;
 
-    public Team(int teamId, String name, String color, Material item, Location spawn) {
-        this.teamId = teamId;
-        this.name = name;
-        this.color = color;
-        this.item = item;
-        this.spawn = spawn;
-        this.onlineTeamMembers = new ArrayList<>();
+    private static final String TEAM_UPGRADES = "Team Upgrades";
+
+    static
+    {
+        Menu teamUpgrades = new Menu();
+        teamUpgrades.register(9 + 4, event ->
+        {
+            HumanEntity player = event.getView().getPlayer();
+            User user = UserManager.getUser(player);
+            Team team = user.getTeam();
+
+            if (team == null)
+            {
+                player.sendMessage("Unable to complete action.");
+                player.closeInventory();
+            } else
+            {
+                UpgradeRequisite requisite = team.upgrades.get(Upgrades.HELMET_ID);
+
+                Material costType = requisite.material();
+                int cost = requisite.cost();
+
+
+            }
+
+            // upgrades
+        });
+
+        MenuManager.register(TEAM_UPGRADES, teamUpgrades);
     }
 
-    public boolean isOffline()
+    public Team(int teamId, int totalMembers, String name, String color, Material beacon, Location spawn)
     {
-        return onlineTeamMembers.isEmpty();
+        this.teamId = teamId;
+        this.totalMembers = totalMembers;
+        this.name = name;
+        this.color = color;
+        this.beacon = beacon;
+        this.spawn = spawn;
+        this.onlineTeamMembers = new ArrayList<>();
+        this.upgrades = new HashMap<>();
+
+        this.upgradesMenu = Bukkit.createInventory(null, 3 * 9, TEAM_UPGRADES);
+    }
+
+    public void upgrade(Upgrades upgrade)
+    {
+        // When an upgrade is submitted to a team,
+        // * set the level in the team upgrade's map
+        // * call the upgrade callback
+        // * update how to get the cost
+        //upgrades.get
     }
 
     public void alert(String message)
@@ -39,6 +95,24 @@ public class Team
         {
             player.sendMessage(message);
         }
+    }
+
+    public boolean isOffline()
+    {
+        return onlineTeamMembers.isEmpty();
+    }
+
+    /**
+     * Total members, online or offline.
+     */
+    public int getTotalMembers()
+    {
+        return totalMembers;
+    }
+
+    public int getId()
+    {
+        return teamId;
     }
 
     public String getName()
@@ -51,9 +125,12 @@ public class Team
         return color;
     }
 
-    public Material material()
+    /**
+     * @return Beacon material
+     */
+    public Material beacon()
     {
-        return item;
+        return beacon;
     }
 
     public List<Player> getOnlineMembers()
@@ -64,5 +141,15 @@ public class Team
     public Location spawn()
     {
         return spawn;
+    }
+
+    public ItemStack getHelmet()
+    {
+        return helmet;
+    }
+
+    public Inventory getUpgradesMenu()
+    {
+        return upgradesMenu;
     }
 }

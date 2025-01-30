@@ -1,0 +1,47 @@
+generic:
+  team_inventory_closed: "&cRun /team to select a team before proceeding!"
+  invalid_arg: "&cInvalid argument. Please check your parameters."
+  friendly_fire_disabled: "&cYou cannot attack your own team!"
+  already_in_team: "&cYou are already in a team!"
+  region:
+    team_alerted: "&4The %team% team has been alerted of your location."
+    team_offline: "&cYou are unable to complete this action while this team is offline!"
+    block_place: "&4&l!!! &c%player% has placed a block in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% &4&l!!!"
+    block_break: "&4&l!!! &c%player% has broken a block in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% &4&l!!!"
+    chest_open: "&4&l!!! &c%player% has opened a chest in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% &4&l!!!"
+upgrades:
+  max_level: "&cThis upgrade has already reached the maximum level!"
+  not_enough: "&cYou do not have enough to purchase this upgrade!"
+  upgraded: "&fYou have successfully upgraded %upgrade% &fto &6level %level%&f!"
+commands:
+  invalid_target: "&cInvalid target."
+  no_permission: "&cYou do not have permission to run this command!"
+  console_blocked: "&cThis command cannot be run in console!"
+  no_team_blocked: "&cYou cannot run this command without being in a team!"
+  team:
+    invalid_team: "&cUnable to find the specified team."
+    remove_usage: "&cUsage: /team remove [username]"
+    set_usage: "&cUsage: /team set [username] [team | team_id]"
+  team_chat:
+    toggle_on: "&fTeam chat has been toggled &aON&f!"
+    toggle_off: "&fTeam chat has been toggled &cOFF&f!"
+    not_in_team: "&cPlease join a team before running this command!"
+  settings:
+    set:
+      console_usage: "&cUsage: /settings set [path] [value] &7- &8Or just modify the file :>"
+      player_usage: "&cUsage:\n- /settings\n- /settings set [path] [value]"
+      invalid_path: "&cThe path that you have specified does not exist in the FracturedCore config file."
+  spawn:
+    not_in_region: "&cYou must be in your team's region to run this command!"
+    teleported: "&fYou have been teleported to %team% team's &fspawn!"
+  stuck:
+  borders:
+    generate:
+      confirm: "&cAre you sure you want to generate team borders at your current location? Doing so will cause lag to the server. Please execute /confirm to proceed."
+      start: "&7Generating, please wait..."
+      end: "&7Generated."
+    extend:
+      confirm: "&cAre you sure you want to extend the team borders at your current location? Doing so will cause lag to the server. Please execute /confirm to proceed."
+      start: "&7Extending, please wait..."
+      end: "&7Extended."
+  discord: "&fJoin our Discord server at: &9&nhttps://discord.gg/2JTY7Fffjs"
