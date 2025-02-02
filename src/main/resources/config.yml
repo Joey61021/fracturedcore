@@ -3,6 +3,8 @@ storage:
   type: 'test'
   # Never publish database login info to the github
   mysql:
+    # jdbc url builder override
+    url:
     database: 'test'
     username: 'root'
     password: 'Password1!'
