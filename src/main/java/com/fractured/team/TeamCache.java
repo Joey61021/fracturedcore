@@ -1,7 +1,9 @@
 package com.fractured.team;
 
+import com.fractured.FracturedCore;
 import com.fractured.menu.Menu;
 import com.fractured.menu.MenuManager;
+import com.fractured.util.globals.ConfigKeys;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -45,8 +47,29 @@ public final class TeamCache
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName(team.color() + team.getName() + " Team");
         meta.setLore(List.of(ChatColor.GRAY + "Online: (" + team.getOnlineMembers().size() + "/" + team.getTotalMembers() + ")"));
+
+        if (FracturedCore.getFracturedConfig().get(ConfigKeys.MEMBER_CAP_ENABLED))
+        {
+            int members = team.getTotalMembers();
+            final int maxGap = FracturedCore.getFracturedConfig().get(ConfigKeys.MAX_PLAYER_GAP);
+
+            // team is getting compared against itself here, I know
+            if (members - GREEN.getTotalMembers() > maxGap ||
+                members - RED.getTotalMembers() > maxGap ||
+                members - BLUE.getTotalMembers() > maxGap ||
+                members - YELLOW.getTotalMembers() > maxGap)
+            {
+                /* If the number of members in this team exceeds the number of
+                   members in any other team by maxGap, we lock it down. */
+                meta.setDisplayName(ChatColor.RED + "(LOCKED) " + team.color() + team.getName() + " Team");
+
+                item.setItemMeta(meta);
+                return item;
+            }
+        }
+
+        meta.setDisplayName(team.color() + team.getName() + " Team");
 
         item.setItemMeta(meta);
         return item;
