@@ -1,5 +1,6 @@
 package com.fractured.team;
 
+import com.fractured.FracturedCore;
 import com.fractured.menu.Menu;
 import com.fractured.menu.MenuManager;
 import com.fractured.team.upgrades.Upgrades;
@@ -7,14 +8,13 @@ import com.fractured.team.upgrades.UpgradeRequisite;
 import com.fractured.user.User;
 import com.fractured.user.UserManager;
 import com.fractured.util.Utils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,6 +68,12 @@ public class Team
         MenuManager.register(TEAM_UPGRADES, teamUpgrades);
     }
 
+    private static final Map<ChatColor, Color> colorMap = Map.of(
+            ChatColor.RED, Color.RED,
+            ChatColor.BLUE, Color.BLUE,
+            ChatColor.GREEN, Color.GREEN
+    );
+
     public Team(int teamId, int totalMembers, String name, char color, Location spawn)
     {
         // Stuff from the database
@@ -79,10 +85,18 @@ public class Team
 
         beacon = Utils.getGlassFrom(color);
 
-        this.onlineTeamMembers = new ArrayList<>();
-        this.upgrades = new HashMap<>();
+        onlineTeamMembers = new ArrayList<>();
+        upgrades = new HashMap<>();
+        upgradesMenu = Bukkit.createInventory(null, 3 * 9, TEAM_UPGRADES);
+        helmet = new ItemStack(Material.LEATHER_HELMET);
+        LeatherArmorMeta meta = (LeatherArmorMeta) helmet.getItemMeta();
 
-        this.upgradesMenu = Bukkit.createInventory(null, 3 * 9, TEAM_UPGRADES);
+        meta.setColor(colorMap.getOrDefault(color, Color.YELLOW));
+
+        meta.addEnchant(Enchantment.PROTECTION, 5, true);
+        meta.setUnbreakable(true);
+        meta.setDisplayName(this.color + this.name + " team");
+        helmet.setItemMeta(meta);
     }
 
     public void upgrade(Upgrades upgrade)
@@ -148,7 +162,7 @@ public class Team
         return spawn;
     }
 
-    public ItemStack getHelmet()
+    public ItemStack helmet()
     {
         return helmet;
     }
