@@ -69,10 +69,10 @@ public class Team
         MenuManager.register(TEAM_UPGRADES, teamUpgrades);
     }
 
-    private static final Map<ChatColor, Color> colorMap = Map.of(
-            ChatColor.RED, Color.RED,
-            ChatColor.BLUE, Color.BLUE,
-            ChatColor.GREEN, Color.GREEN
+    private static final Map<Character, Color> colorMap = Map.of(
+            'c', Color.RED,
+            '9', Color.BLUE,
+            'a', Color.GREEN
     );
 
     public Team(int teamId, int totalMembers, String name, char color, Location spawn)
