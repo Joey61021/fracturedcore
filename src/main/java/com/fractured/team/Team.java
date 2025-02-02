@@ -8,6 +8,7 @@ import com.fractured.team.upgrades.UpgradeRequisite;
 import com.fractured.user.User;
 import com.fractured.user.UserManager;
 import com.fractured.util.Utils;
+import com.fractured.util.globals.Messages;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
@@ -88,7 +89,9 @@ public class Team
         onlineTeamMembers = new ArrayList<>();
         upgrades = new HashMap<>();
         upgradesMenu = Bukkit.createInventory(null, 3 * 9, TEAM_UPGRADES);
+
         helmet = new ItemStack(Material.LEATHER_HELMET);
+
         LeatherArmorMeta meta = (LeatherArmorMeta) helmet.getItemMeta();
 
         meta.setColor(colorMap.getOrDefault(color, Color.YELLOW));
@@ -96,6 +99,7 @@ public class Team
         meta.addEnchant(Enchantment.PROTECTION, 5, true);
         meta.setUnbreakable(true);
         meta.setDisplayName(this.color + this.name + " team");
+
         helmet.setItemMeta(meta);
     }
 
@@ -106,6 +110,44 @@ public class Team
         // * call the upgrade callback
         // * update how to get the cost
         //upgrades.get
+    }
+
+    /**
+     * Someone was added to the team
+     */
+    public void addMember(Player player)
+    {
+        ++totalMembers; // fixme save at shutdown in the database
+        onlineTeamMembers.add(player);
+        player.getInventory().setHelmet(helmet);
+    }
+
+    /**
+     * Someone was removed from the team
+     */
+    public void removeMember(Player player)
+    {
+        --totalMembers;
+        onlineTeamMembers.remove(player);
+        player.getInventory().setHelmet(null);
+    }
+
+    /**
+     * Someone on the team joined the server
+     */
+    public void memberJoined(Player player)
+    {
+        player.setPlayerListFooter(FracturedCore.getMessages().get(Messages.TAB_FOOTER_TEAM).replace("%color%", color.toString()).replace("%team%", name));
+
+        onlineTeamMembers.add(player);
+    }
+
+    /**
+     * Someone on the team left the server
+     */
+    public void memberQuit(Player player)
+    {
+        onlineTeamMembers.remove(player);
     }
 
     public void alert(String message)
