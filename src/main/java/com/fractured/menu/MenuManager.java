@@ -35,14 +35,18 @@ public class MenuManager implements Listener
     {
         InventoryView inventory = event.getView();
 
-        var foo = callbacks.get(inventory.getTitle());
+        var inventoryCallback = callbacks.get(inventory.getTitle());
 
-        if (foo != null)
+        if (inventoryCallback != null)
         {
-            foo.onClick(event);
-        } else
-        {
+            if (event.getClickedInventory() != inventory.getTopInventory())
+            {
+                // Player can't click their own inventory and have actions occur
+                return;
+            }
+
             event.setCancelled(true);
+            inventoryCallback.onClick(event);
         }
     }
 }
