@@ -18,15 +18,15 @@ public class TeamManager
 
         if (team == null)
         {
-            player.sendMessage(FracturedCore.getMessages().get(Messages.CMD_TC_NOT_IN_TEAM));
+            player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_NO_TEAM_BLOCKED));
         } else if (user.isInTeamChat())
         {
             user.setInTeamChat(false);
-            player.sendMessage(FracturedCore.getMessages().get(Messages.CMD_TC_TOGGLE_OFF));
+            player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_CHAT_TOGGLE_OFF));
         } else
         {
             user.setInTeamChat(true);
-            player.sendMessage(FracturedCore.getMessages().get(Messages.CMD_TC_TOGGLE_ON));
+            player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_CHAT_TOGGLE_ON));
         }
     }
 
@@ -49,7 +49,7 @@ public class TeamManager
         // User Object
         // This goes last because preprocessing requires the user's last team before it be changed.
         user.setTeam(team);
-        player.getInventory().setHelmet(team.helmet());
+        team.addMember(player);
 
         // Messages
         player.sendMessage("Joined " + team.getName() + " team...");
@@ -113,7 +113,7 @@ public class TeamManager
         player.setDisplayName(ChatColor.GRAY + player.getName());
 
         player.setPlayerListName(player.getDisplayName());
-        player.setPlayerListFooter(Messages.NO_TEAM_TAB_LIST_FOOTER);
+        player.setPlayerListFooter(FracturedCore.getMessages().get(Messages.TAB_FOOTER_NO_TEAM));
 
         // Store the value so it's not cleared in the async call (stupid)
         Team team = user.getTeam();
@@ -125,9 +125,10 @@ public class TeamManager
 
         // Removing them from a team
         player.sendMessage("You have been removed from " + user.getTeam().getName() + " team.");
+        user.getTeam().removeMember(player);
         // This goes last because preprocessing requires the user's last team before it be changed.
         user.setTeam(null);
-        player.getInventory().setHelmet(null);
+
     }
 
     /**
