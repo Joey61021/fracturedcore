@@ -1,18 +1,21 @@
 package com.fractured.team;
 
+import com.fractured.FracturedCore;
 import com.fractured.menu.Menu;
 import com.fractured.menu.MenuManager;
 import com.fractured.team.upgrades.Upgrades;
 import com.fractured.team.upgrades.UpgradeRequisite;
 import com.fractured.user.User;
 import com.fractured.user.UserManager;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import com.fractured.util.Utils;
+import com.fractured.util.globals.Messages;
+import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +30,7 @@ public class Team
     private final int teamId;
     private int totalMembers;
     private final String name;
-    private final String color;
+    private final ChatColor color;
     private final Material beacon;
     private final Location spawn;
     private final List<Player> onlineTeamMembers;
@@ -48,7 +51,7 @@ public class Team
 
             if (team == null)
             {
-                player.sendMessage("Unable to complete action.");
+                player.sendMessage("You are not in a team!");
                 player.closeInventory();
             } else
             {
@@ -57,7 +60,7 @@ public class Team
                 Material costType = requisite.material();
                 int cost = requisite.cost();
 
-
+                player.sendMessage("TODO");
             }
 
             // upgrades
@@ -66,18 +69,38 @@ public class Team
         MenuManager.register(TEAM_UPGRADES, teamUpgrades);
     }
 
-    public Team(int teamId, int totalMembers, String name, String color, Material beacon, Location spawn)
+    private static final Map<ChatColor, Color> colorMap = Map.of(
+            ChatColor.RED, Color.RED,
+            ChatColor.BLUE, Color.BLUE,
+            ChatColor.GREEN, Color.GREEN
+    );
+
+    public Team(int teamId, int totalMembers, String name, char color, Location spawn)
     {
+        // Stuff from the database
         this.teamId = teamId;
         this.totalMembers = totalMembers;
         this.name = name;
-        this.color = color;
-        this.beacon = beacon;
+        this.color = ChatColor.getByChar(color);
         this.spawn = spawn;
-        this.onlineTeamMembers = new ArrayList<>();
-        this.upgrades = new HashMap<>();
 
-        this.upgradesMenu = Bukkit.createInventory(null, 3 * 9, TEAM_UPGRADES);
+        beacon = Utils.getGlassFrom(color);
+
+        onlineTeamMembers = new ArrayList<>();
+        upgrades = new HashMap<>();
+        upgradesMenu = Bukkit.createInventory(null, 3 * 9, TEAM_UPGRADES);
+
+        helmet = new ItemStack(Material.LEATHER_HELMET);
+
+        LeatherArmorMeta meta = (LeatherArmorMeta) helmet.getItemMeta();
+
+        meta.setColor(colorMap.getOrDefault(color, Color.YELLOW));
+
+        meta.addEnchant(Enchantment.PROTECTION, 5, true);
+        meta.setUnbreakable(true);
+        meta.setDisplayName(this.color + this.name + " team");
+
+        helmet.setItemMeta(meta);
     }
 
     public void upgrade(Upgrades upgrade)
@@ -87,6 +110,44 @@ public class Team
         // * call the upgrade callback
         // * update how to get the cost
         //upgrades.get
+    }
+
+    /**
+     * Someone was added to the team
+     */
+    public void addMember(Player player)
+    {
+        ++totalMembers; // fixme save at shutdown in the database
+        onlineTeamMembers.add(player);
+        player.getInventory().setHelmet(helmet);
+    }
+
+    /**
+     * Someone was removed from the team
+     */
+    public void removeMember(Player player)
+    {
+        --totalMembers;
+        onlineTeamMembers.remove(player);
+        player.getInventory().setHelmet(null);
+    }
+
+    /**
+     * Someone on the team joined the server
+     */
+    public void memberJoined(Player player)
+    {
+        player.setPlayerListFooter(FracturedCore.getMessages().get(Messages.TAB_FOOTER_TEAM).replace("%color%", color.toString()).replace("%team%", name));
+
+        onlineTeamMembers.add(player);
+    }
+
+    /**
+     * Someone on the team left the server
+     */
+    public void memberQuit(Player player)
+    {
+        onlineTeamMembers.remove(player);
     }
 
     public void alert(String message)
@@ -120,7 +181,7 @@ public class Team
         return name;
     }
 
-    public String color()
+    public ChatColor color()
     {
         return color;
     }
@@ -143,7 +204,7 @@ public class Team
         return spawn;
     }
 
-    public ItemStack getHelmet()
+    public ItemStack helmet()
     {
         return helmet;
     }

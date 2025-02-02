@@ -1,27 +1,21 @@
 storage:
-  # Currently recognized storage methods: {'mysql'}
+  # Currently recognized storage methods: {'mysql', 'test' @Deprecated}
   type: 'test'
   # Never publish database login info to the github
   mysql:
+    # jdbc url builder override
+    url:
     database: 'test'
     username: 'root'
     password: 'Password1!'
     host: '127.0.0.1'
     port: 3306
 locations:
-  default_world: "world"
-  spawn:
-    x: 0.5
-    y: 0.5
-    z: 0.5
-    yaw: 0.0
-    pitch: 90.0
+  over_world: "world"
   beacon:
     x: 0.5
     y: 64.0
     z: 0.5
-    yaw: 0.0
-    pitch: 0.0
 command:
   stuck:
     enabled: true
@@ -29,5 +23,9 @@ command:
   spawn:
     enabled: true
     duration: 60
+teams:
+  member_cap_enabled: true
+  # How many extra players a team is allowed over the other teams before that team is locked.
+  max_player_gap: 5
 friendly_fire: true
 starter_items: true

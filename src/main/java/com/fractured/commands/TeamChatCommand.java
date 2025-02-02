@@ -17,7 +17,7 @@ public final class TeamChatCommand
     {
         if (!(sender instanceof Player))
         {
-            sender.sendMessage(FracturedCore.getMessages().get(Messages.CONSOLE_BLOCKED));
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_CONSOLE_BLOCKED));
             return true;
         }
 

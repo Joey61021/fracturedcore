@@ -6,38 +6,11 @@ import com.fractured.user.UserManager;
 import com.fractured.util.globals.Messages;
 import com.fractured.util.Utils;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-
-import java.util.Map;
 
 public class TeamManager
 {
-    public static ItemStack getHelmet(Team team)
-    {
-//        ItemStack item = new ItemStack(Material.LEATHER_HELMET);
-//        LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
-//
-//        Map<ChatColor, Color> colorMap = Map.of(
-//                ChatColor.RED, Color.RED,
-//                ChatColor.BLUE, Color.BLUE,
-//                ChatColor.GREEN, Color.GREEN
-//        );
-//
-//        ChatColor color = team.getColor();
-//        meta.setColor(colorMap.getOrDefault(color, Color.YELLOW));
-//
-//        meta.addEnchant(Enchantment.PROTECTION, FracturedCore.getSettings.getInt("upgrades." + team.getName().toLowerCase() + "." + Upgrades.HELMET_PROTECTION.getUpgradeValue(), 1), true);
-//        meta.setUnbreakable(true);
-//        meta.setDisplayName(Utils.color(team.color() + team.getName() + " team"));
-//        item.setItemMeta(meta);
-        return null; // return item
-    }
-
     public static void toggleTeamChat(Player player)
     {
         User user = UserManager.getUser(player.getUniqueId());
@@ -45,57 +18,20 @@ public class TeamManager
 
         if (team == null)
         {
-            player.sendMessage(FracturedCore.getMessages().get(Messages.CMD_TC_NOT_IN_TEAM));
+            player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_NO_TEAM_BLOCKED));
         } else if (user.isInTeamChat())
         {
             user.setInTeamChat(false);
-            player.sendMessage(FracturedCore.getMessages().get(Messages.CMD_TC_TOGGLE_OFF));
+            player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_CHAT_TOGGLE_OFF));
         } else
         {
             user.setInTeamChat(true);
-            player.sendMessage(FracturedCore.getMessages().get(Messages.CMD_TC_TOGGLE_ON));
+            player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_CHAT_TOGGLE_ON));
         }
     }
 
-    /**
-     * Removes a player from a team.
-     * <p>
-     * In total, this makes a database call, sends the player a message, and sets
-     * the team in their corresponding {@link User} object. This also updates
-     * the player's tab list and display name.
-     * @apiNote The database call is asynchronous
-     */
-    public static void removeTeam(Player player, User user)
-    {
-        player.setDisplayName(ChatColor.GRAY + player.getName());
-
-        player.setPlayerListName(player.getDisplayName());
-        player.setPlayerListFooter(Messages.NO_TEAM_TAB_LIST_FOOTER);
-
-        FracturedCore.runAsync(() ->
-        {
-            FracturedCore.getStorage().removeTeam(user);
-        });
-
-        if (user.getTeam() != null)
-        {
-            // Removing them from a team
-            player.sendMessage("You have been removed from " + user.getTeam().getName() + " team.");
-
-            // This goes last because preprocessing requires the user's last team before it be changed.
-            user.setTeam(null);
-        }
-    }
-
-    /**
-     * Adds a player from a team.
-     * <p>
-     * In total, this makes a database call, sends the player a message, and sets
-     * the team in their corresponding {@link User} object. This also updates
-     * the player's tab list and display name.
-     * @apiNote The database call is asynchronous
-     */
-    public static void addTeam(Player player, User user, Team team)
+    // Called if the user is known NOT to be in a team. This skips those checks
+    private static void addTeamCleared(CommandSender staff, String reason, Player player, User user, Team team)
     {
         // Display name
         player.setDisplayName(team.color() + player.getName());
@@ -107,35 +43,127 @@ public class TeamManager
         // Database
         FracturedCore.runAsync(() ->
         {
-            FracturedCore.getStorage().assignTeam(user, team);
+            FracturedCore.getStorage().setTeam(staff, reason, user, team);
         });
 
         // User Object
         // This goes last because preprocessing requires the user's last team before it be changed.
         user.setTeam(team);
+        team.addMember(player);
 
         // Messages
         player.sendMessage("Joined " + team.getName() + " team...");
     }
 
-    public static void removeTeam(Player player)
+    /**
+     * @param phrase Team
+     * @return 0 for success, 1 for already in team, 2 for invalid team
+     */
+    public static int addTeam(CommandSender staff, String reason, Player player, User user, String phrase)
     {
-        removeTeam(player, UserManager.getUser(player.getUniqueId()));
+        if (user.getTeam() != null)
+        {
+            return 1; // user is already in a team
+        }
+
+        Team team = TeamCache.getTeamByPhrase(phrase);
+
+        if (team == null)
+        {
+            return 2; // invalid team
+        }
+
+        addTeamCleared(staff, reason, player, user, team);
+        return 0; // success
     }
 
-    public static void addTeam(Player player, Team team)
+    /**
+     * Adds a player to a team.
+     * <p>
+     * In total, this makes a database call, sends the player a message, and sets
+     * the team in their corresponding {@link User} object. This also updates
+     * the player's tab list and display name.
+     * @apiNote The database call is asynchronous
+     * @return True if the user was added to the team. False if they were already in a team.
+     */
+    public static boolean addTeam(CommandSender staff, String reason, Player player, User user, Team team)
     {
-        addTeam(player, UserManager.getUser(player.getUniqueId()), team);
+        if (user.getTeam() != null)
+        {
+            return false;
+        }
+
+        addTeamCleared(staff, reason, player, user, team);
+        return true;
+    }
+
+    public static boolean addTeam(CommandSender staff, String reason, Player player, Team team)
+    {
+        return addTeam(staff, reason, player, UserManager.getUser(player.getUniqueId()), team);
+    }
+
+    public static boolean addTeam(Player player, Team team)
+    {
+        return addTeam(null, null, player, team);
+    }
+
+    // Called if the player is known to have a team. This method skips those checks
+    private static void removeTeamCleared(CommandSender staff, String reason, Player player, User user)
+    {
+        player.setDisplayName(ChatColor.GRAY + player.getName());
+
+        player.setPlayerListName(player.getDisplayName());
+        player.setPlayerListFooter(FracturedCore.getMessages().get(Messages.TAB_FOOTER_NO_TEAM));
+
+        // Store the value so it's not cleared in the async call (stupid)
+        Team team = user.getTeam();
+
+        FracturedCore.runAsync(() ->
+        {
+            FracturedCore.getStorage().removeTeam(staff, reason, user, team);
+        });
+
+        // Removing them from a team
+        player.sendMessage("You have been removed from " + user.getTeam().getName() + " team.");
+        user.getTeam().removeMember(player);
+        // This goes last because preprocessing requires the user's last team before it be changed.
+        user.setTeam(null);
+
+    }
+
+    /**
+     * Removes a player from a team.
+     * <p>
+     * In total, this makes a database call, sends the player a message, and sets
+     * the team in their corresponding {@link User} object. This also updates
+     * the player's tab list and display name.
+     * @apiNote The database call is asynchronous
+     * @return True if the user's team was removed. False if they weren't in a team
+     */
+    public static boolean removeTeam(CommandSender staff, String reason, Player player, User user)
+    {
+        if (user.getTeam() == null)
+        {
+            return false;
+        }
+
+        removeTeamCleared(staff, reason, player, user);
+        return true;
+    }
+
+    public static boolean removeTeam(CommandSender staff, String reason, Player player)
+    {
+        return removeTeam(staff, reason, player, UserManager.getUser(player.getUniqueId()));
     }
 
     /**
      * Removes the player from their current team and adds them to the new one, no matter what.
      */
-    public static void forceSetTeam(Player player, User user, Team team)
+    public static void forceSetTeam(CommandSender staff, String reason, Player player, User user, Team team)
     {
         if (user.getTeam() != null)
         {
-            removeTeam(player, user);
+            removeTeamCleared(staff, reason, player, user);
         }
 
         // If the team passed is null, we don't have to do anything extra, since we'd
@@ -143,7 +171,7 @@ public class TeamManager
 
         if (team != null)
         {
-            addTeam(player, user, team);
+            addTeamCleared(staff, reason, player, user, team);
         }
     }
 }

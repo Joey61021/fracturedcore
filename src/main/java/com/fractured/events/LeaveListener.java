@@ -23,7 +23,7 @@ public class LeaveListener implements Listener
             event.setQuitMessage(color("&7" + player.getName() + " &fhas disconnected"));
         } else
         {
-            team.getOnlineMembers().remove(player);
+            team.memberQuit(player);
             event.setQuitMessage(team.color() + player.getName() + ChatColor.WHITE + " has disconnected");
         }
     }

@@ -14,7 +14,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Each {@link Player} has associated a {@link com.fractured.user.User} object.
+ * Each {@link Player} has an associated {@link com.fractured.user.User} object.
  * This is to store additional data about the Player. This User object is
  * guaranteed to exist if the Player is online.
  */
@@ -27,17 +27,23 @@ public final class UserManager implements Listener
         users = new ConcurrentHashMap<>(); // concurrent for async reading and writing (onPreLogin for example)
     }
 
+    /**
+     * @apiNote threadsafe
+     */
     public static User getUser(UUID uid)
     {
         return users.get(uid);
     }
 
+    /**
+     * @apiNote threadsafe
+     */
     public static User getUser(HumanEntity player)
     {
         return getUser(player.getUniqueId());
     }
 
-    @EventHandler(priority = EventPriority.LOWEST) // run first
+    @EventHandler(priority = EventPriority.LOW) // run first
     public static void onPreLogin(AsyncPlayerPreLoginEvent event)
     {
         UUID uid = event.getUniqueId();
@@ -49,7 +55,7 @@ public final class UserManager implements Listener
         users.put(uid, user);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST) // run last
+    @EventHandler(priority = EventPriority.HIGH) // run last
     public static void onQuit(PlayerQuitEvent event)
     {
         Player player = event.getPlayer();

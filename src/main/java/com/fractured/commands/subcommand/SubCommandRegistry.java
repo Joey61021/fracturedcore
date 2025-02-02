@@ -1,5 +1,6 @@
 package com.fractured.commands.subcommand;
 
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
@@ -26,18 +27,19 @@ public class SubCommandRegistry
     }
 
     /**
-     * @return True if found, false if not
+     * It's up to the caller of this to verify the argument length
+     * @return True if failed, false if not
      */
-    public boolean dispatch(CommandSender sender, String[] args)
+    public boolean dispatch(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
         SubCommand subCommand = subCommands.get(args[argumentLevel]);
 
         if (subCommand == null)
         {
-            return false;
+            return true;
         }
 
-        subCommand.invoke(sender, args);
-        return true;
+        subCommand.invoke(sender, cmd, label, args);
+        return false;
     }
 }

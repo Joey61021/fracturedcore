@@ -3,6 +3,7 @@ package com.fractured;
 import com.fractured.commands.*;
 import com.fractured.config.Config;
 import com.fractured.events.*;
+import com.fractured.events.inventory.InventoryClickListener;
 import com.fractured.events.inventory.InventoryCloseListener;
 import com.fractured.events.world.WorldManager;
 import com.fractured.menu.MenuManager;
@@ -72,6 +73,7 @@ public final class FracturedCore extends JavaPlugin {
         manager.registerEvents(new InventoryCloseListener(), this);
         manager.registerEvents(new JoinListener(), this);
         manager.registerEvents(new LeaveListener(), this);
+        manager.registerEvents(new InventoryClickListener(), this);
 
         manager.registerEvents(new KillListener(), this);
         manager.registerEvents(new RespawnListener(), this);
@@ -87,6 +89,7 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("discord").setExecutor(DiscordCommand::discord);
         getCommand("upgrades").setExecutor(UpgradesCommand::upgrades);
         getCommand("confirm").setExecutor(ConfirmationManager::confirm);
+        getCommand("world").setExecutor(WorldCommand::world);
     }
 
     @Override
@@ -100,12 +103,14 @@ public final class FracturedCore extends JavaPlugin {
         config = new Config(this, ConfigKeys.class, "config.yml");
         messages = new Config(this, Messages.class, "messages.yml");
         storage = Storage.newStorage(config);
-        storage.initServerResources();
 
         menuManager = new MenuManager();
 
         registerEvents();
         registerCommands();
+
+        // After we've regsitered events and managers (LIke MenuManager)
+        storage.initServerResources();
     }
 
     @Override

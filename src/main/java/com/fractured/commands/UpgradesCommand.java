@@ -18,7 +18,7 @@ public final class UpgradesCommand
     {
         if (!(sender instanceof Player))
         {
-            sender.sendMessage(FracturedCore.getMessages().get(Messages.CONSOLE_BLOCKED));
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_CONSOLE_BLOCKED));
             return true;
         }
 
@@ -27,7 +27,7 @@ public final class UpgradesCommand
 
         if (team == null)
         {
-            sender.sendMessage(FracturedCore.getMessages().get(Messages.NO_TEAM_BLOCKED));
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_NO_TEAM_BLOCKED));
             return true;
         }
 

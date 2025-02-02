@@ -1,11 +1,11 @@
 package com.fractured.storage;
 
-import com.fractured.team.ClaimManager;
 import com.fractured.team.Team;
 import com.fractured.team.TeamCache;
 import com.fractured.team.Claim;
 import com.fractured.user.User;
 import org.bukkit.*;
+import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,7 @@ import java.util.Map;
 public class TestStorage implements Storage
 {
     private final World world = Bukkit.getWorld("world");
-    private final Team green = new Team(1, 2, "Green", "§a", Material.GREEN_CONCRETE, new Location(world, 0, 200, 0));
+    private final Team green = new Team(1, 2, "Green", 'a', new Location(world, 0, 200, 0));
 
     @Override
     public void saveClaim(World world, Claim claim)
@@ -28,9 +28,9 @@ public class TestStorage implements Storage
 
         Map<Integer, Team> teams = new HashMap<>();
 
-        Team red = new Team(2, 3, "Red", "§c", Material.RED_CONCRETE, new Location(world, 0, 200, 0));
-        Team blue = new Team(3, 1, "Blue", "§9", Material.BLUE_CONCRETE, new Location(world, 0, 200, 0));
-        Team yellow = new Team(4, 4, "Yellow", "§e", Material.YELLOW_CONCRETE, new Location(world, 0, 200, 0));
+        Team red = new Team(2, 3, "Red", 'c', new Location(world, 0, 200, 0));
+        Team blue = new Team(3, 1, "Blue", '9', new Location(world, 0, 200, 0));
+        Team yellow = new Team(4, 4, "Yellow", 'e', new Location(world, 0, 200, 0));
 
         teams.put(1, green);
         teams.put(2, red);
@@ -53,27 +53,27 @@ public class TestStorage implements Storage
     }
 
     @Override
-    public void assignTeam(User user, Team team)
+    public void setTeam(CommandSender staff, String reason, User user, Team team)
     {
-        Bukkit.getLogger().info("Assigning team to user " + user.getUserId());
+        Bukkit.getLogger().info("Assigning team to user " + user.getId());
     }
 
     @Override
-    public void removeTeam(User user)
+    public void removeTeam(CommandSender staff, String reason, User user, Team team)
     {
-        Bukkit.getLogger().info("Removing team from user " + user.getUserId());
+        Bukkit.getLogger().info("Removing team from user " + user.getId());
     }
 
     @Override
     public void load(User user)
     {
-        Bukkit.getLogger().info("Loading user " + user.getUserId());
+        Bukkit.getLogger().info("Loading user " + user.getId());
         user.setTeam(green);
     }
 
     @Override
     public void save(User user)
     {
-        Bukkit.getLogger().info("Saving user " + user.getUserId());
+        Bukkit.getLogger().info("Saving user " + user.getId());
     }
 }

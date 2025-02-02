@@ -6,29 +6,19 @@ api-version: '1.21'
 commands:
   coords:
     aliases: [coordinates]
-  me:
-    aliases: [profile]
   teamchat:
     aliases: [tc]
   team:
     aliases: []
-  build:
-    aliases: [b]
   settings:
     aliases: [setting]
-  setlocation:
-    aliases: [setloc]
   borders:
     aliases: [border]
-  regionwand:
-    aliases: [region]
-  bypassregions:
-    aliases: []
-  regioncheck:
-    aliases: []
   spawn:
     aliases: []
   discord:
     aliases: []
   upgrades:
     aliases: []
+  confirm:
+  world:

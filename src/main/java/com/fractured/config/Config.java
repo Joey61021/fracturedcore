@@ -43,7 +43,7 @@ public class Config extends YamlConfiguration
     {
         List<ConfigKey<?>> keys = Arrays.stream(keyClass.getFields())
                 .filter(field -> Modifier.isStatic(field.getModifiers()))
-                .filter(field -> ConfigKey.class.equals(field.getType()))
+                .filter(field -> ConfigKey.class.isAssignableFrom(field.getType()))
                 .map(field ->
                 {
                     try
