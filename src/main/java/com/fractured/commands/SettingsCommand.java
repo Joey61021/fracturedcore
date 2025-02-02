@@ -2,7 +2,6 @@ package com.fractured.commands;
 
 import com.fractured.FracturedCore;
 import com.fractured.commands.subcommand.SubCommandRegistry;
-import com.fractured.menu.MenuManager;
 import com.fractured.util.globals.ConfigKeys;
 import com.fractured.util.globals.Messages;
 import com.fractured.util.globals.Permissions;
@@ -18,8 +17,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.fractured.util.Utils.color;
 
 public final class SettingsCommand
 {
@@ -73,7 +70,7 @@ public final class SettingsCommand
     {
         if (!sender.hasPermission(Permissions.COMMAND_SETTINGS_ADMIN))
         {
-            sender.sendMessage(FracturedCore.getMessages().get(Messages.NO_PERMISSION));
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_NO_PERMISSION));
             return true;
         }
 
@@ -86,14 +83,14 @@ public final class SettingsCommand
             }
             // todo this inventory still needs done
             ((Player) sender).openInventory(inventory);
-        } else if (!settingsSubCommands.dispatch(sender, args))
+        } else if (settingsSubCommands.dispatch(sender, cmd, label, args))
         {
             sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_SETTINGS_PLAYER_USAGE));
         }
         return true;
     }
 
-    private static void settingsSet(final CommandSender sender, final String[] args)
+    private static void settingsSet(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
         // /settings set [path] [value]
         if (args.length < 2)
@@ -113,11 +110,11 @@ public final class SettingsCommand
         sender.sendMessage("Set " + args[1] + " to be " + args[2]);
     }
 
-    private static void settingsRefresh(final CommandSender sender, final String[] args)
+    private static void settingsRefresh(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
         if (!sender.hasPermission(Permissions.COMMAND_SETTINGS_ADMIN))
         {
-            sender.sendMessage(FracturedCore.getMessages().get(Messages.NO_PERMISSION));
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_NO_PERMISSION));
             return;
         }
 
