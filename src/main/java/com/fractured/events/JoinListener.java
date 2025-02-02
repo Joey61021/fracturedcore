@@ -1,7 +1,7 @@
 package com.fractured.events;
 
-import com.fractured.FracturedCore;
 import com.fractured.events.world.WorldManager;
+import com.fractured.team.Team;
 import com.fractured.team.TeamCache;
 import com.fractured.user.User;
 import com.fractured.user.UserManager;
@@ -13,10 +13,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class JoinListener implements Listener
+public final class JoinListener implements Listener
 {
     @EventHandler
-    public void onJoin(PlayerJoinEvent event)
+    public static void onJoin(PlayerJoinEvent event)
     {
         Player player = event.getPlayer();
         player.setGameMode(GameMode.SURVIVAL);
@@ -25,8 +25,9 @@ public class JoinListener implements Listener
         player.setPlayerListHeader(Messages.TAB_LIST_HEADER);
 
         User user = UserManager.getUser(player.getUniqueId());
+        Team team = user.getTeam();
 
-        if (user.getTeam() == null)
+        if (team == null)
         {
             player.setPlayerListFooter(Messages.NO_TEAM_TAB_LIST_FOOTER);
             player.setHealth(player.getMaxHealth());
@@ -39,9 +40,9 @@ public class JoinListener implements Listener
             event.setJoinMessage(ChatColor.GRAY + player.getName() + ChatColor.WHITE + " has connected");
         } else
         {
-            event.setJoinMessage(user.getTeam().color() + player.getName() + ChatColor.WHITE + " has connected");
+            event.setJoinMessage(team.color() + player.getName() + ChatColor.WHITE + " has connected");
             // add member? What happened to that here
-            user.getTeam().getOnlineMembers().add(player);
+            team.getOnlineMembers().add(player);
         }
     }
 }
