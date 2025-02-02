@@ -77,6 +77,7 @@ public final class FracturedCore extends JavaPlugin {
 
         manager.registerEvents(new KillListener(), this);
         manager.registerEvents(new RespawnListener(), this);
+        manager.registerEvents(new SleepListener(), this);
     }
 
     private void registerCommands()

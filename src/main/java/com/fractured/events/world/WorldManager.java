@@ -322,11 +322,21 @@ public class WorldManager implements Listener
 
         ItemStack item = event.getItem();
 
+        if (item == null || item.getType().equals(Material.AIR))
+        {
+            return;
+        }
+
+        if (item.getType().name().contains("helmet") && event.getAction().name().toLowerCase().contains("right"))
+        {
+            event.setCancelled(true);
+            return;
+        }
+
         if (clicked.getWorld() == BEACON.getWorld() &&
-            item != null &&
             item.getType().equals(Material.PRISMARINE_SHARD) &&
             event.getItem().getItemMeta() != null &&
-            event.getItem().getItemMeta().hasEnchant(Enchantment.UNBREAKING) &&
+            event.getItem().getItemMeta().hasEnchant(Enchantment.DURABILITY) &&
             clicked.getLocation().distance(BEACON) < 3)
         {
             // todo subtract just one

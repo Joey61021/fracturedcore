@@ -21,7 +21,7 @@ public class DeathListener implements Listener {
 
         // fixme, on damage event can we set their helmet to null so we don't have to do this slow loop?
         for (ItemStack item : event.getDrops()) {
-            if (item != null && item.getType().equals(Material.LEATHER_HELMET) && item.hasItemMeta() && item.getItemMeta().hasEnchant(Enchantment.PROTECTION)) {
+            if (item != null && item.getType().equals(Material.LEATHER_HELMET) && item.hasItemMeta() && item.getItemMeta().hasEnchant(Enchantment.PROTECTION_ENVIRONMENTAL)) {
                 item.setType(Material.AIR);
             }
         }

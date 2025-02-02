@@ -25,7 +25,7 @@ public class KillListener implements Listener {
 
             ItemMeta meta = item.getItemMeta();
             meta.setDisplayName(Utils.color("&bFractured Shard"));
-            meta.addEnchant(Enchantment.UNBREAKING, 1, true);
+            meta.addEnchant(Enchantment.DURABILITY, 1, true);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             ArrayList<String> lore = new ArrayList<>();
             lore.add(Utils.color("&7Insert this shard into the centre beacon to activate"));

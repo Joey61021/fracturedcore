@@ -7,6 +7,7 @@ generic:
   invalid_arg: "&cInvalid argument. Please check your parameters."
   friendly_fire_disabled: "&cYou cannot attack your own team!"
   already_in_team: "&cYou are already in a team!"
+  cannot_sleep: "&cYou cannot sleep in enemy team regions!"
   region:
     team_alerted: "&4The %team% team has been alerted of your location."
     team_offline: "&cYou are unable to complete this action while this team is offline!"

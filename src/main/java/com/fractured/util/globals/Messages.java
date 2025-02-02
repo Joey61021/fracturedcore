@@ -14,6 +14,7 @@ public final class Messages
 
     public static final TextConfigKey TEAM_INVENTORY_CLOSED = textKey("generic.team_inventory_closed");
     public static final TextConfigKey FRIENDLY_FIRE_DISABLED = textKey("generic.friendly_fire_disabled");
+    public static final TextConfigKey CANNOT_SLEEP_HERE = textKey("generic.cannot_sleep_here");
 
     public static final TextConfigKey REGION_TEAM_ALERTED = textKey("generic.region.team_alerted");
     public static final TextConfigKey REGION_TEAM_OFFLINE = textKey("generic.region.team_offline");
