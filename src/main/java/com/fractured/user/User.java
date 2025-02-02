@@ -1,6 +1,7 @@
 package com.fractured.user;
 
 import com.fractured.team.Team;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -56,7 +57,7 @@ public class User
     }
 
     /**
-     * Use {@link com.fractured.team.TeamManager#addTeam(Player, Team)} or {@link com.fractured.team.TeamManager#removeTeam(Player)}
+     * Use {@link com.fractured.team.TeamManager#addTeam(Player, Team)} or {@link com.fractured.team.TeamManager#removeTeam(CommandSender, String, Player)} )}
      */
     public void setTeam(Team team)
     {
