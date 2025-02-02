@@ -4,7 +4,6 @@ import com.fractured.FracturedCore;
 import com.fractured.user.User;
 import com.fractured.user.UserManager;
 import com.fractured.util.globals.Messages;
-import com.fractured.util.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -33,13 +32,6 @@ public class TeamManager
     // Called if the user is known NOT to be in a team. This skips those checks
     private static void addTeamCleared(CommandSender staff, String reason, Player player, User user, Team team)
     {
-        // Display name
-        player.setDisplayName(team.color() + player.getName());
-
-        // Tab List
-        player.setPlayerListName(player.getDisplayName());
-        player.setPlayerListFooter(Utils.color("&7Your team: " + team.color() + team.getName() + " team"));
-
         // Database
         FracturedCore.runAsync(() ->
         {
@@ -110,11 +102,6 @@ public class TeamManager
     // Called if the player is known to have a team. This method skips those checks
     private static void removeTeamCleared(CommandSender staff, String reason, Player player, User user)
     {
-        player.setDisplayName(ChatColor.GRAY + player.getName());
-
-        player.setPlayerListName(player.getDisplayName());
-        player.setPlayerListFooter(FracturedCore.getMessages().get(Messages.TAB_FOOTER_NO_TEAM));
-
         // Store the value so it's not cleared in the async call (stupid)
         Team team = user.getTeam();
 
@@ -128,7 +115,6 @@ public class TeamManager
         user.getTeam().removeMember(player);
         // This goes last because preprocessing requires the user's last team before it be changed.
         user.setTeam(null);
-
     }
 
     /**

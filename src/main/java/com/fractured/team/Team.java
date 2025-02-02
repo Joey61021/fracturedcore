@@ -112,14 +112,43 @@ public class Team
         //upgrades.get
     }
 
+    private void setPlayer(Player player)
+    {
+        onlineTeamMembers.add(player);
+        // Display name
+        player.setDisplayName(color() + player.getName());
+
+        // Tab List
+        player.setPlayerListName(player.getDisplayName());
+        player.setPlayerListFooter(FracturedCore.getMessages().get(Messages.TAB_FOOTER_TEAM).replace("%color%", color.toString()).replace("%team%", name));
+    }
+
+    private void clearPlayer(Player player)
+    {
+        onlineTeamMembers.remove(player);
+        player.setDisplayName(ChatColor.GRAY + player.getName());
+
+        player.setPlayerListName(player.getDisplayName());
+        player.setPlayerListFooter(FracturedCore.getMessages().get(Messages.TAB_FOOTER_NO_TEAM));
+    }
+
     /**
      * Someone was added to the team
      */
     public void addMember(Player player)
     {
         ++totalMembers; // fixme save at shutdown in the database
-        onlineTeamMembers.add(player);
         player.getInventory().setHelmet(helmet);
+        setPlayer(player);
+    }
+
+    /**
+     * Someone on the team joined the server
+     */
+    public void memberJoined(Player player)
+    {
+        setPlayer(player);
+        // alert()
     }
 
     /**
@@ -128,18 +157,8 @@ public class Team
     public void removeMember(Player player)
     {
         --totalMembers;
-        onlineTeamMembers.remove(player);
+        clearPlayer(player);
         player.getInventory().setHelmet(null);
-    }
-
-    /**
-     * Someone on the team joined the server
-     */
-    public void memberJoined(Player player)
-    {
-        player.setPlayerListFooter(FracturedCore.getMessages().get(Messages.TAB_FOOTER_TEAM).replace("%color%", color.toString()).replace("%team%", name));
-
-        onlineTeamMembers.add(player);
     }
 
     /**
@@ -147,7 +166,7 @@ public class Team
      */
     public void memberQuit(Player player)
     {
-        onlineTeamMembers.remove(player);
+        clearPlayer(player);
     }
 
     public void alert(String message)
