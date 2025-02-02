@@ -81,4 +81,23 @@ public final class Messages
     public static final TextConfigKey TAB_FOOTER_TEAM = textKey("tab.footer_team");
 
     public static final String PLUGIN_RESTARTING = ChatColor.YELLOW + "Server Restarting...";
+
+    public static final TextConfigKey DEATH_CACTUS = textKey("deaths.cactus");
+    public static final TextConfigKey DEATH_DROWNED = textKey("deaths.drowned");
+    public static final TextConfigKey DEATH_ELYTRA = textKey("deaths.elytra");
+    public static final TextConfigKey DEATH_EXPLOSION = textKey("deaths.explosion");
+    public static final TextConfigKey DEATH_FALLING = textKey("deaths.falling");
+    public static final TextConfigKey DEATH_BLOCKS = textKey("deaths.blocks");
+    public static final TextConfigKey DEATH_FIRE = textKey("deaths.fire");
+    public static final TextConfigKey DEATH_LAVA = textKey("deaths.lava");
+    public static final TextConfigKey DEATH_LIGHTNING = textKey("deaths.lightning");
+    public static final TextConfigKey DEATH_MAGMA_BLOCK = textKey("deaths.magma_block");
+    public static final TextConfigKey DEATH_MAGIC = textKey("deaths.magic");
+    public static final TextConfigKey DEATH_POWDERED_SNOW = textKey("deaths.powdered_snow");
+    public static final TextConfigKey DEATH_PLAYER_MOB = textKey("deaths.player_mob");
+    public static final TextConfigKey DEATH_PLAYER_MOB_ITEM = textKey("deaths.player_mob_item");
+    public static final TextConfigKey DEATH_BEE = textKey("deaths.bee");
+    public static final TextConfigKey DEATH_WARDEN_SONIC_CHARGE = textKey("deaths.warden_sonic_charge");
+    public static final TextConfigKey DEATH_PLAYER_SHOT = textKey("deaths.player_shot");
+    public static final TextConfigKey DEATH_PLAYER_SHOT_ITEM = textKey("deaths.player_shot_item");
 }
