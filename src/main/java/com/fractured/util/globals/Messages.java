@@ -18,15 +18,17 @@ public final class Messages
     public static final TextConfigKey FRIENDLY_FIRE_DISABLED = textKey("generic.friendly_fire_disabled");
     public static final TextConfigKey ALREADY_IN_TEAM = textKey("generic.already_in_team");
 
+    public static final TextConfigKey COMMAND_TEAM_TELEPORT_USAGE = textKey("commands.team.teleport.usage");
+
     public static final TextConfigKey NO_PERMISSION = textKey("commands.no_permission");
-    public static final TextConfigKey CONSOLE_BLOCKED = textKey("commands.console-blocked");
+    public static final TextConfigKey CONSOLE_BLOCKED = textKey("commands.console_blocked");
     public static final TextConfigKey NO_TEAM_BLOCKED = textKey("commands.spawn.no_team");
 
-    public static final TextConfigKey REGION_TEAM_ALERTED = textKey("generic.region.team-alerted");
-    public static final TextConfigKey REGION_TEAM_OFFLINE = textKey("generic.region.team-offline");
-    public static final TextConfigKey REGION_ALERT_BLOCK_PLACE = textKey("generic.region.block-place");
-    public static final TextConfigKey REGION_ALERT_BLOCK_BREAK = textKey("generic.region.block-break");
-    public static final TextConfigKey REGION_ALERT_CHEST_OPEN = textKey("generic.region.chest-open");
+    public static final TextConfigKey REGION_TEAM_ALERTED = textKey("generic.region.team_alerted");
+    public static final TextConfigKey REGION_TEAM_OFFLINE = textKey("generic.region.team_offline");
+    public static final TextConfigKey REGION_ALERT_BLOCK_PLACE = textKey("generic.region.block_place");
+    public static final TextConfigKey REGION_ALERT_BLOCK_BREAK = textKey("generic.region.block_break");
+    public static final TextConfigKey REGION_ALERT_CHEST_OPEN = textKey("generic.region.chest_open");
 
     public static final TextConfigKey UPGRADES_MAX_LEVEL = textKey("upgrades.max_level");
     public static final TextConfigKey UPGRADES_NOT_ENOUGH = textKey("upgrades.not_enough");
@@ -65,7 +67,7 @@ public final class Messages
     public static final String COMMAND_TEAM_CLEAR_USAGE = ChatColor.RED + "Usage: /team remove [username]";
     public static final String COMMAND_TEAM_SET_USAGE = ChatColor.RED + "Usage: /team set [username] [team | team_id]";
     public static final String COMMAND_TEAM_GENERAL_USAGE = ChatColor.RED + "Usage:\n- /team menu\n- /team join [team | team_id]";
-    public static final String COMMAND_TEAM_GENERAL_STAFF_USAGE = ChatColor.RED + "Usage:\n- /team menu\n- /team join [team | team_id]\n- /team set [username] [team | team_id]\n- /team forceset [username] [team | team_id]\n- /team forcejoin [team | team_id]\n- /team list\n- /team remove [username]";
+    public static final String COMMAND_TEAM_GENERAL_STAFF_USAGE = ChatColor.RED + "Usage:\n- /team menu\n- /team join [team | team_id]\n- /team set [username] [team | team_id]\n- /team forceset [username] [team | team_id]\n- /team forcejoin [team | team_id]\n- /team list\n- /team remove [username]\n- /team teleport [team | team_id]";
     public static final String COMMAND_TARGET_ALREADY_IN_TEAM = ChatColor.RED + "Failed to set player team: Target is already in team";
     public static final String COMMAND_TEAM_ALREADY_IN_TEAM = ChatColor.RED + "You are already in a team! If you think you made a mistake or this should be changed, please contact the server owners.";
     public static final String COMMAND_INVALID_TEAM = ChatColor.RED + "Unable to find the specified team.";
