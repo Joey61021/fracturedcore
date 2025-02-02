@@ -24,6 +24,6 @@ public class RespawnListener implements Listener {
             event.setRespawnLocation(team.spawn());
         }
 
-        //player.getInventory().setHelmet(team);
+        player.getInventory().setHelmet(team.helmet());
     }
 }
