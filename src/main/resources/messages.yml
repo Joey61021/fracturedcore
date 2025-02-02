@@ -19,6 +19,8 @@ commands:
   console_blocked: "&cThis command cannot be run in console!"
   no_team_blocked: "&cYou cannot run this command without being in a team!"
   team:
+    teleport:
+      usage: "&cUsage: /team teleport [team | team_id]"
     invalid_team: "&cUnable to find the specified team."
     remove_usage: "&cUsage: /team remove [username]"
     set_usage: "&cUsage: /team set [username] [team | team_id]"
