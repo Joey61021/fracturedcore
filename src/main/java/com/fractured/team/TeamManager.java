@@ -8,31 +8,9 @@ import com.fractured.util.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 public class TeamManager
 {
-    public static ItemStack getHelmet(Team team)
-    {
-//        ItemStack item = new ItemStack(Material.LEATHER_HELMET);
-//        LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
-//
-//        Map<ChatColor, Color> colorMap = Map.of(
-//                ChatColor.RED, Color.RED,
-//                ChatColor.BLUE, Color.BLUE,
-//                ChatColor.GREEN, Color.GREEN
-//        );
-//
-//        ChatColor color = team.getColor();
-//        meta.setColor(colorMap.getOrDefault(color, Color.YELLOW));
-//
-//        meta.addEnchant(Enchantment.PROTECTION, FracturedCore.getSettings.getInt("upgrades." + team.getName().toLowerCase() + "." + Upgrades.HELMET_PROTECTION.getUpgradeValue(), 1), true);
-//        meta.setUnbreakable(true);
-//        meta.setDisplayName(Utils.color(team.color() + team.getName() + " team"));
-//        item.setItemMeta(meta);
-        return null; // return item
-    }
-
     public static void toggleTeamChat(Player player)
     {
         User user = UserManager.getUser(player.getUniqueId());
@@ -71,6 +49,7 @@ public class TeamManager
         // User Object
         // This goes last because preprocessing requires the user's last team before it be changed.
         user.setTeam(team);
+        player.getInventory().setHelmet(team.helmet());
 
         // Messages
         player.sendMessage("Joined " + team.getName() + " team...");
@@ -148,6 +127,7 @@ public class TeamManager
         player.sendMessage("You have been removed from " + user.getTeam().getName() + " team.");
         // This goes last because preprocessing requires the user's last team before it be changed.
         user.setTeam(null);
+        player.getInventory().setHelmet(null);
     }
 
     /**
