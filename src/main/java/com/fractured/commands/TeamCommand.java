@@ -49,36 +49,47 @@ public final class TeamCommand
         Staff command that puts you in a team, removing you from the team you're already in
         /team forcejoin [name | id]
          */
-        teamSubCommands.register("clear", TeamCommand::teamClearCommand, "c", "remove", "r");
-        teamSubCommands.register("set", TeamCommand::teamSetCommand, "add", "a", "s");
-        teamSubCommands.register("forceset", TeamCommand::teamForceSetCommand, "fs");
-        teamSubCommands.register("join", TeamCommand::teamJoinCommand, "j");
-        teamSubCommands.register("forcejoin", TeamCommand::teamForceJoinCommand, "fj");
-        teamSubCommands.register("menu", TeamCommand::teamMenuCommand, "m");
+        teamSubCommands.register("clear", TeamCommand::teamClear, "c", "remove", "r");
+        teamSubCommands.register("set", TeamCommand::teamSet, "add", "a", "s");
+        teamSubCommands.register("forceset", TeamCommand::teamForceSet, "fs");
+        teamSubCommands.register("join", TeamCommand::teamJoin, "j");
+        teamSubCommands.register("forcejoin", TeamCommand::teamForceJoin, "fj");
+        teamSubCommands.register("menu", TeamCommand::teamMenu, "m");
         teamSubCommands.register("list", TeamCommand::teamList, "l");
         teamSubCommands.register("teleport", TeamCommand::teamTeleport, "tp");
     }
 
     public static boolean team(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
-        if (args.length == 0 || !teamSubCommands.dispatch(sender, args))
+        if (args.length == 0)
+        {
+            teamMenu(sender, cmd, label, args);
+            return true;
+        }
+
+        if (teamSubCommands.dispatch(sender, cmd, label, args))
         {
             if (sender.hasPermission(Permissions.COMMAND_TEAM_ADMIN))
             {
-                sender.sendMessage(Messages.COMMAND_TEAM_GENERAL_STAFF_USAGE);
+                sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_GENERAL_STAFF_USAGE));
             } else
             {
-                sender.sendMessage(Messages.COMMAND_TEAM_GENERAL_USAGE);
+                sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_GENERAL_USAGE));
             }
         }
         return true;
     }
 
-    private static void teamTeleport(final CommandSender sender, final String[] args)
+    private static void teamSetSpawn(final CommandSender sender, final Command cmd, final String label, final String[] args)
+    {
+
+    }
+
+    private static void teamTeleport(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
         if (!(sender instanceof Player))
         {
-            sender.sendMessage(FracturedCore.getMessages().get(Messages.CONSOLE_BLOCKED));
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_CONSOLE_BLOCKED));
             return;
         }
 
@@ -94,16 +105,14 @@ public final class TeamCommand
 
         if (team == null)
         {
-            sender.sendMessage(Messages.COMMAND_INVALID_TEAM);
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_INVALID_TEAM));
             return;
         }
 
         ((Player) sender).teleport(team.spawn());
     }
 
-    // SUB COMMANDS
-
-    private static void teamList(final CommandSender sender, String[] args)
+    private static void teamList(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
         Collection<Team> teams = TeamCache.teams();
 
@@ -112,31 +121,34 @@ public final class TeamCommand
 
         for (Team team : teams)
         {
-            teamList.append(ChatColor.GRAY);
-            teamList.append('(');
-            teamList.append(team.getOnlineMembers().size());
-            teamList.append('/');
-            teamList.append(team.getTotalMembers());
-            teamList.append(")  ").append(team.color()).append(team.getName());
+            teamList.append(ChatColor.GRAY)
+                    .append('(')
+                    .append(team.getOnlineMembers().size())
+                    .append('/')
+                    .append(team.getTotalMembers())
+                    .append(")  ")
+                    .append(team.color())
+                    .append(team.getName())
+                    .append('\n');
         }
 
         sender.sendMessage(teamList.toString());
     }
 
-    private static void teamClearCommand(final CommandSender sender, String[] args)
+    private static void teamClear(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
         // /team clear [username]
 
         if (!sender.hasPermission(Permissions.COMMAND_TEAM_ADMIN))
         {
-            sender.sendMessage(FracturedCore.getMessages().get(Messages.NO_PERMISSION));
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_NO_PERMISSION));
             return;
         }
 
         // clear, and user make 2
         if (args.length < 2)
         {
-            sender.sendMessage(Messages.COMMAND_TEAM_CLEAR_USAGE);
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_REMOVE_USAGE));
             return;
         }
 
@@ -144,7 +156,7 @@ public final class TeamCommand
 
         if (target == null)
         {
-            sender.sendMessage(Messages.COMMAND_INVALID_TARGET);
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_INVALID_TARGET));
             return;
         }
 
@@ -152,26 +164,29 @@ public final class TeamCommand
 
         if (!TeamManager.removeTeam(sender, null, target, user))
         {
-            // fixme
+            // todo
             sender.sendMessage("Target not in team!");
+        } else
+        {
+            sender.sendMessage("Removed target from their team.");
         }
     }
 
-    private static void teamSetCommand(final CommandSender sender, String[] args)
+    private static void teamSet(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
         // /team set [user] [team | id]
         // console allowed,
 
         if (!sender.hasPermission(Permissions.COMMAND_TEAM_ADMIN))
         {
-            sender.sendMessage(FracturedCore.getMessages().get(Messages.NO_PERMISSION));
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_NO_PERMISSION));
             return;
         }
 
         // set, user, and team makes 3
         if (args.length < 3)
         {
-            sender.sendMessage(Messages.COMMAND_TEAM_SET_USAGE);
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_SET_USAGE));
             return;
         }
 
@@ -179,7 +194,7 @@ public final class TeamCommand
 
         if (target == null)
         {
-            sender.sendMessage(Messages.COMMAND_INVALID_TARGET);
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_INVALID_TARGET));
             return;
         }
 
@@ -187,34 +202,31 @@ public final class TeamCommand
 
         switch (TeamManager.addTeam(sender, null, target, user, args[2]))
         {
-            case 0:
-                // todo
-                sender.sendMessage("Added.");
-                return;
+            // TeamManager#addTeam sends a message for case 0
             case 1:
-                sender.sendMessage(Messages.COMMAND_TARGET_ALREADY_IN_TEAM);
-                return;
+                sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TARGET_ALREADY_IN_TEAM));
+                break;
             case 2:
-                sender.sendMessage(Messages.COMMAND_INVALID_TEAM);
-                return;
+                sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_INVALID_TEAM));
+                break;
         }
     }
 
-    private static void teamForceSetCommand(final CommandSender sender, String[] args)
+    private static void teamForceSet(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
         // /team set [user] [team | id]
         // console allowed,
 
         if (!sender.hasPermission(Permissions.COMMAND_TEAM_ADMIN))
         {
-            sender.sendMessage(FracturedCore.getMessages().get(Messages.NO_PERMISSION));
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_NO_PERMISSION));
             return;
         }
 
         // set, user, and team makes 3
         if (args.length < 3)
         {
-            sender.sendMessage(Messages.COMMAND_TEAM_SET_USAGE);
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_FORCE_SET_USAGE));
             return;
         }
 
@@ -222,57 +234,62 @@ public final class TeamCommand
 
         if (target == null)
         {
-            sender.sendMessage(Messages.COMMAND_INVALID_TARGET);
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_INVALID_TARGET));
             return;
         }
 
         User user = UserManager.getUser(target.getUniqueId());
-
         Team team = TeamCache.getTeam(args[2]);
 
         if (team == null)
         {
-            sender.sendMessage(Messages.COMMAND_INVALID_TEAM);
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_FORCE_SET_INVALID_TEAM));
             return;
         }
 
         TeamManager.forceSetTeam(sender, null, target, user, team);
     }
 
-    private static void teamJoinCommand(final CommandSender sender, String[] args)
+    private static void teamJoin(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
         // /team join [team | id]
         // anyone can execute this except for console
 
         if (!(sender instanceof Player))
         {
-            sender.sendMessage(FracturedCore.getMessages().get(Messages.CONSOLE_BLOCKED));
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_CONSOLE_BLOCKED));
+            return;
+        }
+
+        if (args.length < 2)
+        {
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_JOIN_USAGE));
             return;
         }
 
         Player player = (Player) sender;
         User user = UserManager.getUser(player.getUniqueId());
 
-        switch (TeamManager.addTeam(sender, null, player, user, args[1]))
+        switch (TeamManager.addTeam(sender, null, player, user, args[2]))
         {
-            case 0:
-                // todo
-                sender.sendMessage("Joined!");
+            // Message is sent by TeamManager#addTeam for case 0
             case 1:
-                sender.sendMessage(Messages.COMMAND_TEAM_ALREADY_IN_TEAM);
+                sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_ALREADY_IN_TEAM));
+                break;
             case 2:
-                sender.sendMessage(Messages.COMMAND_INVALID_TEAM);
+                sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_INVALID_TEAM));
+                break;
         }
     }
 
-    private static void teamForceJoinCommand(final CommandSender sender, String[] args)
+    private static void teamForceJoin(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
         // /team forcejoin [team | id]
         // anyone can execute this except for console
 
         if (!(sender instanceof Player))
         {
-            sender.sendMessage(FracturedCore.getMessages().get(Messages.CONSOLE_BLOCKED));
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_CONSOLE_BLOCKED));
             return;
         }
 
@@ -282,18 +299,18 @@ public final class TeamCommand
         Team team = TeamCache.getTeam(args[1]);
         if (team == null)
         {
-            sender.sendMessage(Messages.COMMAND_INVALID_TEAM);
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_INVALID_TEAM));
             return;
         }
 
         TeamManager.forceSetTeam(sender, null, player, user, team);
     }
 
-    private static void teamMenuCommand(final CommandSender sender, String[] args)
+    private static void teamMenu(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
         if (!(sender instanceof Player))
         {
-            sender.sendMessage(FracturedCore.getMessages().get(Messages.CONSOLE_BLOCKED));
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_CONSOLE_BLOCKED));
             return;
         }
 
@@ -302,7 +319,7 @@ public final class TeamCommand
 
         if (user.getTeam() != null)
         {
-            sender.sendMessage(Messages.COMMAND_TEAM_ALREADY_IN_TEAM);
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_ALREADY_IN_TEAM));
             return;
         }
 
