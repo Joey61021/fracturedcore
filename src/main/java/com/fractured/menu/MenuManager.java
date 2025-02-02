@@ -40,6 +40,9 @@ public class MenuManager implements Listener
         if (foo != null)
         {
             foo.onClick(event);
+        } else
+        {
+            event.setCancelled(true);
         }
     }
 }
