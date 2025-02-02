@@ -50,13 +50,13 @@ public final class TeamCommand
         /team forcejoin [name | id]
          */
         teamSubCommands.register("clear", TeamCommand::teamClearCommand, "c", "remove", "r");
-        teamSubCommands.register("set", TeamCommand::teamSetCommand, "s");
+        teamSubCommands.register("set", TeamCommand::teamSetCommand, "add", "a", "s");
         teamSubCommands.register("forceset", TeamCommand::teamForceSetCommand, "fs");
         teamSubCommands.register("join", TeamCommand::teamJoinCommand, "j");
         teamSubCommands.register("forcejoin", TeamCommand::teamForceJoinCommand, "fj");
         teamSubCommands.register("menu", TeamCommand::teamMenuCommand, "m");
         teamSubCommands.register("list", TeamCommand::teamList, "l");
-        // todo /team tp
+        teamSubCommands.register("teleport", TeamCommand::teamTeleport, "tp");
     }
 
     public static boolean team(final CommandSender sender, final Command cmd, final String label, final String[] args)
@@ -70,9 +70,35 @@ public final class TeamCommand
             {
                 sender.sendMessage(Messages.COMMAND_TEAM_GENERAL_USAGE);
             }
-            return true;
         }
         return true;
+    }
+
+    private static void teamTeleport(final CommandSender sender, final String[] args)
+    {
+        if (!(sender instanceof Player))
+        {
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.CONSOLE_BLOCKED));
+            return;
+        }
+
+        // /team tp [team] args.length == 2
+
+        if (args.length < 2)
+        {
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_TELEPORT_USAGE));
+            return;
+        }
+
+        Team team = TeamCache.getTeamByPhrase(args[1]);
+
+        if (team == null)
+        {
+            sender.sendMessage(Messages.COMMAND_INVALID_TEAM);
+            return;
+        }
+
+        ((Player) sender).teleport(team.spawn());
     }
 
     // SUB COMMANDS
@@ -83,34 +109,16 @@ public final class TeamCommand
 
         // fixme store message and update as teams are added
         StringBuilder teamList = new StringBuilder();
-        String s;
 
         for (Team team : teams)
         {
-            // I've never done this before, but it's pretty cool. This is how you can do alignment
-            s = team.getName();
-
-            teamList.append(team.color()).append(s);
-            // team.color() is not included in this here
-            for (int i = 0; i < 8 - s.length(); ++i)
-            {
-                teamList.append(" ");
-            }
-
             teamList.append(ChatColor.GRAY);
             teamList.append('(');
             teamList.append(team.getOnlineMembers().size());
             teamList.append('/');
             teamList.append(team.getTotalMembers());
-            teamList.append(")\n");
+            teamList.append(")  ").append(team.color()).append(team.getName());
         }
-
-        // 3     8
-        //|-||------|
-        //1  Blue    (1/4)
-        //2  Yellow  (0/5)
-        //3  Red     (2/6)
-        //4  Green   (1/2)
 
         sender.sendMessage(teamList.toString());
     }
@@ -182,10 +190,13 @@ public final class TeamCommand
             case 0:
                 // todo
                 sender.sendMessage("Added.");
+                return;
             case 1:
                 sender.sendMessage(Messages.COMMAND_TARGET_ALREADY_IN_TEAM);
+                return;
             case 2:
                 sender.sendMessage(Messages.COMMAND_INVALID_TEAM);
+                return;
         }
     }
 
