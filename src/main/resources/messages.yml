@@ -1,3 +1,7 @@
+tab:
+  header: "&eFractured &f| &e1.21.4 SMP"
+  footer_no_team: "&7Your team: None"
+  footer_team: "&7Your team: %color%%team%"
 generic:
   team_inventory_closed: "&cRun /team to select a team before proceeding!"
   invalid_arg: "&cInvalid argument. Please check your parameters."
@@ -15,19 +19,62 @@ upgrades:
   upgraded: "&fYou have successfully upgraded %upgrade% &fto &6level %level%&f!"
 commands:
   invalid_target: "&cInvalid target."
+  invalid_world: "&cInvalid world."
+  invalid_team: "&cInvalid team."
+  target_already_in_team: "&cThat player is already in a team."
+  already_in_team: "&cYou are already in a team! If you think you made a mistake or this should be changed, please contact the server owners."
   no_permission: "&cYou do not have permission to run this command!"
   console_blocked: "&cThis command cannot be run in console!"
   no_team_blocked: "&cYou cannot run this command without being in a team!"
+  not_in_claim: "&cYou are not in any team claim."
+  world:
+    usage: "&cUsage:\n
+            - /world teleport [world]\n
+            - /world generate [name]\n
+            - /world list"
+    teleport:
+      usage: "&cUsage: /world teleport [world]"
+    generate:
+      usage: "&cUsage: /world generate [name]"
+      world_already_exists: "&cA world by that name already exists."
+      confirm: "&cAre you sure that you want to generate a world? Doing so will cause immense lag to the server. Type /confirm to proceed."
+      begin: "&7Generating, please wait..."
+      end: "&7Generated."
   team:
+    usage:
+      - "&cUsage:\n
+         - /team join [team | team_id]\n
+         - /team menu\n
+         - /team list"
+    staff_usage:
+      - "&cUsage:\n
+         - /team menu\n
+         - /team join [team | team_id]\n
+         - /team set [username] [team | team_id]\n
+         - /team forceset [username] [team | team_id]\n
+         - /team forcejoin [team | team_id]\n
+         - /team list\n
+         - /team remove [username]\n
+         - /team teleport [team | team_id]"
+    remove:
+      usage: "&cUsage: /team remove [username]"
+      removed: "You have been removed from %color%%team%&f team."
+    set:
+      usage: "&cUsage: /team set [username] [team | team_id]"
+    force_set:
+      usage: "&cUsage: /team forceset [username] [team | team_id]"
+      invalid_team: "&cInvalid team; if you want to remove the player's team, use /team remove instead."
+    join:
+      usage: "&cUsage: /team join [team | team_id]"
+    forcejoin:
     teleport:
       usage: "&cUsage: /team teleport [team | team_id]"
-    invalid_team: "&cUnable to find the specified team."
-    remove_usage: "&cUsage: /team remove [username]"
-    set_usage: "&cUsage: /team set [username] [team | team_id]"
+    setspawn:
+      # This has a confirm because the command gets the claim that you're in and assumes that's what you're talking about
+      confirm: "&cAre you sure that you want to set the spawn for %team% here? Type /confirm to proceed."
   team_chat:
     toggle_on: "&fTeam chat has been toggled &aON&f!"
     toggle_off: "&fTeam chat has been toggled &cOFF&f!"
-    not_in_team: "&cPlease join a team before running this command!"
   settings:
     set:
       console_usage: "&cUsage: /settings set [path] [value] &7- &8Or just modify the file :>"
@@ -38,12 +85,15 @@ commands:
     teleported: "&fYou have been teleported to %team% team's &fspawn!"
   stuck:
   borders:
+    usage: "&cUsage:\n
+            - /borders generate [size]\n
+            - /borders extend [size]"
     generate:
-      confirm: "&cAre you sure you want to generate team borders at your current location? Doing so will cause lag to the server. Please execute /confirm to proceed."
-      start: "&7Generating, please wait..."
-      end: "&7Generated."
+      confirm: "&cAre you sure you want to generate team borders at your current location? Doing so will cause immense lag to the server. Type /confirm to proceed."
+      begin: "&7Generating, please wait..."
+      end: "&7Generated. Be sure that the team claims are set accordingly."
     extend:
-      confirm: "&cAre you sure you want to extend the team borders at your current location? Doing so will cause lag to the server. Please execute /confirm to proceed."
-      start: "&7Extending, please wait..."
-      end: "&7Extended."
+      confirm: "&cAre you sure you want to extend the team borders? Doing so will cause immense lag to the server. Type /confirm to proceed."
+      begin: "&7Extending, please wait..."
+      end: "&7Extended. Be sure that the team claims are updated accordingly."
   discord: "&fJoin our Discord server at: &9&nhttps://discord.gg/2JTY7Fffjs"
