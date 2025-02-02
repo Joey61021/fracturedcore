@@ -37,9 +37,8 @@ public class DeathListener implements Listener {
         if (victim.getHealth() - event.getFinalDamage() <= 0)
         {
             victim.getInventory().setHelmet(null);
-
             // if cause was from an entity
-            if (event.getCause().name().toLowerCase().contains("entity")) {
+            if (event.getDamageSource().getCausingEntity() != null) {
                 return;
             }
             callDeath(event.getCause(), victim, null);
