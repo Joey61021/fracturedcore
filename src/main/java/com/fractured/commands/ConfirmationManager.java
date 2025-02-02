@@ -12,46 +12,49 @@ import java.util.function.Consumer;
 public final class ConfirmationManager
 {
     private static final Map<UUID, Consumer<CommandSender>> uuidConfirms = new ConcurrentHashMap<>();
-    private static Consumer<CommandSender> consoleConfirms;
+    /**
+     * consoleConfirms can be set from multiple threads, so a lock is used to make sure
+     * it's not set while being accessed.
+     */
+    private static final Object consoleConfirmsLock = new Object();
+    private static volatile Consumer<CommandSender> consoleConfirms;
 
-    private ConfirmationManager()
-    {
-    }
-
-    public static boolean addConfirmation(Player player, Consumer<CommandSender> subcommand)
+    public static boolean addPlayerConfirmation(Player player, Consumer<CommandSender> subcommand)
     {
         return uuidConfirms.put(player.getUniqueId(), subcommand) != null;
-    }
-
-    public static boolean addConfirmation(CommandSender sender, Consumer<CommandSender> subcommand)
-    {
-        if (sender instanceof Player)
-        {
-            return addConfirmation((Player) sender, subcommand);
-        }
-        return addConsoleConfirmation(subcommand);
     }
 
     /**
      * Overrides the previous consoleConfirmation
      * @return true if there was a previous value not null for the console callback
      */
-    public static boolean addConsoleConfirmation(Consumer<CommandSender> subcommand)
+    public static boolean setConsoleConfirmation(Consumer<CommandSender> subcommand)
     {
-        boolean rax = consoleConfirms != null;
+        synchronized (consoleConfirmsLock)
+        {
+            boolean rax = consoleConfirms != null;
 
-        consoleConfirms = subcommand;
+            consoleConfirms = subcommand;
 
-        return rax;
+            return rax;
+        }
+    }
+
+    public static boolean addConfirmation(CommandSender sender, Consumer<CommandSender> subcommand)
+    {
+        if (sender instanceof Player)
+        {
+            return addPlayerConfirmation((Player) sender, subcommand);
+        }
+        return setConsoleConfirmation(subcommand);
     }
 
     public static boolean confirm(final CommandSender sender, final Command command, final String label, final String[] args)
     {
-        Consumer<CommandSender> callback;
-
         if (sender instanceof Player)
         {
-            callback = uuidConfirms.remove(((Player) sender).getUniqueId());
+            // sender is a player
+            Consumer<CommandSender> callback = uuidConfirms.remove(((Player) sender).getUniqueId());
 
             if (callback != null)
             {
@@ -63,15 +66,20 @@ public final class ConfirmationManager
             return true;
         }
 
-        // the sender is console
-        if (consoleConfirms != null)
+        synchronized (consoleConfirmsLock)
         {
-            consoleConfirms.accept(sender);
-            consoleConfirms = null;
-            return true;
+            // the sender is console
+            if (consoleConfirms != null)
+            {
+                consoleConfirms.accept(sender);
+                consoleConfirms = null;
+                return true;
+            }
         }
 
         sender.sendMessage("You do not have any pending commands.");
         return true;
     }
+
+    private ConfirmationManager() { }
 }
