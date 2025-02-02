@@ -4,7 +4,6 @@ import com.fractured.FracturedCore;
 import com.fractured.config.Config;
 import com.fractured.team.ClaimManager;
 import com.fractured.team.Claim;
-import com.fractured.team.TeamCache;
 import com.fractured.user.User;
 import com.fractured.user.UserManager;
 import com.fractured.util.globals.Messages;
@@ -25,16 +24,10 @@ import org.bukkit.inventory.ItemStack;
 public class WorldManager implements Listener
 {
     private static final World OVER_WORLD;
-    private static Location SPAWN; // fixme use OVER_WORLD.getWorldSpawn() or sometrin glke that
     private static Location BEACON;
 
-    private static final String DEFAULT_WORLD_PATH = "locations.default_world";
+    private static final String DEFAULT_WORLD_PATH = "locations.over_world";
     private static final String BEACON_PATH = "locations.beacon";
-    private static final String SPAWN_PATH = "locations.spawn";
-
-    // This is for overworld, not nether or anything like that
-    public static final int MAX_HEIGHT = 320;
-    public static final int MIN_HEIGHT = -64;
 
     static
     {
@@ -44,10 +37,9 @@ public class WorldManager implements Listener
 
         if (OVER_WORLD == null)
         {
-            throw new IllegalArgumentException("Unrecognized world at " + DEFAULT_WORLD_PATH);
+            throw new IllegalArgumentException("Unable to find the over world world at " + DEFAULT_WORLD_PATH);
         } else
         {
-            SPAWN = getLocation(config, SPAWN_PATH);
             BEACON = getLocation(config, BEACON_PATH);
         }
     }
@@ -95,6 +87,68 @@ public class WorldManager implements Listener
     }
 
     /**
+     * Generates a team border from -x to +x starting at the location (x0, y0, z0) in the world, with the specified
+     * materials on the left and right, and bedrock in the middle.
+     * @param world not null
+     */
+    private static void generateXBorder(int dist, int x0, int y0, int z0, World world, Material left, Material right)
+    {
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+        // .  .  .  .  .  .  2  2  2  2  2  2  2  2  2  2
+        // .  .  .  .  .  b  @  @  @  @  @  @  @  @  @  @
+        // .  .  .  .  .  .  1  1  1  1  1  1  1  1  1  1
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+
+        int cx = x0 >> 4; // divide by 16
+        int cz = z0 >> 4; // divide by 16
+
+        Chunk chunk;
+        int i;
+
+        // dist >> 4 is the length of chunks we need to generate blocks
+        // in, (minus any extra if the distance is not even), so we still
+        // need to generate the tail end as well.
+        for (i = 0; i < dist >> 4; ++i)
+        {
+            chunk = world.getChunkAt(cx + i, cz);
+
+            for (int y = world.getMinHeight(); y <= y0; ++y)
+            {
+
+            }
+        }
+
+        chunk = world.getChunkAt(cx + i, cz);
+
+        // finish the tail end
+        for (int x = 0; x < dist % 16; ++x)
+        {
+
+        }
+    }
+
+    /**
+     * Generates a team border from -x to +x starting at the location (x0, y0, z0) in the world, with the specified
+     * materials on the left and right, and bedrock in the middle.
+     * @param world not null
+     */
+    private static void generateZBorder(int dist, int x0, int y0, int z0, World world, Material left, Material right)
+    {
+
+    }
+
+    /**
      * This method does three things,
      * 1) Generates new team borders and sets the world border
      * 2) Updates beacon location in the config and in the computer
@@ -110,84 +164,89 @@ public class WorldManager implements Listener
             throw new IllegalStateException("Cannot generate team borders in a null world!");
         }
 
-        int x = location.getBlockX();
-        int y = location.getBlockY() - 1;
-        int z = location.getBlockZ();
+        int x0 = location.getBlockX();
+        int y0 = location.getBlockY() - 1;
+        int z0 = location.getBlockZ();
 
-        // todo add this to the chunk populator so it auto generates?
-        for (int a = 0; a < y - MIN_HEIGHT; a++)
+        // . . . | . . . x = start generating
+        // . . . | . . .
+        // . . . x . . .
+        // x - - + x - -
+        // . . . | . . .
+        // . . . | . . .
+        // . . . x . . .
+
+        generateXBorder(radius, x0, y0, z0, world, Material.RED_CONCRETE, Material.BLUE_CONCRETE);
+        generateXBorder(radius, x0 - radius - 1, y0, z0, world, Material.GREEN_CONCRETE, Material.YELLOW_CONCRETE);
+        generateZBorder(radius, x0, y0, z0, world, Material.BLUE_CONCRETE, Material.YELLOW_CONCRETE);
+        generateZBorder(radius, x0, y0, z0 - radius - 1, world, Material.RED_CONCRETE, Material.GREEN_CONCRETE);
+
+        // Generate beacon, glass
+        world.getBlockAt(x0, y0 - 1, z0).setType(Material.BEACON);
+        // (set beacon location)
+        setLocation(FracturedCore.getFracturedConfig(), "locations.beacon", BEACON = new Location(world, x0, y0, z0));
+        world.getBlockAt(x0, y0, z0).setType(Material.GLASS);
+
+        // Generate iron blocks
+        for (int x = 0; x < 3; x++)
         {
-            world.getBlockAt(x, y - a, z).setType(Material.BEDROCK);
-
-            for (int b = 0; b < radius; b++)
+            for (int z = 0; z < 3; z++)
             {
-                world.getBlockAt(x + 1 + b, y - a, z - 1).setType(Material.RED_CONCRETE);
-                world.getBlockAt(x + 1 + b, y - a, z).setType(Material.BEDROCK);
-                world.getBlockAt(x + 1 + b, y - a, z + 1).setType(Material.BLUE_CONCRETE);
-            }
-
-            for (int b = 0; b < radius; b++)
-            {
-                world.getBlockAt(x - 1, y - a, z + 1 + b).setType(Material.YELLOW_CONCRETE);
-                world.getBlockAt(x, y - a, z + 1 + b).setType(Material.BEDROCK);
-                world.getBlockAt(x + 1, y - a, z + 1 + b).setType(Material.BLUE_CONCRETE);
-            }
-
-            for (int b = 0; b < radius; b++)
-            {
-                world.getBlockAt(x - 1 - b, y - a, z - 1).setType(Material.LIME_CONCRETE);
-                world.getBlockAt(x - 1 - b, y - a, z).setType(Material.BEDROCK);
-                world.getBlockAt(x - 1 - b, y - a, z + 1).setType(Material.YELLOW_CONCRETE);
-            }
-
-            for (int b = 0; b < radius; b++)
-            {
-                world.getBlockAt(x - 1, y - a, z - 1 - b).setType(Material.LIME_CONCRETE);
-                world.getBlockAt(x, y - a, z - 1 - b).setType(Material.BEDROCK);
-                world.getBlockAt(x + 1, y - a, z - 1 - b).setType(Material.RED_CONCRETE);
+                world.getBlockAt(x0 - 1 + x, y0 - 2, z0 - 1 + z).setType(Material.IRON_BLOCK);
             }
         }
 
-        world.getBlockAt(x, y, z).setType(Material.WHITE_STAINED_GLASS);
-        world.getBlockAt(x, y - 1, z).setType(Material.BEACON);
-
-        for (int a = 0; a < 3; a++)
-        {
-            for (int b = 0; b < 3; b++)
-            {
-                world.getBlockAt(x - 1 + a, y - 2, z - 1 + b).setType(Material.IRON_BLOCK);
-            }
-        }
-
-        // TeamCache.getTeam cannot return null
-//        Claim yellow = new Claim(TeamCache.getTeam("yellow"), x - 1, z + 1, x - radius, z + radius);
-//        Claim green = new Claim(TeamCache.getTeam("green"), x - 1, z - 1, x - radius, z - radius);
-//        Claim red = new Claim(TeamCache.getTeam("red"), x + 1, z - 1, x + radius, z - radius);
-//        Claim blue = new Claim(TeamCache.getTeam("blue"), x + 1, z + 1, x + radius, z + radius);
-//
-//        ClaimManager.newClaim();
-
-        //FracturedCore.getStorage().setClaims(yellow, green, red, blue);
-        setLocation(FracturedCore.getFracturedConfig(), "locations.beacon", BEACON = new Location(world, x, y, z));
-
-        // world border
-        world.getWorldBorder().setCenter(BEACON);
-        world.getWorldBorder().setSize(2 * radius);
+        // Set world border
+        world.getWorldBorder().setCenter(new Location(world, x0 + 0.5, y0, z0 + 0.5));
+        world.getWorldBorder().setSize(2 * radius + 1);
     }
 
     public static void extendTeamBorders(int size)
     {
-        // todo
+
+
+//        for (int a = 0; a < BEACON.getBlockY() + 1 - MIN_HEIGHT; a++)
+//        {
+//            world.getBlockAt(x, y - a, z).setType(Material.BEDROCK);
+//
+//            for (int b = 0; b < radius; b++)
+//            {
+//                world.getBlockAt(x + 1 + b, y - a, z - 1).setType(Material.RED_CONCRETE);
+//                world.getBlockAt(x + 1 + b, y - a, z).setType(Material.BEDROCK);
+//                world.getBlockAt(x + 1 + b, y - a, z + 1).setType(Material.BLUE_CONCRETE);
+//            }
+//
+//            for (int b = 0; b < radius; b++)
+//            {
+//                world.getBlockAt(x - 1, y - a, z + 1 + b).setType(Material.YELLOW_CONCRETE);
+//                world.getBlockAt(x, y - a, z + 1 + b).setType(Material.BEDROCK);
+//                world.getBlockAt(x + 1, y - a, z + 1 + b).setType(Material.BLUE_CONCRETE);
+//            }
+//
+//            for (int b = 0; b < radius; b++)
+//            {
+//                world.getBlockAt(x - 1 - b, y - a, z - 1).setType(Material.LIME_CONCRETE);
+//                world.getBlockAt(x - 1 - b, y - a, z).setType(Material.BEDROCK);
+//                world.getBlockAt(x - 1 - b, y - a, z + 1).setType(Material.YELLOW_CONCRETE);
+//            }
+//
+//            for (int b = 0; b < radius; b++)
+//            {
+//                world.getBlockAt(x - 1, y - a, z - 1 - b).setType(Material.LIME_CONCRETE);
+//                world.getBlockAt(x, y - a, z - 1 - b).setType(Material.BEDROCK);
+//                world.getBlockAt(x + 1, y - a, z - 1 - b).setType(Material.RED_CONCRETE);
+//            }
+//        }
     }
 
     public static Location getSpawn()
     {
-        return SPAWN;
+        return OVER_WORLD.getSpawnLocation();
     }
 
     private static <E extends BlockEvent & Cancellable> void onBlockChange(Player player, E event)
     {
-        if (player.getWorld() != OVER_WORLD || player.getGameMode() == GameMode.CREATIVE)
+        if (player.getGameMode() == GameMode.CREATIVE)
         {
             return;
         }
@@ -239,7 +298,7 @@ public class WorldManager implements Listener
     {
         Player player = event.getPlayer();
 
-        if (player.getWorld() != OVER_WORLD || player.getGameMode() == GameMode.CREATIVE)
+        if (player.getGameMode() == GameMode.CREATIVE)
         {
             return;
         }
