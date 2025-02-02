@@ -2,6 +2,7 @@ package com.fractured.team;
 
 import com.fractured.menu.Menu;
 import com.fractured.menu.MenuManager;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -45,7 +46,7 @@ public final class TeamCache
         ItemMeta meta = item.getItemMeta();
 
         meta.setDisplayName(team.color() + team.getName() + " Team");
-        meta.setLore(List.of("Online: (" + team.getOnlineMembers() + "/" + team.getTotalMembers() + ")"));
+        meta.setLore(List.of(ChatColor.GRAY + "Online: (" + team.getOnlineMembers().size() + "/" + team.getTotalMembers() + ")"));
 
         item.setItemMeta(meta);
         return item;
