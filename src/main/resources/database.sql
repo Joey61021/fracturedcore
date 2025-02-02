@@ -1,35 +1,47 @@
 CREATE TABLE users
 (
     id  INT AUTO_INCREMENT PRIMARY KEY,
-    uid VARCHAR(36) NOT NULL
+    uid VARCHAR(36) NOT NULL UNIQUE
+);
+
+CREATE TABLE worlds
+(
+    id  INT AUTO_INCREMENT PRIMARY KEY,
+    -- uuid
+    uid VARCHAR(36) NOT NULL UNIQUE
 );
 
 -- A list of all the teams. This is where the TeamCache is derived from.
-CREATE TABLE team_entries
+CREATE TABLE teams
 (
     id      INT AUTO_INCREMENT PRIMARY KEY,
     -- Number of members in the team, dynamically updated as players join and leave
-    members INT   NOT NULL,
+    members INT NOT NULL,
+    name    VARCHAR(16),
+    color   TINYINT,
     -- Spawn location
-    s_x DOUBLE NOT NULL,
-    s_y DOUBLE NOT NULL,
-    s_z DOUBLE NOT NULL,
-    s_pi     FLOAT NOT NULL,
-    s_ya     FLOAT NOT NULL
+    s_world INT,
+    s_x DOUBLE,
+    s_y DOUBLE,
+    s_z DOUBLE,
+    s_pi    FLOAT,
+    s_ya    FLOAT
 );
 
 -- A list of all the claims. Each claim has a corresponding team to which it
 -- belongs. Although this plugin only requires that teams have one claim, this
 -- system allows for changes in the future.
-CREATE TABLE claim_entries
+CREATE TABLE claims
 (
-    id      INT AUTO_INCREMENT PRIMARY KEY,
-    team_id INT NOT NULL,
-    x0      INT NOT NULL,
-    z0      INT NOT NULL,
-    x1      INT NOT NULL,
-    z1      INT NOT NULL,
-    FOREIGN KEY (team_id) REFERENCES team_entries (id)
+    id       INT AUTO_INCREMENT PRIMARY KEY,
+    team_id  INT NOT NULL,
+    world_id INT NOT NULL,
+    x0       INT NOT NULL,
+    z0       INT NOT NULL,
+    x1       INT NOT NULL,
+    z1       INT NOT NULL,
+    FOREIGN KEY (team_id) REFERENCES teams (id),
+    FOREIGN KEY (world_id) REFERENCES worlds (id)
 );
 
 CREATE TABLE team_member_changes
@@ -41,23 +53,24 @@ CREATE TABLE team_member_changes
     added    BOOL      NOT NULL,
     staff_id INT       NOT NULL,
     reason   VARCHAR(255),
-    FOREIGN KEY (team_id) REFERENCES team (id),
+    FOREIGN KEY (team_id) REFERENCES teams (id),
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 CREATE TABLE team_members
 (
     id      INT AUTO_INCREMENT PRIMARY KEY,
-    team_id INT NOT NULL,
-    user_id INT NOT NULL,
-    FOREIGN KEY (team_id) REFERENCES team_entries (id),
-    FOREIGN KEY (user_id) REFERENCES users (id)
+    user_id INT NOT NULL UNIQUE,
+    team_id INT,
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (team_id) REFERENCES teams (id)
 );
 
-CREATE TABLE beacons
+CREATE TABLE team_upgrades
 (
-    id int AUTO_INCREMENT PRIMARY KEY,
-    x int NOT NULL,
-    y int NOT NULL,
-    z int NOT NULL
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    team_id INT NOT NULL,
+    upgrade_id INT NOT NULL,
+    upgrade_level INT NOT NULL,
+    FOREIGN KEY (team_id) REFERENCES teams (id)
 );

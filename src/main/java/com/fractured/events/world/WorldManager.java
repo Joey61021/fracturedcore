@@ -25,7 +25,7 @@ import org.bukkit.inventory.ItemStack;
 public class WorldManager implements Listener
 {
     private static final World OVER_WORLD;
-    private static Location SPAWN;
+    private static Location SPAWN; // fixme use OVER_WORLD.getWorldSpawn() or sometrin glke that
     private static Location BEACON;
 
     private static final String DEFAULT_WORLD_PATH = "locations.default_world";

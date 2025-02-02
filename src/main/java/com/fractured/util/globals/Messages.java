@@ -66,7 +66,7 @@ public final class Messages
     public static final String COMMAND_TEAM_SET_USAGE = ChatColor.RED + "Usage: /team set [username] [team | team_id]";
     public static final String COMMAND_TEAM_GENERAL_USAGE = ChatColor.RED + "Usage:\n- /team menu\n- /team join [team | team_id]";
     public static final String COMMAND_TEAM_GENERAL_STAFF_USAGE = ChatColor.RED + "Usage:\n- /team menu\n- /team join [team | team_id]\n- /team set [username] [team | team_id]\n- /team forceset [username] [team | team_id]\n- /team forcejoin [team | team_id]\n- /team list\n- /team remove [username]";
-    public static final String COMMAND_TEAM_SET_TARGET_ALREADY_IN_TEAM = ChatColor.RED + "Failed to set player team: Target is already in team";
+    public static final String COMMAND_TARGET_ALREADY_IN_TEAM = ChatColor.RED + "Failed to set player team: Target is already in team";
     public static final String COMMAND_TEAM_ALREADY_IN_TEAM = ChatColor.RED + "You are already in a team! If you think you made a mistake or this should be changed, please contact the server owners.";
     public static final String COMMAND_INVALID_TEAM = ChatColor.RED + "Unable to find the specified team.";
 

@@ -41,6 +41,7 @@ public class JoinListener implements Listener
         {
             event.setJoinMessage(user.getTeam().color() + player.getName() + ChatColor.WHITE + " has connected");
             // add member? What happened to that here
+            user.getTeam().getOnlineMembers().add(player);
         }
     }
 }

@@ -1,16 +1,11 @@
 package com.fractured.team;
 
-import com.fractured.menu.InventoryCallback;
-import com.fractured.menu.ItemBuilder;
 import com.fractured.menu.Menu;
 import com.fractured.menu.MenuManager;
-import com.fractured.util.Utils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -32,10 +27,10 @@ public final class TeamCache
     private static Map<String, Team> teamsByName;
     private static final String SELECT_TEAM = "Select Team";
 
-    private static final Team GREEN = getTeam("green");
-    private static final Team RED = getTeam("red");
-    private static final Team BLUE = getTeam("blue");
-    private static final Team YELLOW = getTeam("yellow");
+    private static Team GREEN;
+    private static Team RED;
+    private static Team BLUE;
+    private static Team YELLOW;
 
     private static void addTeam(HumanEntity player, Team team)
     {
@@ -69,13 +64,18 @@ public final class TeamCache
         teamsById = teamsIdMap;
         teamsByName = new HashMap<>();
 
-        // init team inventory (and teamsByName)
-        teamInventory = Bukkit.createInventory(null, 9 * 3, SELECT_TEAM);
-
         for (Team team : teamsById.values())
         {
             teamsByName.put(team.getName().toLowerCase(), team);
         }
+
+        GREEN = getTeam("green");
+        RED = getTeam("red");
+        BLUE = getTeam("blue");
+        YELLOW = getTeam("yellow");
+
+        // init team inventory (and teamsByName)
+        teamInventory = Bukkit.createInventory(null, 9 * 3, SELECT_TEAM);
 
         Menu selectTeam = new Menu();
 
@@ -106,6 +106,38 @@ public final class TeamCache
     public static Team getTeam(String name)
     {
         return teamsByName.get(name.toLowerCase());
+    }
+
+    /**
+     * Tries to get the requested team by name or id
+     *
+     * @param s some identifier that (should) connects to a team
+     * @return Doesn't guarentee that the team is not null.
+     */
+    public static Team getTeamByPhrase(String s)
+    {
+        // Get by name first
+        Team rax = getTeam(s);
+
+        // If there is no team by that name, try the id
+        if (rax == null)
+        {
+            int i;
+
+            try
+            {
+                i = Integer.parseInt(s);
+            } catch (NumberFormatException e)
+            {
+                // id is invalid, so no team could be found
+                return null;
+            }
+
+            // Input is an int, we can try by the team's id
+            rax = TeamCache.getTeam(i);
+        }
+
+        return rax;
     }
 
     public static void openMenu(Player player)

@@ -6,7 +6,9 @@ import com.fractured.team.upgrades.Upgrades;
 import com.fractured.team.upgrades.UpgradeRequisite;
 import com.fractured.user.User;
 import com.fractured.user.UserManager;
+import com.fractured.util.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -27,7 +29,7 @@ public class Team
     private final int teamId;
     private int totalMembers;
     private final String name;
-    private final String color;
+    private final ChatColor color;
     private final Material beacon;
     private final Location spawn;
     private final List<Player> onlineTeamMembers;
@@ -48,7 +50,7 @@ public class Team
 
             if (team == null)
             {
-                player.sendMessage("Unable to complete action.");
+                player.sendMessage("You are not in a team!");
                 player.closeInventory();
             } else
             {
@@ -57,7 +59,7 @@ public class Team
                 Material costType = requisite.material();
                 int cost = requisite.cost();
 
-
+                player.sendMessage("TODO");
             }
 
             // upgrades
@@ -66,14 +68,17 @@ public class Team
         MenuManager.register(TEAM_UPGRADES, teamUpgrades);
     }
 
-    public Team(int teamId, int totalMembers, String name, String color, Material beacon, Location spawn)
+    public Team(int teamId, int totalMembers, String name, char color, Location spawn)
     {
+        // Stuff from the database
         this.teamId = teamId;
         this.totalMembers = totalMembers;
         this.name = name;
-        this.color = color;
-        this.beacon = beacon;
+        this.color = ChatColor.getByChar(color);
         this.spawn = spawn;
+
+        beacon = Utils.getGlassFrom(color);
+
         this.onlineTeamMembers = new ArrayList<>();
         this.upgrades = new HashMap<>();
 
@@ -120,7 +125,7 @@ public class Team
         return name;
     }
 
-    public String color()
+    public ChatColor color()
     {
         return color;
     }

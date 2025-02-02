@@ -87,6 +87,7 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("discord").setExecutor(DiscordCommand::discord);
         getCommand("upgrades").setExecutor(UpgradesCommand::upgrades);
         getCommand("confirm").setExecutor(ConfirmationManager::confirm);
+        getCommand("world").setExecutor(WorldCommand::world);
     }
 
     @Override
@@ -100,12 +101,14 @@ public final class FracturedCore extends JavaPlugin {
         config = new Config(this, ConfigKeys.class, "config.yml");
         messages = new Config(this, Messages.class, "messages.yml");
         storage = Storage.newStorage(config);
-        storage.initServerResources();
 
         menuManager = new MenuManager();
 
         registerEvents();
         registerCommands();
+
+        // After we've regsitered events and managers (LIke MenuManager)
+        storage.initServerResources();
     }
 
     @Override

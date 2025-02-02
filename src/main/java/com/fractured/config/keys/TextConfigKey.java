@@ -14,6 +14,8 @@ public class TextConfigKey extends ConfigKey<String>
     @Override
     public String get(Config config)
     {
-        return ChatColor.translateAlternateColorCodes('&', super.get(config));
+        String s = super.get(config);
+
+        return ChatColor.translateAlternateColorCodes('&', s == null ? "" : s);
     }
 }

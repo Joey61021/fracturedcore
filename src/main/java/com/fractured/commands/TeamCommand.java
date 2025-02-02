@@ -56,6 +56,7 @@ public final class TeamCommand
         teamSubCommands.register("forcejoin", TeamCommand::teamForceJoinCommand, "fj");
         teamSubCommands.register("menu", TeamCommand::teamMenuCommand, "m");
         teamSubCommands.register("list", TeamCommand::teamList, "l");
+        // todo /team tp
     }
 
     public static boolean team(final CommandSender sender, final Command cmd, final String label, final String[] args)
@@ -87,19 +88,11 @@ public final class TeamCommand
         for (Team team : teams)
         {
             // I've never done this before, but it's pretty cool. This is how you can do alignment
-            s = Integer.toString(team.getId());
-            teamList.append(ChatColor.WHITE).append(s);
-
-            for (int i = 0; i < s.length() - 3; ++i)
-            {
-                teamList.append(" ");
-            }
-
             s = team.getName();
 
             teamList.append(team.color()).append(s);
             // team.color() is not included in this here
-            for (int i = 0; i < s.length() - 8; ++i)
+            for (int i = 0; i < 8 - s.length(); ++i)
             {
                 teamList.append(" ");
             }
@@ -118,9 +111,6 @@ public final class TeamCommand
         //2  Yellow  (0/5)
         //3  Red     (2/6)
         //4  Green   (1/2)
-
-        // fixme this don't work
-        System.out.println(teamList);
 
         sender.sendMessage(teamList.toString());
     }
@@ -152,45 +142,11 @@ public final class TeamCommand
 
         User user = UserManager.getUser(target.getUniqueId());
 
-        if (user.getTeam() == null)
+        if (!TeamManager.removeTeam(sender, null, target, user))
         {
-            sender.sendMessage(Messages.COMMAND_INVALID_TARGET);
-            return;
+            // fixme
+            sender.sendMessage("Target not in team!");
         }
-
-        TeamManager.removeTeam(target, user);
-    }
-
-    /**
-     * Tries to get the requested team
-     *
-     * @param s some identifier that (should) connects to a team
-     * @return Doesn't guarentee that the team is not null.
-     */
-    private static Team getTeam(String s)
-    {
-        // Get by name first
-        Team rax = TeamCache.getTeam(s);
-
-        // If there is no team by that name, try the id
-        if (rax == null)
-        {
-            int i;
-
-            try
-            {
-                i = Integer.parseInt(s);
-            } catch (NumberFormatException e)
-            {
-                // id is invalid, so no team could be found
-                return null;
-            }
-
-            // Input is an int, we can try by the team's id
-            rax = TeamCache.getTeam(i);
-        }
-
-        return rax;
     }
 
     private static void teamSetCommand(final CommandSender sender, String[] args)
@@ -221,22 +177,16 @@ public final class TeamCommand
 
         User user = UserManager.getUser(target.getUniqueId());
 
-        if (user.getTeam() != null)
+        switch (TeamManager.addTeam(sender, null, target, user, args[2]))
         {
-            sender.sendMessage(Messages.COMMAND_TEAM_SET_TARGET_ALREADY_IN_TEAM);
-            return;
+            case 0:
+                // todo
+                sender.sendMessage("Added.");
+            case 1:
+                sender.sendMessage(Messages.COMMAND_TARGET_ALREADY_IN_TEAM);
+            case 2:
+                sender.sendMessage(Messages.COMMAND_INVALID_TEAM);
         }
-
-        Team team = getTeam(args[2]);
-
-        if (team == null)
-        {
-            sender.sendMessage(Messages.COMMAND_INVALID_TEAM);
-            return;
-        }
-
-        // Team is not null
-        TeamManager.addTeam(target, team);
     }
 
     private static void teamForceSetCommand(final CommandSender sender, String[] args)
@@ -267,7 +217,7 @@ public final class TeamCommand
 
         User user = UserManager.getUser(target.getUniqueId());
 
-        Team team = getTeam(args[2]);
+        Team team = TeamCache.getTeam(args[2]);
 
         if (team == null)
         {
@@ -275,7 +225,7 @@ public final class TeamCommand
             return;
         }
 
-        TeamManager.forceSetTeam(target, user, team);
+        TeamManager.forceSetTeam(sender, null, target, user, team);
     }
 
     private static void teamJoinCommand(final CommandSender sender, String[] args)
@@ -292,20 +242,16 @@ public final class TeamCommand
         Player player = (Player) sender;
         User user = UserManager.getUser(player.getUniqueId());
 
-        if (user.getTeam() != null)
+        switch (TeamManager.addTeam(sender, null, player, user, args[1]))
         {
-            sender.sendMessage(Messages.COMMAND_TEAM_ALREADY_IN_TEAM);
-            return;
+            case 0:
+                // todo
+                sender.sendMessage("Joined!");
+            case 1:
+                sender.sendMessage(Messages.COMMAND_TEAM_ALREADY_IN_TEAM);
+            case 2:
+                sender.sendMessage(Messages.COMMAND_INVALID_TEAM);
         }
-
-        Team team = getTeam(args[1]);
-        if (team == null)
-        {
-            sender.sendMessage(Messages.COMMAND_INVALID_TEAM);
-            return;
-        }
-
-        TeamManager.addTeam(player, team);
     }
 
     private static void teamForceJoinCommand(final CommandSender sender, String[] args)
@@ -322,14 +268,14 @@ public final class TeamCommand
         Player player = (Player) sender;
         User user = UserManager.getUser(player.getUniqueId());
 
-        Team team = getTeam(args[1]);
+        Team team = TeamCache.getTeam(args[1]);
         if (team == null)
         {
             sender.sendMessage(Messages.COMMAND_INVALID_TEAM);
             return;
         }
 
-        TeamManager.forceSetTeam(player, user, team);
+        TeamManager.forceSetTeam(sender, null, player, user, team);
     }
 
     private static void teamMenuCommand(final CommandSender sender, String[] args)

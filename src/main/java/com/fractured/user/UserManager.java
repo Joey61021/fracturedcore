@@ -37,7 +37,7 @@ public final class UserManager implements Listener
         return getUser(player.getUniqueId());
     }
 
-    @EventHandler(priority = EventPriority.LOWEST) // run first
+    @EventHandler(priority = EventPriority.LOW) // run first
     public static void onPreLogin(AsyncPlayerPreLoginEvent event)
     {
         UUID uid = event.getUniqueId();
@@ -49,7 +49,7 @@ public final class UserManager implements Listener
         users.put(uid, user);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST) // run last
+    @EventHandler(priority = EventPriority.HIGH) // run last
     public static void onQuit(PlayerQuitEvent event)
     {
         Player player = event.getPlayer();

@@ -114,10 +114,14 @@ public final class WorldCommand
 
         while (worlds.hasNext())
         {
-            builder.append("- ").append(worlds.next().getName()).append("\n");
+            builder.append("- ").append(worlds.next().getName());
+
+            if (worlds.hasNext())
+            {
+                builder.append("\n");
+            }
         }
 
-        builder.append("- ").append(worlds.next().getName());
         sender.sendMessage(builder.toString());
     }
 }

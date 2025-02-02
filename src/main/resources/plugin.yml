@@ -32,3 +32,5 @@ commands:
     aliases: []
   upgrades:
     aliases: []
+  confirm:
+  world:
