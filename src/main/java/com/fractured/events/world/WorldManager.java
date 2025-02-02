@@ -410,7 +410,7 @@ public class WorldManager implements Listener
         if (clicked.getWorld() == BEACON.getWorld() &&
             item.getType().equals(Material.PRISMARINE_SHARD) &&
             event.getItem().getItemMeta() != null &&
-            event.getItem().getItemMeta().hasEnchant(Enchantment.DURABILITY) &&
+            event.getItem().getItemMeta().hasEnchant(Enchantment.UNBREAKING) &&
             clicked.getLocation().distance(BEACON) < 3)
         {
             // todo subtract just one
