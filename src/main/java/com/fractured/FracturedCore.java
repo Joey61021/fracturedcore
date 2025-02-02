@@ -3,6 +3,7 @@ package com.fractured;
 import com.fractured.commands.*;
 import com.fractured.config.Config;
 import com.fractured.events.*;
+import com.fractured.events.inventory.InventoryClickListener;
 import com.fractured.events.inventory.InventoryCloseListener;
 import com.fractured.events.world.WorldManager;
 import com.fractured.menu.MenuManager;
@@ -72,6 +73,7 @@ public final class FracturedCore extends JavaPlugin {
         manager.registerEvents(new InventoryCloseListener(), this);
         manager.registerEvents(new JoinListener(), this);
         manager.registerEvents(new LeaveListener(), this);
+        manager.registerEvents(new InventoryClickListener(), this);
 
         manager.registerEvents(new KillListener(), this);
         manager.registerEvents(new RespawnListener(), this);
