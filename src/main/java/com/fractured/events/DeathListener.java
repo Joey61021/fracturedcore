@@ -63,22 +63,35 @@ public class DeathListener implements Listener {
     private static String getDeathMessage(EntityDamageEvent.DamageCause cause)
     {
         return switch (cause) {
-            case THORNS -> FracturedCore.getMessages().get(Messages.DEATH_CACTUS);
-            case DROWNING -> FracturedCore.getMessages().get(Messages.DEATH_DROWNED);
-            case FLY_INTO_WALL -> FracturedCore.getMessages().get(Messages.DEATH_ELYTRA);
-            case ENTITY_EXPLOSION, BLOCK_EXPLOSION -> FracturedCore.getMessages().get(Messages.DEATH_EXPLOSION);
-            case FALL -> FracturedCore.getMessages().get(Messages.DEATH_FALLING);
-            case FALLING_BLOCK -> FracturedCore.getMessages().get(Messages.DEATH_BLOCKS);
+            case WORLD_BORDER -> FracturedCore.getMessages().get(Messages.DEATH_WORLD_BORDER);
+            case CONTACT -> FracturedCore.getMessages().get(Messages.DEATH_CONTACT);
+            case ENTITY_ATTACK -> FracturedCore.getMessages().get(Messages.DEATH_ENTITY_ATTACK);
+            case ENTITY_SWEEP_ATTACK -> FracturedCore.getMessages().get(Messages.DEATH_ENTITY_SWEEP_ATTACK);
+            case PROJECTILE -> FracturedCore.getMessages().get(Messages.DEATH_PROJECTILE);
+            case SUFFOCATION -> FracturedCore.getMessages().get(Messages.DEATH_SUFFOCATION);
+            case FALL -> FracturedCore.getMessages().get(Messages.DEATH_FALL);
             case FIRE, FIRE_TICK -> FracturedCore.getMessages().get(Messages.DEATH_FIRE);
+            case MELTING -> FracturedCore.getMessages().get(Messages.DEATH_MELTING);
             case LAVA -> FracturedCore.getMessages().get(Messages.DEATH_LAVA);
+            case DROWNING -> FracturedCore.getMessages().get(Messages.DEATH_DROWNED);
+            case BLOCK_EXPLOSION, ENTITY_EXPLOSION -> FracturedCore.getMessages().get(Messages.DEATH_BLOCK_EXPLOSION);
+            case VOID -> FracturedCore.getMessages().get(Messages.DEATH_VOID);
             case LIGHTNING -> FracturedCore.getMessages().get(Messages.DEATH_LIGHTNING);
-            case HOT_FLOOR -> FracturedCore.getMessages().get(Messages.DEATH_MAGMA_BLOCK);
+            case STARVATION -> FracturedCore.getMessages().get(Messages.DEATH_STARVATION);
+            case POISON -> FracturedCore.getMessages().get(Messages.DEATH_POISON);
+            case WITHER -> FracturedCore.getMessages().get(Messages.DEATH_WITHER);
+            case FALLING_BLOCK -> FracturedCore.getMessages().get(Messages.DEATH_FALLING_BLOCK);
+            case THORNS -> FracturedCore.getMessages().get(Messages.DEATH_THORNS);
+            case DRAGON_BREATH -> FracturedCore.getMessages().get(Messages.DEATH_DRAGON_BREATH);
+            case FLY_INTO_WALL -> FracturedCore.getMessages().get(Messages.DEATH_FLY_INTO_WALL);
+            case HOT_FLOOR -> FracturedCore.getMessages().get(Messages.DEATH_HOT_FLOOR);
+            case CRAMMING -> FracturedCore.getMessages().get(Messages.DEATH_CRAMMING);
+            case DRYOUT -> FracturedCore.getMessages().get(Messages.DEATH_DRYOUT);
+            case FREEZE -> FracturedCore.getMessages().get(Messages.DEATH_FREEZE);
+            case SONIC_BOOM -> FracturedCore.getMessages().get(Messages.DEATH_SONIC_BOOM);
+            case SUICIDE -> FracturedCore.getMessages().get(Messages.DEATH_SUICIDE);
             case MAGIC -> FracturedCore.getMessages().get(Messages.DEATH_MAGIC);
-            case FREEZE -> FracturedCore.getMessages().get(Messages.DEATH_POWDERED_SNOW);
-            case ENTITY_ATTACK -> FracturedCore.getMessages().get(Messages.DEATH_PLAYER_MOB);
-            case SONIC_BOOM -> FracturedCore.getMessages().get(Messages.DEATH_WARDEN_SONIC_CHARGE);
-            case PROJECTILE -> FracturedCore.getMessages().get(Messages.DEATH_PLAYER_SHOT);
-            default -> "You died from unknown causes.";
+            default -> FracturedCore.getMessages().get(Messages.DEATH_KILL);
         };
     }
 }

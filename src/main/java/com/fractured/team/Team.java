@@ -96,7 +96,7 @@ public class Team
 
         meta.setColor(colorMap.getOrDefault(color, Color.YELLOW));
 
-        meta.addEnchant(Enchantment.PROTECTION, 5, true);
+        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 5, true);
         meta.setUnbreakable(true);
         meta.setDisplayName(this.color + this.name + " team");
 
