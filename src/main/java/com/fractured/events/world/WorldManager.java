@@ -91,50 +91,124 @@ public class WorldManager implements Listener
      * materials on the left and right, and bedrock in the middle.
      * @param world not null
      */
-    private static void generateXBorder(int dist, int x0, int y0, int z0, World world, Material left, Material right)
+    private static void generateXBorder(final int dist, int x0, int y0, int z0, World world, Material left, Material right)
     {
-        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
-        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
-        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
-        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
-        // .  .  .  .  .  .  2  2  2  2  2  2  2  2  2  2
-        // .  .  .  .  .  b  @  @  @  @  @  @  @  @  @  @
-        // .  .  .  .  .  .  1  1  1  1  1  1  1  1  1  1
-        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
-        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
-        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
-        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
-        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
-        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
-        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
-        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
-        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+        // .  .  .  .  .  v  @  @  @  @  @  @  @  @  @  @  ^ -z
+        // .  .  .  .  .  .  1  1  1  1  1  1  1  1  1  1  |
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
+        // .  .  .  .  .  .  2  2  2  2  2  2  2  2  2  2  |
+        // .  .  .  .  .  v  @  @  @  @  @  @  @  @  @  @  |
+        // .  .  .  .  .  .  1  1  1  1  1  1  1  1  1  1  |
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  | v = (x0, z0) % 16   [for this case, v = (5,5)]
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
+        // .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  V +z
+        // <  -  -  -  -  -  -  -  -  -  -  -  -  -  -  >
+        // -x                                          +x
 
+        /* Where the player is in the chunk relative to the 0 corner of it.
+           (THIS IS NOT THE SAME AS CHUNK COORDINATE, THESE SCALE THE SAME
+           AS REGULAR COORDINATES) */
+        // Relative coordinates
+        int rx = x0 % 16;
+        int rz = z0 % 16;
+
+        if (rx < 0)
+        {
+            rx += 16;
+        }
+
+        if (rz < 0)
+        {
+            rz += 16;
+        }
+
+        // Chunk coordinates
         int cx = x0 >> 4; // divide by 16
         int cz = z0 >> 4; // divide by 16
 
-        Chunk chunk;
-        int i;
-
-        // dist >> 4 is the length of chunks we need to generate blocks
-        // in, (minus any extra if the distance is not even), so we still
-        // need to generate the tail end as well.
-        for (i = 0; i < dist >> 4; ++i)
+        if (rz == 0)
         {
-            chunk = world.getChunkAt(cx + i, cz);
+            // -z edge (We need to load 2 chunks)
 
-            for (int y = world.getMinHeight(); y <= y0; ++y)
+            Chunk bedrock = world.getChunkAt(cx, cz);
+            Chunk adjacent = world.getChunkAt(cx, cz - 1);
+
+            // Less than one chunk
+            if (rx + dist < 16)
             {
 
             }
-        }
 
-        chunk = world.getChunkAt(cx + i, cz);
-
-        // finish the tail end
-        for (int x = 0; x < dist % 16; ++x)
+            for (int x = rx + 1; x <= Math.min(15, rx + dist); ++x)
+            {
+                for (int y = world.getMinHeight() + 1; y <= y0; ++y)
+                {
+                    adjacent.getBlock(rx, y, 15).setType(left);
+                    bedrock.getBlock(rx, y, 0).setType(Material.BEDROCK);
+                    bedrock.getBlock(rx, y, 1).setType(right);
+                }
+            }
+        } else if (rz == 15)
         {
+            // +z edge (We need to load 2 chunks)
 
+            Chunk bedrock = world.getChunkAt(cx, cz);
+            Chunk adjacent = world.getChunkAt(cx, cz + 1);
+        } else
+        {
+            Chunk chunk = world.getChunkAt(cx, cz);
+
+            int rxAndX;
+
+            for (int x = 1; x <= Math.min(15 - rx, dist); ++x)
+            {
+                rxAndX = rx + x;
+
+                for (int y = world.getMinHeight() + 1; y <= y0; ++y)
+                {
+                    chunk.getBlock(rxAndX, y, rz - 1).setType(left);
+                    chunk.getBlock(rxAndX, y, rz).setType(Material.BEDROCK);
+                    chunk.getBlock(rxAndX, y, rz + 1).setType(right);
+                }
+            }
+
+            int i;
+
+            // Start at the next chunk, we already did one
+            // (dist - rx) >> 4 is how many chunks we need to decorate.
+            for (i = 1; i <= (dist - rx) >> 4; ++i)
+            {
+                chunk = world.getChunkAt(cx + i, cz);
+
+                for (int x = 0; x < 16; ++x)
+                {
+                    for (int y = world.getMinHeight() + 1; y <= y0; ++y)
+                    {
+                        chunk.getBlock(x, y, rz - 1).setType(left);
+                        chunk.getBlock(x, y, rz).setType(Material.BEDROCK);
+                        chunk.getBlock(x, y, rz + 1).setType(right);
+                    }
+                }
+            }
+
+            chunk = world.getChunkAt(cx + i, cz);
+
+            for (int x = 0; x < (dist - (15 - rx)) % 16; ++x)
+            {
+                for (int y = world.getMinHeight() + 1; y <= y0; ++y)
+                {
+                    chunk.getBlock(x, y, rz - 1).setType(left);
+                    chunk.getBlock(x, y, rz).setType(Material.BEDROCK);
+                    chunk.getBlock(x, y, rz + 1).setType(right);
+                }
+            }
         }
     }
 
@@ -177,8 +251,8 @@ public class WorldManager implements Listener
         // . . . x . . .
 
         generateXBorder(radius, x0, y0, z0, world, Material.RED_CONCRETE, Material.BLUE_CONCRETE);
-        generateXBorder(radius, x0 - radius - 1, y0, z0, world, Material.GREEN_CONCRETE, Material.YELLOW_CONCRETE);
         generateZBorder(radius, x0, y0, z0, world, Material.BLUE_CONCRETE, Material.YELLOW_CONCRETE);
+        generateXBorder(radius, x0 - radius - 1, y0, z0, world, Material.GREEN_CONCRETE, Material.YELLOW_CONCRETE);
         generateZBorder(radius, x0, y0, z0 - radius - 1, world, Material.RED_CONCRETE, Material.GREEN_CONCRETE);
 
         // Generate beacon, glass
