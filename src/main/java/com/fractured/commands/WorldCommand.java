@@ -22,7 +22,7 @@ public final class WorldCommand
     private static final SubCommandRegistry worldSubCommands;
 
     static
-    { //todo config messages here
+    {
         worldSubCommands = new SubCommandRegistry(0);
 
         // /world list
@@ -36,30 +36,36 @@ public final class WorldCommand
 
     public static boolean world(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
-        if (args.length == 0 || !worldSubCommands.dispatch(sender, args))
+        if (args.length == 0 || worldSubCommands.dispatch(sender, cmd, label, args))
         {
-            // usage
+            if (sender.hasPermission(Permissions.COMMAND_WORLD_ADMIN))
+            {
+                sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_WORLD_USAGE));
+            } else
+            {
+                sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_NO_PERMISSION));
+            }
         }
         return true;
     }
 
-    private static void worldTeleport(final CommandSender sender, final String[] args)
+    private static void worldTeleport(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
         if (!(sender instanceof Player))
         {
-            sender.sendMessage(FracturedCore.getMessages().get(Messages.CONSOLE_BLOCKED));
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_CONSOLE_BLOCKED));
             return;
         }
 
-        if (!sender.hasPermission(Permissions.COMMAND_WORLD_TELEPORT))
+        if (!sender.hasPermission(Permissions.COMMAND_WORLD_ADMIN))
         {
-            sender.sendMessage(FracturedCore.getMessages().get(Messages.NO_PERMISSION));
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_NO_PERMISSION));
             return;
         }
 
         if (args.length < 2)
         {
-            // usage
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_WORLD_TELEPORT_USAGE));
             return;
         }
 
@@ -67,45 +73,48 @@ public final class WorldCommand
 
         if (world == null)
         {
-            sender.sendMessage("world not found");
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.INVALID_WORLD));
             return;
         }
 
         ((Player) sender).teleport(world.getSpawnLocation());
     }
 
-    private static void worldGenerate(final CommandSender sender, final String[] args)
+    private static void worldGenerate(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
-        if (!sender.hasPermission(Permissions.COMMAND_WORLD_GENERATE))
+        if (!sender.hasPermission(Permissions.COMMAND_WORLD_ADMIN))
         {
-            sender.sendMessage(FracturedCore.getMessages().get(Messages.NO_PERMISSION));
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_NO_PERMISSION));
             return;
         }
 
         // world generate [name]
         if (args.length < 2)
         {
-            // usage
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_WORLD_GENERATE_USAGE));
             return;
         }
 
-        // todo confirm
         if (Bukkit.getWorld(args[1]) != null)
         {
-            sender.sendMessage("A world by that name already exists!");
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_WORLD_GENERATE_WORLD_ALREADY_EXISTS));
             return;
         }
 
-        sender.sendMessage("Generating...");
-        Bukkit.createWorld(new WorldCreator(args[1]));
-        sender.sendMessage("Done.");
+        ConfirmationManager.addConfirmation(sender, verifier ->
+        {
+            verifier.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_WORLD_GENERATE_BEGIN));
+            Bukkit.createWorld(new WorldCreator(args[1]));
+            verifier.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_WORLD_GENERATE_END));
+        });
+        sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_WORLD_GENERATE_CONFIRM));
     }
 
-    private static void worldList(final CommandSender sender, final String[] args)
+    private static void worldList(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
-        if (!sender.hasPermission(Permissions.COMMAND_WORLD_LIST))
+        if (!sender.hasPermission(Permissions.COMMAND_WORLD_ADMIN))
         {
-            sender.sendMessage(FracturedCore.getMessages().get(Messages.NO_PERMISSION));
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_NO_PERMISSION));
             return;
         }
 
