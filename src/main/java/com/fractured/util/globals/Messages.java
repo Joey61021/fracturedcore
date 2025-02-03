@@ -49,8 +49,6 @@ public final class Messages
 
     public static final TextConfigKey COMMAND_WORLD_USAGE = textKey("commands.world.usage");
     public static final TextConfigKey COMMAND_WORLD_TELEPORT_USAGE = textKey("commands.world.teleport.usage");
-    public static final TextConfigKey COMMAND_WORLD_INFORMATION_HEADER = textKey("commands.world.information_header");
-    public static final TextConfigKey COMMAND_WORLD_INFORMATION_COLUMN = textKey("commands.world.information_column");
     public static final TextConfigKey COMMAND_WORLD_GENERATE_USAGE = textKey("commands.world.generate.usage");
     public static final TextConfigKey COMMAND_WORLD_GENERATE_WORLD_ALREADY_EXISTS = textKey("commands.world.generate.world_already_exists");
     public static final TextConfigKey COMMAND_WORLD_GENERATE_CONFIRM = textKey("commands.world.generate.confirm");
@@ -60,13 +58,15 @@ public final class Messages
     public static final TextConfigKey COMMAND_TEAM_CHAT_TOGGLE_ON = textKey("commands.team_chat.toggle_on");
     public static final TextConfigKey COMMAND_TEAM_CHAT_TOGGLE_OFF = textKey("commands.team_chat.toggle_off");
 
-    public static final TextConfigKey CMD_SET_LOCATION_INVALID = textKey("commands.set-location.invalid");
-    public static final TextConfigKey CMD_SET_LOCATION_SET = textKey("commands.set-location.set");
+    public static final TextConfigKey CMD_SET_LOCATION_INVALID = textKey("commands.set_location.invalid");
+    public static final TextConfigKey CMD_SET_LOCATION_SET = textKey("commands.set_location.set");
 
     public static final TextConfigKey CMD_SPAWN_NOT_IN_REGION = textKey("commands.spawn.not-in-region");
     public static final TextConfigKey CMD_SPAWN_TELEPORTED = textKey("commands.spawn.teleported");
 
     public static final TextConfigKey COMMAND_BORDERS_USAGE = textKey("commands.borders.usage");
+    public static final TextConfigKey COMMAND_BORDERS_INFORMATION_HEADER = textKey("commands.borders.information_header");
+    public static final TextConfigKey COMMAND_BORDERS_INFORMATION_COLUMN = textKey("commands.borders.information_column");
     public static final TextConfigKey COMMAND_BORDERS_GENERATE_CONFIRM = textKey("commands.borders.generate.confirm");
     public static final TextConfigKey COMMAND_BORDERS_GENERATE_START = textKey("commands.borders.generate.begin");
     public static final TextConfigKey COMMAND_BORDERS_GENERATE_END = textKey("commands.borders.generate.end");
@@ -82,7 +82,15 @@ public final class Messages
     public static final TextConfigKey COMMAND_DISCORD = textKey("commands.discord");
 
     public static final TextConfigKey COMMAND_HOME_INVALID_REGION = textKey("commands.home.invalid_region");
-    public static final TextConfigKey COMMAND_HOME_SET = textKey("commands.home.set");
+    public static final TextConfigKey COMMAND_HOME_SET = textKey("commands.home.set_home");
+
+    public static final TextConfigKey COMMAND_EVENT_USAGE = textKey("commands.event.usage");
+    public static final TextConfigKey COMMAND_EVENT_NONE_ACTIVE = textKey("commands.event.no_event_active");
+    public static final TextConfigKey COMMAND_EVENT_INVALID = textKey("commands.event.invalid_event");
+    public static final TextConfigKey COMMAND_EVENT_RUN = textKey("commands.event.event_run");
+    public static final TextConfigKey COMMAND_EVENT_ACTIVE = textKey("commands.event.event_active");
+    public static final TextConfigKey COMMAND_EVENT_STOPPED = textKey("commands.event.event_stopped");
+    public static final TextConfigKey COMMAND_EVENT_STOPPED_OFFLINE = textKey("commands.event.event_stopped_offline");
 
     public static final TextConfigKey TAB_HEADER = textKey("tab.header");
     public static final TextConfigKey TAB_FOOTER_NO_TEAM = textKey("tab.footer_no_team");

@@ -1,5 +1,6 @@
 package com.fractured;
 
+import com.fractured.cevents.EventManager;
 import com.fractured.commands.*;
 import com.fractured.config.Config;
 import com.fractured.events.*;
@@ -71,7 +72,7 @@ public final class FracturedCore extends JavaPlugin {
         manager.registerEvents(new ChatListener(), this);
         manager.registerEvents(new DeathListener(), this);
         manager.registerEvents(new EntityDamageListener(), this);
-        manager.registerEvents(new ExplosionListener(), this);
+        manager.registerEvents(new ExplodeListener(), this);
         manager.registerEvents(new InventoryCloseListener(), this);
         manager.registerEvents(new JoinListener(), this);
         manager.registerEvents(new LeaveListener(), this);
@@ -95,6 +96,7 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("world").setExecutor(WorldCommand::world);
         getCommand("sethome").setExecutor(SetHomeCommand::sethome);
         getCommand("home").setExecutor(HomeCommand::home);
+        getCommand("event").setExecutor(EventCommand::event);
     }
 
     @Override
@@ -116,6 +118,9 @@ public final class FracturedCore extends JavaPlugin {
 
         // After we've regsitered events and managers (LIke MenuManager)
         storage.initServerResources();
+
+        // Register custom events (cevents)
+        EventManager.init();
     }
 
     @Override

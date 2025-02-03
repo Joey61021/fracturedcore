@@ -14,7 +14,6 @@ public class MenuManager implements Listener
 
     public MenuManager()
     {
-        // smh spigot
         if (callbacks != null)
         {
             throw new IllegalStateException("MenuManager has already been initialized");

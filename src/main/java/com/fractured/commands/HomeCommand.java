@@ -40,8 +40,8 @@ public final class HomeCommand
             return false;
         }
 
-        player.setRespawnLocation(player.getLocation());
         player.sendMessage(FracturedCore.getMessages().get(Messages.TELEPORTING));
+        player.teleport(player.getRespawnLocation() == null ? team.spawn() : player.getRespawnLocation());
         return true;
     }
 }

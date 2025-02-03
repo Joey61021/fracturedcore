@@ -15,12 +15,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public final class SettingsCommand
 {
-    // lol Java
     private SettingsCommand()
     {
     }
@@ -34,36 +30,29 @@ public final class SettingsCommand
         settingsSubCommands.register("set", SettingsCommand::settingsSet, "s");
         settingsSubCommands.register("refresh", SettingsCommand::settingsRefresh, "reload", "rl", "r");
 
-        inventory = Bukkit.createInventory(null, 3 * 9, "Settings");
+        inventory = Bukkit.createInventory(null, 9, "Settings");
 
-        // todo Perhaps make a config key which stores an itemstack or callback or something of the sort to modify the config?
-        ItemStack item = new ItemStack(FracturedCore.getFracturedConfig().get(ConfigKeys.FRIENDLY_FIRE) ? Material.GREEN_CONCRETE : Material.RED_CONCRETE);
+        ItemStack item = new ItemStack(Material.BOW);
         ItemMeta meta = item.getItemMeta();
-        List<String> lore = new ArrayList<>();
+
 
         if (meta != null)
         {
-            meta.setDisplayName(ChatColor.GRAY + "Friendly Fire: " + ChatColor.GREEN + " On");
-            lore.add(ConfigKeys.FRIENDLY_FIRE.getPath() + ": true");
-
-            meta.setLore(lore);
+            meta.setDisplayName(ChatColor.GRAY + "Friendly Fire: " + (FracturedCore.getFracturedConfig().get(ConfigKeys.FRIENDLY_FIRE) ? ChatColor.GREEN + "On" : ChatColor.RED + "Off"));
             item.setItemMeta(meta);
         }
 
-        inventory.addItem(item);
+        inventory.setItem(1, item);
 
-        item = new ItemStack(FracturedCore.getFracturedConfig().get(ConfigKeys.STARTER_ITEMS) ? Material.GREEN_CONCRETE : Material.RED_CONCRETE);
+        item = new ItemStack(Material.WOODEN_PICKAXE);
 
         if (meta != null)
         {
-            meta.setDisplayName(ChatColor.GRAY + "Starter Items: " + ChatColor.GREEN + " On");
-            lore.set(0, ConfigKeys.STARTER_ITEMS.getPath() + ": true");
-
-            meta.setLore(lore);
+            meta.setDisplayName(ChatColor.GRAY + "Starter Items: " +(FracturedCore.getFracturedConfig().get(ConfigKeys.STARTER_ITEMS) ? ChatColor.GREEN + "On" : ChatColor.RED + "Off"));
             item.setItemMeta(meta);
         }
 
-        inventory.addItem(item);
+        inventory.setItem(7, item);
     }
 
     public static boolean settings(final CommandSender sender, final Command cmd, final String label, final String[] args)
@@ -81,7 +70,6 @@ public final class SettingsCommand
                 sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_SETTINGS_CONSOLE_USAGE));
                 return true;
             }
-            // todo this inventory still needs done
             ((Player) sender).openInventory(inventory);
         } else if (settingsSubCommands.dispatch(sender, cmd, label, args))
         {
