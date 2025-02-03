@@ -111,6 +111,16 @@ commands:
   home:
     invalid_region: "&cYou cannot set your home here!"
     set_home: "&fYour home has been &eset&f!"
+  event:
+    usage: "&cUsage:\n
+            - /event start [event]\n
+            - /event stop"
+    no_event_active: "&cThere is no event active, to start one run /event start [event]!"
+    invalid_event: "&cSorry, but this is not a valid event!"
+    event_run: "&fEvent %event% &fis now being run for &a%time% &fminutes!"
+    event_active: "&cAn event is already active. Please wait for the event to finish or alternatively run /event stop."
+    event_stopped: "&cThe %event% &cevent event has been stopped!"
+    event_stopped_offline: "&cThe %event% event has been stopped because there are not enough players online!"
 deaths:
   kill: "%victim% &fdied"
   world_border: "%victim% left the confines of this world"

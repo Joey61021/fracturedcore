@@ -40,10 +40,10 @@ public final class BordersCommand
 
             if (args.length == 0)
             {
-                sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_WORLD_INFORMATION_HEADER));
+                sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_BORDERS_INFORMATION_HEADER));
                 for (World worlds : Bukkit.getWorlds())
                 {
-                    sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_WORLD_INFORMATION_COLUMN).replace("%world%", worlds.getName()).replace("%size%", String.valueOf(worlds.getWorldBorder().getSize())));
+                    sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_BORDERS_INFORMATION_COLUMN).replace("%world%", worlds.getName()).replace("%size%", String.valueOf(worlds.getWorldBorder().getSize())));
                 }
                 return;
             }
