@@ -21,7 +21,14 @@ commands:
   upgrades:
     aliases: []
   confirm:
+    aliases: []
   world:
+    aliases: []
   sethome:
+    aliases: []
   home:
+    aliases: []
   event:
+    aliases: []
+  shield:
+    aliases: []
