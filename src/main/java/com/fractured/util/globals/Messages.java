@@ -15,6 +15,9 @@ public final class Messages
     public static final TextConfigKey TEAM_INVENTORY_CLOSED = textKey("generic.team_inventory_closed");
     public static final TextConfigKey FRIENDLY_FIRE_DISABLED = textKey("generic.friendly_fire_disabled");
     public static final TextConfigKey CANNOT_SLEEP_HERE = textKey("generic.cannot_sleep_here");
+    public static final TextConfigKey ENEMY_TEAM_BLOCKED = textKey("generic.enemy_team_blocked");
+    public static final TextConfigKey MUST_BE_INT = textKey("generic.must_be_int");
+    public static final TextConfigKey TELEPORTING = textKey("generic.teleporting");
 
     public static final TextConfigKey REGION_TEAM_ALERTED = textKey("generic.region.team_alerted");
     public static final TextConfigKey REGION_TEAM_OFFLINE = textKey("generic.region.team_offline");
@@ -46,6 +49,8 @@ public final class Messages
 
     public static final TextConfigKey COMMAND_WORLD_USAGE = textKey("commands.world.usage");
     public static final TextConfigKey COMMAND_WORLD_TELEPORT_USAGE = textKey("commands.world.teleport.usage");
+    public static final TextConfigKey COMMAND_WORLD_INFORMATION_HEADER = textKey("commands.world.information_header");
+    public static final TextConfigKey COMMAND_WORLD_INFORMATION_COLUMN = textKey("commands.world.information_column");
     public static final TextConfigKey COMMAND_WORLD_GENERATE_USAGE = textKey("commands.world.generate.usage");
     public static final TextConfigKey COMMAND_WORLD_GENERATE_WORLD_ALREADY_EXISTS = textKey("commands.world.generate.world_already_exists");
     public static final TextConfigKey COMMAND_WORLD_GENERATE_CONFIRM = textKey("commands.world.generate.confirm");
@@ -76,11 +81,15 @@ public final class Messages
 
     public static final TextConfigKey COMMAND_DISCORD = textKey("commands.discord");
 
+    public static final TextConfigKey COMMAND_HOME_INVALID_REGION = textKey("commands.home.invalid_region");
+    public static final TextConfigKey COMMAND_HOME_SET = textKey("commands.home.set");
+
     public static final TextConfigKey TAB_HEADER = textKey("tab.header");
     public static final TextConfigKey TAB_FOOTER_NO_TEAM = textKey("tab.footer_no_team");
     public static final TextConfigKey TAB_FOOTER_TEAM = textKey("tab.footer_team");
 
     public static final String PLUGIN_RESTARTING = ChatColor.YELLOW + "Server Restarting...";
+    public static final String PLUGIN_INVALID_STATE = ChatColor.RED + "&cInvalid state. Please contact a server administrator.";
 
     public static final TextConfigKey DEATH_KILL = textKey("deaths.kill");
     public static final TextConfigKey DEATH_WORLD_BORDER = textKey("deaths.world_border");
@@ -91,14 +100,11 @@ public final class Messages
     public static final TextConfigKey DEATH_SUFFOCATION = textKey("deaths.suffocation");
     public static final TextConfigKey DEATH_FALL = textKey("deaths.fall");
     public static final TextConfigKey DEATH_FIRE = textKey("deaths.fire");
-    public static final TextConfigKey DEATH_FIRE_TICK = textKey("deaths.fire_tick");
     public static final TextConfigKey DEATH_MELTING = textKey("deaths.melting");
     public static final TextConfigKey DEATH_LAVA = textKey("deaths.lava");
     public static final TextConfigKey DEATH_MAGIC = textKey("deaths.magic");
-    public static final TextConfigKey DEATH_POWDER_SNOW = textKey("deaths.powder_snow");
     public static final TextConfigKey DEATH_DROWNED = textKey("deaths.drowned");
     public static final TextConfigKey DEATH_BLOCK_EXPLOSION = textKey("deaths.block_explosion");
-    public static final TextConfigKey DEATH_ENTITY_EXPLOSION = textKey("deaths.entity_explosion");
     public static final TextConfigKey DEATH_VOID = textKey("deaths.void");
     public static final TextConfigKey DEATH_LIGHTNING = textKey("deaths.lightning");
     public static final TextConfigKey DEATH_SUICIDE = textKey("deaths.suicide");

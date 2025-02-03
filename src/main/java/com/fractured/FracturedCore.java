@@ -70,6 +70,8 @@ public final class FracturedCore extends JavaPlugin {
         manager.registerEvents(new WorldManager(), this);
         manager.registerEvents(new ChatListener(), this);
         manager.registerEvents(new DeathListener(), this);
+        manager.registerEvents(new EntityDamageListener(), this);
+        manager.registerEvents(new ExplosionListener(), this);
         manager.registerEvents(new InventoryCloseListener(), this);
         manager.registerEvents(new JoinListener(), this);
         manager.registerEvents(new LeaveListener(), this);
@@ -91,6 +93,8 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("upgrades").setExecutor(UpgradesCommand::upgrades);
         getCommand("confirm").setExecutor(ConfirmationManager::confirm);
         getCommand("world").setExecutor(WorldCommand::world);
+        getCommand("sethome").setExecutor(SetHomeCommand::sethome);
+        getCommand("home").setExecutor(HomeCommand::home);
     }
 
     @Override

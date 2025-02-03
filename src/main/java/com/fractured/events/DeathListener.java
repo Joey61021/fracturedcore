@@ -37,6 +37,10 @@ public class DeathListener implements Listener {
         if (victim.getHealth() - event.getFinalDamage() <= 0)
         {
             victim.getInventory().setHelmet(null);
+            // if cause was from an entity
+            if (event.getDamageSource().getCausingEntity() != null) {
+                return;
+            }
             callDeath(event.getCause(), victim, null);
         }
     }
@@ -55,9 +59,14 @@ public class DeathListener implements Listener {
         }
     }
 
-    private static void callDeath(EntityDamageEvent.DamageCause cause, Player victim, @Nullable Entity target)
+    private static void callDeath(EntityDamageEvent.DamageCause cause, Player victim, @Nullable Entity attacker)
     {
-        Bukkit.broadcastMessage(getDeathMessage(cause));
+        String attackerName = "&7None";
+        if (attacker != null) {
+            attackerName = attacker instanceof Player ? ((Player) attacker).getDisplayName() : attacker.getName();
+        }
+
+        Bukkit.broadcastMessage(getDeathMessage(cause).replace("%victim%", victim.getDisplayName()).replace("%attacker%", attackerName));
     }
 
     private static String getDeathMessage(EntityDamageEvent.DamageCause cause)

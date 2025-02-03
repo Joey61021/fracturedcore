@@ -57,7 +57,7 @@ public final class SettingsCommand
         if (meta != null)
         {
             meta.setDisplayName(ChatColor.GRAY + "Starter Items: " + ChatColor.GREEN + " On");
-            lore.set(0, ConfigKeys.FRIENDLY_FIRE.getPath() + ": true");
+            lore.set(0, ConfigKeys.STARTER_ITEMS.getPath() + ": true");
 
             meta.setLore(lore);
             item.setItemMeta(meta);
