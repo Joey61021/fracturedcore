@@ -367,10 +367,10 @@ public class WorldManager implements Listener
 
         Block block = event.getBlock();
         Player player = event.getPlayer();
-        ItemStack item = event.getPlayer().getItemInUse();
+        ItemStack item = event.getPlayer().getItemInHand();
 
         // Item cannot be null
-        if (item == null || item.getItemMeta() == null || item.getType().equals(Material.AIR))
+        if (item.getItemMeta() == null || item.getType().equals(Material.AIR))
         {
             return;
         }
@@ -384,7 +384,7 @@ public class WorldManager implements Listener
             if (item.getType().equals(Material.NETHERITE_PICKAXE))
             {
 
-                Material drop = switch (item.getType()) {
+                Material drop = switch (block.getType()) {
                     case IRON_ORE, DEEPSLATE_IRON_ORE -> Material.IRON_INGOT;
                     case GOLD_ORE, DEEPSLATE_GOLD_ORE -> Material.GOLD_INGOT;
                     case COPPER_ORE, DEEPSLATE_COPPER_ORE -> Material.COPPER_INGOT;
@@ -396,15 +396,15 @@ public class WorldManager implements Listener
             }
 
             // CUSTOM ENCHANT - TREE HARVASTER
-            if (item.getType().equals(Material.NETHERITE_AXE) && item.getType().name().toLowerCase().contains("log"))
+            if (item.getType().equals(Material.NETHERITE_AXE) && block.getType().name().toLowerCase().contains("log"))
             {
                 Set<Block> blocks = new HashSet<>();
-                // Radius is determined by the level, 3*level. For this case lets say the level is 2, so 3*2
-                getNearbyBlocks(false, block, 3*2, blocks);
+                // Radius is determined by the level, 3*level. For this case lets say the level is 3, so 3*3
+                getNearbyBlocks(false, block, 3*3, blocks);
 
                 for (Block b : blocks) {
-                    b.setType(Material.AIR);
                     b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(b.getType()));
+                    b.setType(Material.AIR);
                 }
 
                 blocks.clear();
@@ -417,8 +417,8 @@ public class WorldManager implements Listener
                 getNearbyBlocks(true, block, 9, blocks);
 
                 for (Block b : blocks) {
-                    b.setType(Material.AIR);
                     b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(b.getType()));
+                    b.setType(Material.AIR);
                 }
 
                 blocks.clear();
