@@ -1,6 +1,7 @@
 package com.fractured.user;
 
 import com.fractured.team.Team;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -19,11 +20,16 @@ public class User
      * Mapping the upgrade_id to the upgrade level
      */
     private final Map<Integer, Integer> upgrades;
+    /**
+     * Last region alert location to prevent spam
+     */
+    private Location lastAlert;
 
     public User(UUID uuid)
     {
         this.uuid = uuid;
         upgrades = new HashMap<>();
+        lastAlert = null;
     }
 
     public UUID getUuid()
@@ -67,5 +73,15 @@ public class User
         // (coupled with a check that checks before you set in team chat if you are in
         // a team)
         inTeamChat = false;
+    }
+
+    public void setLastAlert(Location location)
+    {
+        this.lastAlert = location;
+    }
+
+    public Location getLastAlert()
+    {
+        return lastAlert;
     }
 }

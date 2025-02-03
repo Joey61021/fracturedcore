@@ -2,12 +2,12 @@ package com.fractured.events.world;
 
 import com.fractured.FracturedCore;
 import com.fractured.config.Config;
-import com.fractured.team.ClaimManager;
 import com.fractured.team.Claim;
+import com.fractured.team.ClaimManager;
+import com.fractured.team.Team;
 import com.fractured.user.User;
 import com.fractured.user.UserManager;
 import com.fractured.util.globals.Messages;
-import com.fractured.team.Team;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -432,8 +432,13 @@ public class WorldManager implements Listener
                 player.sendMessage(FracturedCore.getMessages().get(Messages.REGION_TEAM_OFFLINE));
             } else
             {
-                // todo config messages
+                // If last alert location is less than 5 blocks away, cancel to prevent spam
+                if (user.getLastAlert() != null && player.getLocation().distance(user.getLastAlert()) < 10)
+                {
+                    return;
+                }
                 // Alert the enemy team
+                user.setLastAlert(player.getLocation());
                 claim.getTeam().alert("There is activity in your claim at (" + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ() + ")!");
             }
         }
