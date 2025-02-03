@@ -71,7 +71,7 @@ public final class FracturedCore extends JavaPlugin {
         manager.registerEvents(new ChatListener(), this);
         manager.registerEvents(new DeathListener(), this);
         manager.registerEvents(new EntityDamageListener(), this);
-        manager.registerEvents(new ExplosionListener(), this);
+        manager.registerEvents(new ExplodeListener(), this);
         manager.registerEvents(new InventoryCloseListener(), this);
         manager.registerEvents(new JoinListener(), this);
         manager.registerEvents(new LeaveListener(), this);

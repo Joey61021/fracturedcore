@@ -60,8 +60,8 @@ public final class Messages
     public static final TextConfigKey COMMAND_TEAM_CHAT_TOGGLE_ON = textKey("commands.team_chat.toggle_on");
     public static final TextConfigKey COMMAND_TEAM_CHAT_TOGGLE_OFF = textKey("commands.team_chat.toggle_off");
 
-    public static final TextConfigKey CMD_SET_LOCATION_INVALID = textKey("commands.set-location.invalid");
-    public static final TextConfigKey CMD_SET_LOCATION_SET = textKey("commands.set-location.set");
+    public static final TextConfigKey CMD_SET_LOCATION_INVALID = textKey("commands.set_location.invalid");
+    public static final TextConfigKey CMD_SET_LOCATION_SET = textKey("commands.set_location.set");
 
     public static final TextConfigKey CMD_SPAWN_NOT_IN_REGION = textKey("commands.spawn.not-in-region");
     public static final TextConfigKey CMD_SPAWN_TELEPORTED = textKey("commands.spawn.teleported");
@@ -82,7 +82,7 @@ public final class Messages
     public static final TextConfigKey COMMAND_DISCORD = textKey("commands.discord");
 
     public static final TextConfigKey COMMAND_HOME_INVALID_REGION = textKey("commands.home.invalid_region");
-    public static final TextConfigKey COMMAND_HOME_SET = textKey("commands.home.set");
+    public static final TextConfigKey COMMAND_HOME_SET = textKey("commands.home.set_home");
 
     public static final TextConfigKey TAB_HEADER = textKey("tab.header");
     public static final TextConfigKey TAB_FOOTER_NO_TEAM = textKey("tab.footer_no_team");
