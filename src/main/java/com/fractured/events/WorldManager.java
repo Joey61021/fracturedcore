@@ -11,6 +11,7 @@ import com.fractured.util.globals.Messages;
 import com.fractured.util.globals.Permissions;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -21,6 +22,9 @@ import org.bukkit.event.block.BlockEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class WorldManager implements Listener
 {
@@ -392,10 +396,35 @@ public class WorldManager implements Listener
             }
 
             // CUSTOM ENCHANT - TREE HARVASTER
-            if (item.getType().equals(Material.NETHERITE_AXE))
+            if (item.getType().equals(Material.NETHERITE_AXE) && item.getType().name().toLowerCase().contains("log"))
             {
+                Set<Block> blocks = new HashSet<>();
+                // Radius is determined by the level, 3*level. For this case lets say the level is 2, so 3*2
+                getNearbyBlocks(block, 3*2, blocks);
 
+                for (Block b : blocks) {
+                    b.setType(Material.AIR);
+                    b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(b.getType()));
+                }
 
+                blocks.clear();
+            }
+        }
+    }
+
+    public static void getNearbyBlocks(Block block, int radius, Set<Block> blocks)
+    {
+        if (blocks.size() >= radius)
+        {
+            return;
+        }
+
+        blocks.add(block);
+
+        for (BlockFace face : BlockFace.values()) {
+            Block relative = block.getRelative(face);
+            if (relative.getType().equals(block.getType()) && !blocks.contains(relative)) {
+                getNearbyBlocks(relative, radius, blocks);
             }
         }
     }
