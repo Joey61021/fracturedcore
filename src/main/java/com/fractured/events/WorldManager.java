@@ -1,4 +1,4 @@
-package com.fractured.events.world;
+package com.fractured.events;
 
 import com.fractured.FracturedCore;
 import com.fractured.config.Config;
@@ -8,6 +8,7 @@ import com.fractured.team.Team;
 import com.fractured.user.User;
 import com.fractured.user.UserManager;
 import com.fractured.util.globals.Messages;
+import com.fractured.util.globals.Permissions;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -359,6 +360,44 @@ public class WorldManager implements Listener
     public static void onBreak(BlockBreakEvent event)
     {
         onBlockChange(event.getPlayer(), event);
+
+        Block block = event.getBlock();
+        Player player = event.getPlayer();
+        ItemStack item = event.getPlayer().getItemInUse();
+
+        // Item cannot be null
+        if (item == null || item.getItemMeta() == null || item.getType().equals(Material.AIR))
+        {
+            return;
+        }
+
+        // todo fixme
+        // Testing purposes only - enchant logic, remove when enchants are setup
+        if (player.hasPermission(Permissions.COMMAND_WORLD_ADMIN) && item.getItemMeta().hasEnchants() && item.getItemMeta().hasEnchant(Enchantment.DURABILITY))
+        {
+
+            // CUSTOM ENCHANT - AUTOSMELT
+            if (item.getType().equals(Material.NETHERITE_PICKAXE))
+            {
+
+                Material drop = switch (item.getType()) {
+                    case IRON_ORE, DEEPSLATE_IRON_ORE -> Material.IRON_INGOT;
+                    case GOLD_ORE, DEEPSLATE_GOLD_ORE -> Material.GOLD_INGOT;
+                    case COPPER_ORE, DEEPSLATE_COPPER_ORE -> Material.COPPER_INGOT;
+                    default -> Material.AIR;
+                };
+                event.setDropItems(false);
+                block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(drop));
+                return;
+            }
+
+            // CUSTOM ENCHANT - TREE HARVASTER
+            if (item.getType().equals(Material.NETHERITE_AXE))
+            {
+
+
+            }
+        }
     }
 
     @EventHandler

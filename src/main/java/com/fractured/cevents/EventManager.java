@@ -2,7 +2,7 @@ package com.fractured.cevents;
 
 import com.fractured.FracturedCore;
 import com.fractured.cevents.loot.LootItem;
-import com.fractured.events.world.WorldManager;
+import com.fractured.events.WorldManager;
 import com.fractured.util.Utils;
 import com.fractured.util.globals.Messages;
 import net.md_5.bungee.api.ChatColor;

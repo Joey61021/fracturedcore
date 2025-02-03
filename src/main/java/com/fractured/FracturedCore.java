@@ -6,7 +6,7 @@ import com.fractured.config.Config;
 import com.fractured.events.*;
 import com.fractured.events.inventory.InventoryClickListener;
 import com.fractured.events.inventory.InventoryCloseListener;
-import com.fractured.events.world.WorldManager;
+import com.fractured.events.WorldManager;
 import com.fractured.menu.MenuManager;
 import com.fractured.storage.Storage;
 import com.fractured.user.UserManager;

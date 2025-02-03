@@ -1,7 +1,7 @@
 package com.fractured.commands;
 
 import com.fractured.FracturedCore;
-import com.fractured.events.world.WorldManager;
+import com.fractured.events.WorldManager;
 import com.fractured.team.Claim;
 import com.fractured.team.ClaimManager;
 import com.fractured.team.Team;
