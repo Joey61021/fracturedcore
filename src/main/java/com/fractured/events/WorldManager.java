@@ -400,7 +400,21 @@ public class WorldManager implements Listener
             {
                 Set<Block> blocks = new HashSet<>();
                 // Radius is determined by the level, 3*level. For this case lets say the level is 2, so 3*2
-                getNearbyBlocks(block, 3*2, blocks);
+                getNearbyBlocks(false, block, 3*2, blocks);
+
+                for (Block b : blocks) {
+                    b.setType(Material.AIR);
+                    b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(b.getType()));
+                }
+
+                blocks.clear();
+            }
+
+            // CUSTOM ENCHANT - BREAK 3x3x3
+            if (item.getType().equals(Material.DIAMOND_PICKAXE))
+            {
+                Set<Block> blocks = new HashSet<>();
+                getNearbyBlocks(true, block, 9, blocks);
 
                 for (Block b : blocks) {
                     b.setType(Material.AIR);
@@ -412,7 +426,7 @@ public class WorldManager implements Listener
         }
     }
 
-    public static void getNearbyBlocks(Block block, int radius, Set<Block> blocks)
+    public static void getNearbyBlocks(boolean ignoreType, Block block, int radius, Set<Block> blocks)
     {
         if (blocks.size() >= radius)
         {
@@ -423,8 +437,8 @@ public class WorldManager implements Listener
 
         for (BlockFace face : BlockFace.values()) {
             Block relative = block.getRelative(face);
-            if (relative.getType().equals(block.getType()) && !blocks.contains(relative)) {
-                getNearbyBlocks(relative, radius, blocks);
+            if ((ignoreType || relative.getType().equals(block.getType())) && !blocks.contains(relative)) {
+                getNearbyBlocks(true, relative, radius, blocks);
             }
         }
     }
