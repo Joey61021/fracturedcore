@@ -28,8 +28,8 @@ public final class JoinListener implements Listener
         User user = UserManager.getUser(player.getUniqueId());
         if (user == null)
         {
-            // Shouldn't be null, but it was once. Why? Don't know.
-            player.kickPlayer("Invalid state.");
+            // shouldn't ever be called
+            player.kickPlayer(Messages.PLUGIN_INVALID_STATE);
             return;
         }
 
@@ -44,7 +44,8 @@ public final class JoinListener implements Listener
             player.teleport(WorldManager.getSpawn());
             TeamCache.openMenu(player); // open team menu
             event.setJoinMessage(ChatColor.GRAY + player.getName() + ChatColor.WHITE + " has connected");
-        } else
+        }
+        else
         {
             event.setJoinMessage(team.color() + player.getName() + ChatColor.WHITE + " has connected");
             team.memberJoined(player);

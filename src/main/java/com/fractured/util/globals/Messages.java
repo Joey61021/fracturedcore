@@ -89,6 +89,7 @@ public final class Messages
     public static final TextConfigKey TAB_FOOTER_TEAM = textKey("tab.footer_team");
 
     public static final String PLUGIN_RESTARTING = ChatColor.YELLOW + "Server Restarting...";
+    public static final String PLUGIN_INVALID_STATE = ChatColor.RED + "&cInvalid state. Please contact a server administrator.";
 
     public static final TextConfigKey DEATH_KILL = textKey("deaths.kill");
     public static final TextConfigKey DEATH_WORLD_BORDER = textKey("deaths.world_border");

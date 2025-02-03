@@ -3,10 +3,13 @@ package com.fractured.team;
 import com.fractured.FracturedCore;
 import com.fractured.user.User;
 import com.fractured.user.UserManager;
+import com.fractured.util.globals.ConfigKeys;
 import com.fractured.util.globals.Messages;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class TeamManager
 {
@@ -45,6 +48,13 @@ public class TeamManager
 
         // Messages
         player.sendMessage("Joined " + team.getName() + " team...");
+
+        if (FracturedCore.getFracturedConfig().get(ConfigKeys.STARTER_ITEMS))
+        {
+            player.getInventory().addItem(new ItemStack(Material.WOODEN_SWORD));
+            player.getInventory().addItem(new ItemStack(Material.WOODEN_AXE));
+            player.getInventory().addItem(new ItemStack(Material.WOODEN_PICKAXE));
+        }
     }
 
     /**
