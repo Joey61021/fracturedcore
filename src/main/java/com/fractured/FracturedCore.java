@@ -3,6 +3,7 @@ package com.fractured;
 import com.fractured.cevents.EventManager;
 import com.fractured.commands.*;
 import com.fractured.config.Config;
+import com.fractured.enchants.EnchantmentManager;
 import com.fractured.events.*;
 import com.fractured.events.inventory.InventoryClickListener;
 import com.fractured.events.inventory.InventoryCloseListener;
@@ -13,6 +14,7 @@ import com.fractured.user.UserManager;
 import com.fractured.util.globals.ConfigKeys;
 import com.fractured.util.globals.Messages;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,6 +48,11 @@ public final class FracturedCore extends JavaPlugin {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, runnable);
     }
 
+    public static NamespacedKey newNamespacedKey(String key)
+    {
+        return new NamespacedKey(plugin, key);
+    }
+
     public static Config getFracturedConfig()
     {
         return config;
@@ -69,6 +76,8 @@ public final class FracturedCore extends JavaPlugin {
         manager.registerEvents(new UserManager(), this);
         manager.registerEvents(menuManager, this);
         manager.registerEvents(new WorldManager(), this);
+        manager.registerEvents(new EnchantmentManager(), this);
+
         manager.registerEvents(new ChatListener(), this);
         manager.registerEvents(new DeathListener(), this);
         manager.registerEvents(new EntityDamageListener(), this);
@@ -88,7 +97,7 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("coords").setExecutor(CoordsCommand::coords);
         getCommand("teamchat").setExecutor(TeamChatCommand::teamchat);
         getCommand("team").setExecutor(TeamCommand::team);
-        getCommand("settings").setExecutor(SettingsCommand::settings);
+        getCommand("configs").setExecutor(ConfigsCommand::configs);
         getCommand("borders").setExecutor(BordersCommand::borders);
         getCommand("discord").setExecutor(DiscordCommand::discord);
         getCommand("upgrades").setExecutor(UpgradesCommand::upgrades);
@@ -97,6 +106,8 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("sethome").setExecutor(SetHomeCommand::sethome);
         getCommand("home").setExecutor(HomeCommand::home);
         getCommand("event").setExecutor(EventCommand::event);
+        getCommand("test").setExecutor(TestCommand::test);
+        getCommand("customenchant").setExecutor(CustomEnchantCommand::customEnchant);
     }
 
     @Override
