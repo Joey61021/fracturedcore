@@ -5,6 +5,8 @@ import com.fractured.commands.subcommand.SubCommandRegistry;
 import com.fractured.events.world.WorldManager;
 import com.fractured.util.globals.Messages;
 import com.fractured.util.globals.Permissions;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -30,11 +32,19 @@ public final class BordersCommand
     {
         FracturedCore.runAsync(() ->
         {
-            // todo /borders sends border information
-
             if (!sender.hasPermission(Permissions.COMMAND_BORDERS_ADMIN))
             {
                 sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_NO_PERMISSION));
+                return;
+            }
+
+            if (args.length == 0)
+            {
+                sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_WORLD_INFORMATION_HEADER));
+                for (World worlds : Bukkit.getWorlds())
+                {
+                    sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_WORLD_INFORMATION_COLUMN).replace("%world%", worlds.getName()).replace("%size%", String.valueOf(worlds.getWorldBorder().getSize())));
+                }
                 return;
             }
 
@@ -66,8 +76,7 @@ public final class BordersCommand
             size = Integer.parseInt(args[1]);
         } catch (NumberFormatException e)
         {
-            // fixme
-            sender.sendMessage("Size must be an integer");
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.MUST_BE_INT));
             return;
         }
 
@@ -92,8 +101,7 @@ public final class BordersCommand
             size = Integer.parseInt(args[1]);
         } catch (NumberFormatException e)
         {
-            // fixme
-            sender.sendMessage("Size must be an integer");
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.MUST_BE_INT));
             return;
         }
 

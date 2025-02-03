@@ -8,6 +8,8 @@ generic:
   friendly_fire_disabled: "&cYou cannot attack your own team!"
   already_in_team: "&cYou are already in a team!"
   cannot_sleep: "&cYou cannot sleep in enemy team regions!"
+  must_be_int: "&cArgument must be an integer!"
+  teleporting: "&fYou are being &eteleported&f..."
   region:
     team_alerted: "&4The %team% team has been alerted of your location."
     team_offline: "&cYou are unable to complete this action while this team is offline!"
@@ -29,7 +31,6 @@ commands:
   no_team_blocked: "&cYou cannot run this command without being in a team!"
   not_in_claim: "&cYou are not in any team claim."
   enemy_team_blocked: "&cYou cannot execute this command in an enemy region!"
-  teleporting: "&fYou are being &eteleported&f..."
   world:
     usage: "&cUsage:\n
             - /world teleport [world]\n
@@ -91,6 +92,8 @@ commands:
     usage: "&cUsage:\n
             - /borders generate [size]\n
             - /borders extend [size]"
+    information_header: "&eBorder &f| &eInformation"
+    information_column: "&f- %world% size: &a%size%"
     generate:
       confirm: "&cAre you sure you want to generate team borders at your current location? Doing so will cause immense lag to the server. Type /confirm to proceed."
       begin: "&7Generating, please wait..."

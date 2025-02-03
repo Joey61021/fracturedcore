@@ -16,6 +16,7 @@ public final class Messages
     public static final TextConfigKey FRIENDLY_FIRE_DISABLED = textKey("generic.friendly_fire_disabled");
     public static final TextConfigKey CANNOT_SLEEP_HERE = textKey("generic.cannot_sleep_here");
     public static final TextConfigKey ENEMY_TEAM_BLOCKED = textKey("generic.enemy_team_blocked");
+    public static final TextConfigKey MUST_BE_INT = textKey("generic.must_be_int");
     public static final TextConfigKey TELEPORTING = textKey("generic.teleporting");
 
     public static final TextConfigKey REGION_TEAM_ALERTED = textKey("generic.region.team_alerted");
@@ -48,6 +49,8 @@ public final class Messages
 
     public static final TextConfigKey COMMAND_WORLD_USAGE = textKey("commands.world.usage");
     public static final TextConfigKey COMMAND_WORLD_TELEPORT_USAGE = textKey("commands.world.teleport.usage");
+    public static final TextConfigKey COMMAND_WORLD_INFORMATION_HEADER = textKey("commands.world.information_header");
+    public static final TextConfigKey COMMAND_WORLD_INFORMATION_COLUMN = textKey("commands.world.information_column");
     public static final TextConfigKey COMMAND_WORLD_GENERATE_USAGE = textKey("commands.world.generate.usage");
     public static final TextConfigKey COMMAND_WORLD_GENERATE_WORLD_ALREADY_EXISTS = textKey("commands.world.generate.world_already_exists");
     public static final TextConfigKey COMMAND_WORLD_GENERATE_CONFIRM = textKey("commands.world.generate.confirm");
