@@ -2,7 +2,7 @@ package com.fractured.commands;
 
 import com.fractured.FracturedCore;
 import com.fractured.commands.subcommand.SubCommandRegistry;
-import com.fractured.events.world.WorldManager;
+import com.fractured.events.WorldManager;
 import com.fractured.util.globals.Messages;
 import com.fractured.util.globals.Permissions;
 import org.bukkit.Bukkit;

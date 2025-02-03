@@ -1,7 +1,6 @@
 package com.fractured.events;
 
 import com.fractured.FracturedCore;
-import com.fractured.events.world.WorldManager;
 import com.fractured.team.Team;
 import com.fractured.team.TeamCache;
 import com.fractured.user.User;
