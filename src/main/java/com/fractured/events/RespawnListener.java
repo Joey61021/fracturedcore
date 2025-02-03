@@ -1,14 +1,11 @@
 package com.fractured.events;
 
 import com.fractured.FracturedCore;
-import com.fractured.commands.SettingsCommand;
 import com.fractured.team.Team;
-import com.fractured.team.upgrades.UpgradeCache;
 import com.fractured.user.User;
 import com.fractured.user.UserManager;
 import com.fractured.util.globals.ConfigKeys;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
