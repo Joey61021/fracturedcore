@@ -11,7 +11,6 @@ import com.fractured.util.globals.Messages;
 import com.fractured.util.globals.Permissions;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -402,11 +401,7 @@ public class WorldManager implements Listener
                 // Radius is determined by the level, 3*level. For this case lets say the level is 3, so 3*3
                 getNearbyBlocks(false, block, 3*3, blocks);
 
-                for (Block b : blocks) {
-                    b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(b.getType()));
-                    b.setType(Material.AIR);
-                }
-
+                blocks.forEach(Block::breakNaturally);
                 blocks.clear();
             }
 
@@ -414,31 +409,32 @@ public class WorldManager implements Listener
             if (item.getType().equals(Material.DIAMOND_PICKAXE))
             {
                 Set<Block> blocks = new HashSet<>();
-                getNearbyBlocks(true, block, 9, blocks);
+                getNearbyBlocks(true, block, 2, blocks);
 
-                for (Block b : blocks) {
-                    b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(b.getType()));
-                    b.setType(Material.AIR);
-                }
-
+                blocks.forEach(Block::breakNaturally);
                 blocks.clear();
             }
         }
     }
 
-    public static void getNearbyBlocks(boolean ignoreType, Block block, int radius, Set<Block> blocks)
-    {
-        if (blocks.size() >= radius)
-        {
-            return;
-        }
+    public static void getNearbyBlocks(boolean checkType, Block block, int radius, Set<Block> blocks) {
+        int bx = block.getX();
+        int by = block.getY();
+        int bz = block.getZ();
 
-        blocks.add(block);
+        World world = block.getWorld();
 
-        for (BlockFace face : BlockFace.values()) {
-            Block relative = block.getRelative(face);
-            if ((ignoreType || relative.getType().equals(block.getType())) && !blocks.contains(relative)) {
-                getNearbyBlocks(true, relative, radius, blocks);
+        for (int x = -radius; x <= radius; x++) {
+            for (int y = -radius; y <= radius; y++) {
+                for (int z = -radius; z <= radius; z++) {
+                    Block relative = world.getBlockAt(bx + x, by + y, bz + z);
+
+                    // Check if within spherical radius (optional)
+                    if ((relative.getType().equals(block.getType()) || checkType) &&relative.getLocation().distance(block.getLocation()) <= radius) {
+                        blocks.add(relative);
+
+                    }
+                }
             }
         }
     }
