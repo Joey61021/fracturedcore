@@ -7,10 +7,15 @@ import com.fractured.user.User;
 import com.fractured.user.UserManager;
 import com.fractured.util.globals.ConfigKeys;
 import com.fractured.util.globals.Messages;
+import com.fractured.util.globals.Permissions;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class EntityDamageListener implements Listener
 {
@@ -43,6 +48,31 @@ public class EntityDamageListener implements Listener
             {
                 event.setCancelled(true);
                 damager.sendMessage(FracturedCore.getMessages().get(Messages.FRIENDLY_FIRE_DISABLED));
+            }
+        }
+
+        // AXE OF PERUN ENCHANT LOGIC
+        // fixme
+
+        if (!(victim instanceof Player) || !(damager instanceof Player))
+        {
+            return;
+        }
+
+        ItemStack item = ((Player) damager).getItemInUse();
+
+        if (!damager.hasPermission(Permissions.COMMAND_WORLD_ADMIN) || item == null || item.getType().equals(Material.AIR) || item.getItemMeta() == null || !item.getItemMeta().hasEnchants())
+        {
+            return;
+        }
+
+        if (item.getType().equals(Material.IRON_AXE) && item.getItemMeta().hasEnchant(Enchantment.DURABILITY))
+        {
+            // todo fixme - chance is dependant on level, so for this instance level is 2, so 2*20
+            double chance = 2*20;
+            if (Math.random()*100 <= chance)
+            {
+                victim.getWorld().strikeLightning(victim.getLocation());
             }
         }
     }
