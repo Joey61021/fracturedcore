@@ -28,6 +28,8 @@ commands:
   console_blocked: "&cThis command cannot be run in console!"
   no_team_blocked: "&cYou cannot run this command without being in a team!"
   not_in_claim: "&cYou are not in any team claim."
+  enemy_team_blocked: "&cYou cannot execute this command in an enemy region!"
+  teleporting: "&fYou are being &eteleported&f..."
   world:
     usage: "&cUsage:\n
             - /world teleport [world]\n
@@ -98,6 +100,14 @@ commands:
       begin: "&7Extending, please wait..."
       end: "&7Extended. Be sure that the team claims are updated accordingly."
   discord: "&fJoin our Discord server at: &9&nhttps://discord.gg/2JTY7Fffjs"
+  tpa:
+    already-sent: "&cYou have already sent a request!"
+    sent: "&fA teleport request has been sent to %receiver%&f!"
+    recived: "&6&l!!! %sender% &fhas requested to teleport to you. Run &b/tpa confirm &fto accept! &6&l!!!"
+    accepted: "&aYour tpa request has been accepted!"
+  home:
+    invalid_region: "&cYou cannot set your home here!"
+    set_home: "&fYour home has been &eset&f!"
 deaths:
   kill: "%victim% &fdied"
   world_border: "%victim% left the confines of this world"

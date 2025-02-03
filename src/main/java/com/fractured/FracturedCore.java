@@ -91,6 +91,8 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("upgrades").setExecutor(UpgradesCommand::upgrades);
         getCommand("confirm").setExecutor(ConfirmationManager::confirm);
         getCommand("world").setExecutor(WorldCommand::world);
+        getCommand("sethome").setExecutor(SetHomeCommand::sethome);
+        getCommand("home").setExecutor(HomeCommand::home);
     }
 
     @Override

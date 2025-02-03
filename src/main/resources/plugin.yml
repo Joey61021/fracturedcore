@@ -22,3 +22,5 @@ commands:
     aliases: []
   confirm:
   world:
+  sethome:
+  home:
