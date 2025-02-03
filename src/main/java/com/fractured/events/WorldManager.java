@@ -373,7 +373,7 @@ public class WorldManager implements Listener
 
         // todo fixme
         // Testing purposes only - enchant logic, remove when enchants are setup
-        if (player.hasPermission(Permissions.COMMAND_WORLD_ADMIN) && item.getItemMeta().hasEnchants() && item.getItemMeta().hasEnchant(Enchantment.DURABILITY))
+        if (player.hasPermission(Permissions.COMMAND_WORLD_ADMIN) && item.getItemMeta().hasEnchants() && item.getItemMeta().hasEnchant(Enchantment.UNBREAKING))
         {
 
             // CUSTOM ENCHANT - AUTOSMELT

@@ -1,7 +1,7 @@
 package com.fractured.team;
 
 import com.fractured.FracturedCore;
-import com.fractured.menu.Menu;
+import com.fractured.menu.MenuCallback;
 import com.fractured.menu.MenuManager;
 import com.fractured.team.upgrades.Upgrades;
 import com.fractured.team.upgrades.UpgradeRequisite;
@@ -42,7 +42,7 @@ public class Team
 
     static
     {
-        Menu teamUpgrades = new Menu();
+        MenuCallback teamUpgrades = new MenuCallback();
         teamUpgrades.register(9 + 4, event ->
         {
             HumanEntity player = event.getView().getPlayer();

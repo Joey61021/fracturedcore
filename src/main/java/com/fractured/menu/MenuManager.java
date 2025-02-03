@@ -44,7 +44,6 @@ public class MenuManager implements Listener
                 return;
             }
 
-            event.setCancelled(true);
             inventoryCallback.onClick(event);
         }
     }

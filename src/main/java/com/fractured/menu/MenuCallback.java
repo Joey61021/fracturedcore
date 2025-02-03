@@ -5,11 +5,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Menu implements InventoryCallback
+public class MenuCallback implements InventoryCallback
 {
-    private final Map<Integer, InventoryCallback> callbacks;
+    protected final Map<Integer, InventoryCallback> callbacks;
 
-    public Menu()
+    public MenuCallback()
     {
         callbacks = new HashMap<>();
     }
@@ -27,6 +27,9 @@ public class Menu implements InventoryCallback
         if (slotCallback != null)
         {
             slotCallback.onClick(event);
+        } else
+        {
+            event.setCancelled(true);
         }
     }
 }

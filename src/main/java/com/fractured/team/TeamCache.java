@@ -1,7 +1,7 @@
 package com.fractured.team;
 
 import com.fractured.FracturedCore;
-import com.fractured.menu.Menu;
+import com.fractured.menu.MenuCallback;
 import com.fractured.menu.MenuManager;
 import com.fractured.util.globals.ConfigKeys;
 import net.md_5.bungee.api.ChatColor;
@@ -101,7 +101,7 @@ public final class TeamCache
         // init team inventory (and teamsByName)
         teamInventory = Bukkit.createInventory(null, 9 * 3, SELECT_TEAM);
 
-        Menu selectTeam = new Menu();
+        MenuCallback selectTeam = new MenuCallback();
 
         // 0   1   2   3   4   5   6   7   8
         // 9  *10  11 *12  13 *14  15 *16  17
