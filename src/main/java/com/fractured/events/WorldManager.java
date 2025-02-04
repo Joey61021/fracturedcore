@@ -324,7 +324,7 @@ public class WorldManager implements Listener
 
     private static <E extends BlockEvent & Cancellable> void onBlockChange(Player player, E event)
     {
-        if (player.getGameMode() == GameMode.CREATIVE)
+        if (player.getGameMode() == GameMode.CREATIVE || UserManager.getUser(player.getUniqueId()).getBypassRegions())
         {
             return;
         }
