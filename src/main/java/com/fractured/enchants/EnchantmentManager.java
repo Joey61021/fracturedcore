@@ -13,6 +13,19 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Items that wish to carry a custom enchantment must pass through the {@link EnchantmentManager}.
+ * When an item is enchanted, it is given through persistent data container a fractured_enchantments
+ * tag, and under this tag as children are the actual enchantments.<p>
+ * <code>
+ * fractured_enchantments: {
+ *   auto_smelt: 1,
+ *   chunker: 2,
+ * }</code><p>
+ * This is exactly how PaperMC by default handles enchantments, only under the
+ * components.minecraft:enchantments tag instead of fractured_enchantments
+ * @author Cory Torode
+ */
 public final class EnchantmentManager implements Listener
 {
     private static final NamespacedKey FRACTURED_ENCHANTMENTS = FracturedCore.newNamespacedKey("fractured_enchantments");
