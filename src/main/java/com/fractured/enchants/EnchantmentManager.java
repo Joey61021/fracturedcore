@@ -2,8 +2,6 @@ package com.fractured.enchants;
 
 import com.fractured.FracturedCore;
 import org.bukkit.NamespacedKey;
-import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -12,7 +10,6 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public final class EnchantmentManager implements Listener
 {
@@ -83,26 +80,5 @@ public final class EnchantmentManager implements Listener
         }
 
         return enchants.has(enchant.key(), PersistentDataType.INTEGER);
-    }
-
-    public static void getNearbyBlocks(boolean checkType, Block block, int radius, Set<Block> blocks) {
-        int bx = block.getX();
-        int by = block.getY();
-        int bz = block.getZ();
-
-        World world = block.getWorld();
-
-        for (int x = -radius; x <= radius; x++) {
-            for (int y = -radius; y <= radius; y++) {
-                for (int z = -radius; z <= radius; z++) {
-                    Block relative = world.getBlockAt(bx + x, by + y, bz + z);
-
-                    // Check if within spherical radius
-                    if ((relative.getType().equals(block.getType()) || checkType) && relative.getLocation().distance(block.getLocation()) <= radius) {
-                        blocks.add(relative);
-                    }
-                }
-            }
-        }
     }
 }

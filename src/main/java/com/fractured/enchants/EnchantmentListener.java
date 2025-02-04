@@ -1,7 +1,11 @@
 package com.fractured.enchants;
 
+import com.fractured.FracturedCore;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,14 +14,18 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.*;
 
@@ -156,7 +164,7 @@ public final class EnchantmentListener implements Listener
         {
             Set<Block> blocks = new HashSet<>();
             // Radius should be determined by the level, 3*level. For this case lets say the level is 3, so 3*3
-            EnchantmentManager.getNearbyBlocks(false, block, 3*3, blocks);
+            getNearbyBlocks(false, block, 3*3, blocks);
 
             blocks.forEach(Block::breakNaturally);
             blocks.clear();
@@ -166,7 +174,7 @@ public final class EnchantmentListener implements Listener
         if (hasEnchantment(item, CustomEnchantment.CHUNKER))
         {
             Set<Block> blocks = new HashSet<>();
-            EnchantmentManager.getNearbyBlocks(true, block, 2, blocks);
+            getNearbyBlocks(true, block, 2, blocks);
 
             blocks.forEach(Block::breakNaturally);
             blocks.clear();
@@ -208,5 +216,98 @@ public final class EnchantmentListener implements Listener
         Inventory inv = player.getInventory();
         pooledItems.get(player.getUniqueId()).forEach(inv::addItem);
         pooledItems.remove(player.getUniqueId());
+    }
+
+    @EventHandler
+    public static void onShoot(ProjectileLaunchEvent event)
+    {
+        if (!(event.getEntity() instanceof Arrow arrow) || !(event.getEntity().getShooter() instanceof Player player))
+        {
+            return;
+        }
+
+        // e.g. bow
+        ItemStack item = player.getActiveItem();
+
+        if ((!item.getType().equals(Material.BOW) && !item.getType().equals(Material.CROSSBOW)) || !hasEnchantment(item, CustomEnchantment.AIM_BOT))
+        {
+            return;
+        }
+
+        startHomingArrow(player, arrow);
+    }
+
+    public static void startHomingArrow(Player shooter, Arrow arrow)
+    {
+        new BukkitRunnable()
+        {
+            @Override
+            public void run()
+            {
+                if (arrow.isDead() || arrow.isInBlock() || arrow.isOnGround())
+                {
+                    cancel(); // Stop the task if the arrow is no longer in flight
+                    return;
+                }
+
+                Entity target = getNearestTarget(shooter, arrow.getLocation());
+
+                if (target != null) {
+                    Vector direction = target.getLocation().toVector().subtract(arrow.getLocation().toVector());
+
+                    if (direction.lengthSquared() > 0) {
+                        direction.normalize().multiply(arrow.getVelocity().length());
+                        arrow.setVelocity(direction);
+                    }
+                }
+            }
+        }.runTaskTimer(JavaPlugin.getPlugin(FracturedCore.class), 3L, 3L);
+    }
+
+    public static Player getNearestTarget(Player shooter, Location location)
+    {
+        Player nearestTarget = null;
+
+        int maxRadius = 50;
+        double closestDistance = Integer.MAX_VALUE;
+
+        Collection<Entity> entities = location.getNearbyEntities(maxRadius, 10, maxRadius);
+
+        for (Entity entity : entities) {
+            if (!(entity instanceof Player) || entity.equals(shooter) || !entity.getWorld().equals(location.getWorld()))
+            {
+                continue; // Skip the shooter and players in different worlds
+            }
+
+            double distance = entity.getLocation().distance(location);
+            if (distance < maxRadius && distance < closestDistance)
+            {
+                closestDistance = distance;
+                nearestTarget = (Player) entity;
+            }
+        }
+
+        return nearestTarget;
+    }
+
+    public static void getNearbyBlocks(boolean checkType, Block block, int radius, Set<Block> blocks) {
+        int bx = block.getX();
+        int by = block.getY();
+        int bz = block.getZ();
+
+        World world = block.getWorld();
+
+        for (int x = -radius; x <= radius; x++) {
+            for (int y = -radius; y <= radius; y++) {
+                for (int z = -radius; z <= radius; z++) {
+                    Block relative = world.getBlockAt(bx + x, by + y, bz + z);
+
+                    // Check if within spherical radius
+                    if ((relative.getType().equals(block.getType()) || checkType) && relative.getLocation().distance(block.getLocation()) <= radius) {
+                        blocks.add(relative);
+                    }
+                }
+            }
+        }
     }
 }

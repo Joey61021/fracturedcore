@@ -10,6 +10,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
+
 public final class TeamChatCommand
 {
     private TeamChatCommand()
@@ -39,7 +41,7 @@ public final class TeamChatCommand
         }
 
         StringBuilder sb = new StringBuilder();
-        for (String arg : args) sb.append(arg).append(" ");
+        Arrays.stream(args).toList().forEach(s -> sb.append(s).append(" "));
         String message = sb.toString();
         team.alert(Utils.color(team.color() + "&l[" + team.getName().charAt(0) + "] &r" + player.getName() + ": &f" + message));
         return true;
