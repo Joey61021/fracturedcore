@@ -106,8 +106,10 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("sethome").setExecutor(SetHomeCommand::sethome);
         getCommand("home").setExecutor(HomeCommand::home);
         getCommand("event").setExecutor(EventCommand::event);
+        getCommand("shield").setExecutor(ShieldCommand::shield);
         getCommand("test").setExecutor(TestCommand::test);
         getCommand("customenchant").setExecutor(CustomEnchantCommand::customEnchant);
+        getCommand("bypassregions").setExecutor(BypassRegionsCommand::bypassRegions);
     }
 
     @Override
