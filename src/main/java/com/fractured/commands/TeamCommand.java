@@ -270,7 +270,7 @@ public final class TeamCommand
         Player player = (Player) sender;
         User user = UserManager.getUser(player.getUniqueId());
 
-        switch (TeamManager.addTeam(sender, null, player, user, args[2]))
+        switch (TeamManager.addTeam(sender, null, player, user, args[1]))
         {
             // Message is sent by TeamManager#addTeam for case 0
             case 1:
