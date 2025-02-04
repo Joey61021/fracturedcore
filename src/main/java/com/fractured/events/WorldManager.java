@@ -8,7 +8,6 @@ import com.fractured.team.Team;
 import com.fractured.user.User;
 import com.fractured.user.UserManager;
 import com.fractured.util.globals.Messages;
-import com.fractured.util.globals.Permissions;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -21,9 +20,6 @@ import org.bukkit.event.block.BlockEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class WorldManager implements Listener
 {
@@ -363,80 +359,6 @@ public class WorldManager implements Listener
     public static void onBreak(BlockBreakEvent event)
     {
         onBlockChange(event.getPlayer(), event);
-
-        Block block = event.getBlock();
-        Player player = event.getPlayer();
-        ItemStack item = event.getPlayer().getItemInHand();
-
-        // Item cannot be null
-        if (item.getItemMeta() == null || item.getType().equals(Material.AIR))
-        {
-            return;
-        }
-
-        // todo fixme
-        // Testing purposes only - enchant logic, remove when enchants are setup
-        if (player.hasPermission(Permissions.COMMAND_WORLD_ADMIN) && item.getItemMeta().hasEnchants() && item.getItemMeta().hasEnchant(Enchantment.UNBREAKING))
-        {
-
-            // CUSTOM ENCHANT - AUTOSMELT
-            if (item.getType().equals(Material.NETHERITE_PICKAXE))
-            {
-
-                Material drop = switch (block.getType()) {
-                    case IRON_ORE, DEEPSLATE_IRON_ORE -> Material.IRON_INGOT;
-                    case GOLD_ORE, DEEPSLATE_GOLD_ORE -> Material.GOLD_INGOT;
-                    case COPPER_ORE, DEEPSLATE_COPPER_ORE -> Material.COPPER_INGOT;
-                    default -> Material.AIR;
-                };
-                event.setDropItems(false);
-                block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(drop));
-                return;
-            }
-
-            // CUSTOM ENCHANT - TREE HARVASTER
-            if (item.getType().equals(Material.NETHERITE_AXE) && block.getType().name().toLowerCase().contains("log"))
-            {
-                Set<Block> blocks = new HashSet<>();
-                // Radius is determined by the level, 3*level. For this case lets say the level is 3, so 3*3
-                getNearbyBlocks(false, block, 3*3, blocks);
-
-                blocks.forEach(Block::breakNaturally);
-                blocks.clear();
-            }
-
-            // CUSTOM ENCHANT - BREAK 3x3x3
-            if (item.getType().equals(Material.DIAMOND_PICKAXE))
-            {
-                Set<Block> blocks = new HashSet<>();
-                getNearbyBlocks(true, block, 2, blocks);
-
-                blocks.forEach(Block::breakNaturally);
-                blocks.clear();
-            }
-        }
-    }
-
-    public static void getNearbyBlocks(boolean checkType, Block block, int radius, Set<Block> blocks) {
-        int bx = block.getX();
-        int by = block.getY();
-        int bz = block.getZ();
-
-        World world = block.getWorld();
-
-        for (int x = -radius; x <= radius; x++) {
-            for (int y = -radius; y <= radius; y++) {
-                for (int z = -radius; z <= radius; z++) {
-                    Block relative = world.getBlockAt(bx + x, by + y, bz + z);
-
-                    // Check if within spherical radius (optional)
-                    if ((relative.getType().equals(block.getType()) || checkType) &&relative.getLocation().distance(block.getLocation()) <= radius) {
-                        blocks.add(relative);
-
-                    }
-                }
-            }
-        }
     }
 
     @EventHandler

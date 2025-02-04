@@ -135,7 +135,7 @@ deaths:
   fall: "%victim% &fdidn't equip feather falling"
   fire: "%victim% &fwent up in flames"
   melting: "%victim% &fmelted"
-  lava: "%victim% &fftried to swim in lava"
+  lava: "%victim% &fdid a Terminator 2"
   magic: "%victim% &fwas killed by magic"
   drowned: "%victim% &fforgot to breathe"
   block_explosion: "%victim% &fblew up"
