@@ -66,7 +66,7 @@ public class EntityDamageListener implements Listener
             return;
         }
 
-        if (item.getType().equals(Material.IRON_AXE) && item.getItemMeta().hasEnchant(Enchantment.DURABILITY))
+        if (item.getType().equals(Material.IRON_AXE) && item.getItemMeta().hasEnchant(Enchantment.UNBREAKING))
         {
             // todo fixme - chance is dependant on level, so for this instance level is 2, so 2*20
             double chance = 2*20;
