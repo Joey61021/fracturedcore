@@ -10,8 +10,8 @@ commands:
     aliases: [tc]
   team:
     aliases: []
-  settings:
-    aliases: [setting]
+  configs:
+    aliases: [config]
   borders:
     aliases: [border]
   spawn:
