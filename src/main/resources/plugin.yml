@@ -10,8 +10,8 @@ commands:
     aliases: [tc]
   team:
     aliases: []
-  settings:
-    aliases: [setting]
+  configs:
+    aliases: [config]
   borders:
     aliases: [border]
   spawn:
@@ -21,11 +21,20 @@ commands:
   upgrades:
     aliases: []
   confirm:
+    aliases: []
   world:
+    aliases: []
   sethome:
+    aliases: []
   home:
+    aliases: []
   event:
+    aliases: []
   shield:
+    aliases: []
   test:
+    aliases: []
   customenchant:
     aliases: [cenchant]
+  bypassregions:
+    aliases: [regionbypass, br]

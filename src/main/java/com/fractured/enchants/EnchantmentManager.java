@@ -2,9 +2,7 @@ package com.fractured.enchants;
 
 import com.fractured.FracturedCore;
 import org.bukkit.NamespacedKey;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -28,7 +26,7 @@ import java.util.List;
  */
 public final class EnchantmentManager implements Listener
 {
-    private static final NamespacedKey FRACTURED_ENCHANTMENTS = FracturedCore.newNamespacedKey("fractured_enchantments");
+    public static final NamespacedKey FRACTURED_ENCHANTMENTS = FracturedCore.newNamespacedKey("fractured_enchantments");
 
     /**
      * @return 0 success, 1 if above max level, 2 if enchant cannot be applied to this item
@@ -59,7 +57,6 @@ public final class EnchantmentManager implements Listener
             enchants = pdc.getAdapterContext().newPersistentDataContainer();
         }
 
-        // Add enchant
         // This overrides whatever was already there, so if the enchant was already there at a lower level
         enchants.set(enchant.key(), PersistentDataType.INTEGER, level);
         pdc.set(FRACTURED_ENCHANTMENTS, PersistentDataType.TAG_CONTAINER, enchants);
@@ -81,20 +78,20 @@ public final class EnchantmentManager implements Listener
         return 0;
     }
 
-    @EventHandler
-    public static void onPrepare(PrepareItemEnchantEvent event)
-    {
-        ItemMeta meta = event.getItem().getItemMeta();
-
-        if (meta == null)
-        {
-            return;
+    public static boolean hasEnchantment(ItemStack item, CustomEnchantment enchant) {
+        if (item == null || !item.hasItemMeta()) {
+            return false;
         }
 
-        // if the item has custom enchantments on it, it's already enchanted:
-        if (meta.getPersistentDataContainer().has(FRACTURED_ENCHANTMENTS))
-        {
-            event.setCancelled(true);
+        ItemMeta meta = item.getItemMeta();
+        PersistentDataContainer pdc = meta.getPersistentDataContainer();
+
+        PersistentDataContainer enchants = pdc.get(FRACTURED_ENCHANTMENTS, PersistentDataType.TAG_CONTAINER);
+
+        if (enchants == null) {
+            return false;
         }
+
+        return enchants.has(enchant.key(), PersistentDataType.INTEGER);
     }
 }

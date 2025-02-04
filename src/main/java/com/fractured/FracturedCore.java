@@ -3,6 +3,7 @@ package com.fractured;
 import com.fractured.cevents.EventManager;
 import com.fractured.commands.*;
 import com.fractured.config.Config;
+import com.fractured.enchants.EnchantmentListener;
 import com.fractured.enchants.EnchantmentManager;
 import com.fractured.events.*;
 import com.fractured.events.inventory.InventoryClickListener;
@@ -76,7 +77,7 @@ public final class FracturedCore extends JavaPlugin {
         manager.registerEvents(new UserManager(), this);
         manager.registerEvents(menuManager, this);
         manager.registerEvents(new WorldManager(), this);
-        manager.registerEvents(new EnchantmentManager(), this);
+        manager.registerEvents(new EnchantmentListener(), this);
 
         manager.registerEvents(new ChatListener(), this);
         manager.registerEvents(new DeathListener(), this);
@@ -106,8 +107,10 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("sethome").setExecutor(SetHomeCommand::sethome);
         getCommand("home").setExecutor(HomeCommand::home);
         getCommand("event").setExecutor(EventCommand::event);
+        getCommand("shield").setExecutor(ShieldCommand::shield);
         getCommand("test").setExecutor(TestCommand::test);
         getCommand("customenchant").setExecutor(CustomEnchantCommand::customEnchant);
+        getCommand("bypassregions").setExecutor(BypassRegionsCommand::bypassRegions);
     }
 
     @Override

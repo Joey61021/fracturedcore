@@ -24,12 +24,14 @@ public class User
      * Last region alert location to prevent spam
      */
     private Location lastAlert;
+    private boolean bypassRegions;
 
     public User(UUID uuid)
     {
         this.uuid = uuid;
         upgrades = new HashMap<>();
         lastAlert = null;
+        bypassRegions = false;
     }
 
     public UUID getUuid()
@@ -83,5 +85,15 @@ public class User
     public Location getLastAlert()
     {
         return lastAlert;
+    }
+
+    public void setBypassRegions(boolean bypassRegions)
+    {
+        this.bypassRegions = bypassRegions;
+    }
+
+    public boolean getBypassRegions()
+    {
+        return bypassRegions;
     }
 }
