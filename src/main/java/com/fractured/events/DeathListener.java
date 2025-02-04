@@ -1,10 +1,13 @@
 package com.fractured.events;
 
 import com.fractured.FracturedCore;
+import com.fractured.team.Team;
+import com.fractured.user.UserManager;
 import com.fractured.util.Utils;
 import com.fractured.util.globals.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,6 +15,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import javax.annotation.Nullable;
 
@@ -56,6 +61,27 @@ public class DeathListener implements Listener {
         {
             victim.getInventory().setHelmet(null);
             callDeath(event.getCause(), victim, victim.getKiller());
+
+            // Player heads
+            Team team = UserManager.getUser(victim).getTeam();
+
+            // Player heads only drop if player is in a team
+            if (team == null)
+            {
+                return;
+            }
+
+            ItemStack item = new ItemStack(Material.PLAYER_HEAD);
+            SkullMeta meta = (SkullMeta) item.getItemMeta();
+
+            if (meta != null)
+            {
+                meta.setDisplayName(Utils.color(team.color() + victim.getName() + "'s skull"));
+                meta.setOwningPlayer(Bukkit.getOfflinePlayer(victim.getUniqueId()));
+            }
+
+            item.setItemMeta(meta);
+            victim.getWorld().dropItemNaturally(victim.getLocation(), item);
         }
     }
 

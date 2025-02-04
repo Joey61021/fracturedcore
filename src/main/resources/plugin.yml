@@ -10,10 +10,8 @@ commands:
     aliases: [tc]
   team:
     aliases: []
-  configs:
-    aliases: [config]
   settings:
-    aliases: [setting, options, option]
+    aliases: [setting]
   borders:
     aliases: [border]
   spawn:
@@ -27,6 +25,7 @@ commands:
   sethome:
   home:
   event:
+  shield:
   test:
   customenchant:
     aliases: [cenchant]

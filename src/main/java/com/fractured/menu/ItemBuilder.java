@@ -1,10 +1,12 @@
 package com.fractured.menu;
 
+import com.fractured.util.Utils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class ItemBuilder
 {
@@ -19,13 +21,13 @@ public class ItemBuilder
 
     public ItemBuilder name(String name)
     {
-        meta.setDisplayName(name);
+        meta.setDisplayName(Utils.color(name));
         return this;
     }
 
     public ItemBuilder lore(String... lore)
     {
-        meta.setLore(Arrays.asList(lore));
+        meta.setLore(Arrays.stream(lore).map(Utils::color).collect(Collectors.toList()));
         return this;
     }
 
