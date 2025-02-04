@@ -10,6 +10,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -17,12 +19,13 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public final class EnchantmentListener implements Listener
 {
+
+    // For the soul bound enchant, temporarily keep the items for when the player respawns.
+    public static Map<UUID, Set<ItemStack>> pooledItems = new HashMap<>();
 
     @EventHandler
     public static void onPrepare(PrepareItemEnchantEvent event)
@@ -177,7 +180,7 @@ public final class EnchantmentListener implements Listener
 
         for (ItemStack item : event.getDrops())
         {
-            if (item.getType().equals(Material.AIR) || item.getItemMeta() == null)
+            if (item == null || !item.hasItemMeta())
             {
                 continue;
             }
@@ -188,6 +191,22 @@ public final class EnchantmentListener implements Listener
             }
         }
 
-        event.getItemsToKeep().addAll(items);
+        pooledItems.put(event.getPlayer().getUniqueId(), items);
+        event.getDrops().removeAll(items);
+    }
+
+    @EventHandler
+    public static void onRespawn(PlayerRespawnEvent event)
+    {
+        Player player = event.getPlayer();
+
+        if (!pooledItems.containsKey(event.getPlayer().getUniqueId()))
+        {
+            return;
+        }
+
+        Inventory inv = player.getInventory();
+        pooledItems.get(player.getUniqueId()).forEach(inv::addItem);
+        pooledItems.remove(player.getUniqueId());
     }
 }

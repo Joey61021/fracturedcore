@@ -389,7 +389,7 @@ public class WorldManager implements Listener
 
         Block clicked = event.getClickedBlock();
 
-        if (event.getClickedBlock() == null || clicked.getType() == Material.AIR)
+        if (clicked == null || clicked.getType() == Material.AIR)
         {
             return;
         }
@@ -424,7 +424,7 @@ public class WorldManager implements Listener
 
         // The behavior here is changed slightly from the original.
         // If the enemy team is null, the event will not be cancelled, the original did cancel these events.
-        if (claim != null && claim.getTeam() != team)
+        if (!user.getBypassRegions() && claim != null && claim.getTeam() != team)
         {
             if (claim.getTeam().isOffline())
             {
