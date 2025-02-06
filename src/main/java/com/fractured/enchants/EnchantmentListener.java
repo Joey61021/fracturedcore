@@ -261,7 +261,7 @@ public final class EnchantmentListener implements Listener
                     }
                 }
             }
-        }.runTaskTimer(JavaPlugin.getPlugin(FracturedCore.class), 3L, 3L);
+        }.runTaskTimer(JavaPlugin.getPlugin(FracturedCore.class), 1L, 1L);
     }
 
     public static Player getNearestTarget(Player shooter, Location location)
@@ -271,19 +271,25 @@ public final class EnchantmentListener implements Listener
         int maxRadius = 50;
         double closestDistance = Integer.MAX_VALUE;
 
-        Collection<Entity> entities = location.getNearbyEntities(maxRadius, 10, maxRadius);
+        Collection<Player> players = location.getNearbyPlayers(maxRadius, 10, maxRadius);
 
-        for (Entity entity : entities) {
-            if (!(entity instanceof Player) || entity.equals(shooter) || !entity.getWorld().equals(location.getWorld()))
+        // No targets found besides shooter
+        if (players.size() <= 1)
+        {
+            return null;
+        }
+
+        for (Player targets : players) {
+            if (targets.equals(shooter) || !targets.getWorld().equals(location.getWorld()))
             {
                 continue; // Skip the shooter and players in different worlds
             }
 
-            double distance = entity.getLocation().distance(location);
+            double distance = targets.getLocation().distance(location);
             if (distance < maxRadius && distance < closestDistance)
             {
                 closestDistance = distance;
-                nearestTarget = (Player) entity;
+                nearestTarget = targets;
             }
         }
 

@@ -99,6 +99,10 @@ public final class Messages
     public static final TextConfigKey TAB_FOOTER_NO_TEAM = textKey("tab.footer_no_team");
     public static final TextConfigKey TAB_FOOTER_TEAM = textKey("tab.footer_team");
 
+    public static final TextConfigKey SHIELD_PLACE = textKey("shield.place");
+    public static final TextConfigKey SHIELD_CHANGE_RADIUS = textKey("shield.change_radius");
+    public static final TextConfigKey SHIELD_LOCKED = textKey("shield.locked");
+
     public static final String PLUGIN_RESTARTING = ChatColor.YELLOW + "Server Restarting...";
     public static final String PLUGIN_INVALID_STATE = ChatColor.RED + "&cInvalid state. Please contact a server administrator.";
 

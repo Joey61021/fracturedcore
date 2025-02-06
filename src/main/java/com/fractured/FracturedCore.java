@@ -4,12 +4,11 @@ import com.fractured.cevents.EventManager;
 import com.fractured.commands.*;
 import com.fractured.config.Config;
 import com.fractured.enchants.EnchantmentListener;
-import com.fractured.enchants.EnchantmentManager;
 import com.fractured.events.*;
 import com.fractured.events.inventory.InventoryClickListener;
 import com.fractured.events.inventory.InventoryCloseListener;
-import com.fractured.events.WorldManager;
 import com.fractured.menu.MenuManager;
+import com.fractured.shields.ShieldManager;
 import com.fractured.storage.Storage;
 import com.fractured.user.UserManager;
 import com.fractured.util.globals.ConfigKeys;
@@ -76,6 +75,7 @@ public final class FracturedCore extends JavaPlugin {
 
         manager.registerEvents(new UserManager(), this);
         manager.registerEvents(menuManager, this);
+        manager.registerEvents(new ShieldManager(), this);
         manager.registerEvents(new WorldManager(), this);
         manager.registerEvents(new EnchantmentListener(), this);
 
