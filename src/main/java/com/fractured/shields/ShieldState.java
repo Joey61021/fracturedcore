@@ -4,7 +4,7 @@ public enum ShieldState {
 
     ACTIVE("&aActive"),
     INACTIVE("&cInactive"),
-    AWAITING_CHANGE("&bAwaiting &7(shift-click to lock)");
+    EDITING("&eEditing &7(shift-click to lock)");
 
     ShieldState(String name)
     {

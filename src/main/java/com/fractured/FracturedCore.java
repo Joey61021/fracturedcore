@@ -8,6 +8,8 @@ import com.fractured.events.*;
 import com.fractured.events.inventory.InventoryClickListener;
 import com.fractured.events.inventory.InventoryCloseListener;
 import com.fractured.menu.MenuManager;
+import com.fractured.shields.PooledBlock;
+import com.fractured.shields.Shield;
 import com.fractured.shields.ShieldManager;
 import com.fractured.storage.Storage;
 import com.fractured.user.UserManager;
@@ -142,6 +144,11 @@ public final class FracturedCore extends JavaPlugin {
     {
         // fixme wait for db to flush? Consult the bukkit async scheduler probably
         // Also make any additional db updates for saving like the team cache maybe? Anything
+
+        if (ShieldManager.pooledBlocks.size() > 0)
+        {
+            ShieldManager.clearAllParameters();
+        }
 
         for (Player players : Bukkit.getOnlinePlayers())
         {

@@ -24,6 +24,10 @@ public class Claim
      * Maximum z component
      */
     private int z1;
+    /**
+     * Is claim a shield
+     */
+    private boolean shield;
 
     public Team getTeam()
     {
@@ -50,7 +54,12 @@ public class Claim
         return z1;
     }
 
-    protected Claim(Team team, int x0, int z0, int x1, int z1)
+    public boolean getShield()
+    {
+        return shield;
+    }
+
+    protected Claim(Team team, int x0, int z0, int x1, int z1, boolean shield)
     {
         this.team = team;
 
@@ -58,6 +67,8 @@ public class Claim
         this.z0 = Math.min(z0, z1);
         this.x1 = Math.max(x0, x1);
         this.z1 = Math.max(z0, z1);
+
+        this.shield = shield;
     }
 
     public boolean contains(int x, int z)

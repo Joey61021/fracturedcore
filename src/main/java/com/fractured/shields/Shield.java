@@ -1,5 +1,6 @@
 package com.fractured.shields;
 
+import com.fractured.team.Team;
 import com.fractured.util.Utils;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
@@ -9,13 +10,16 @@ public class Shield {
     private Block block;
     private int radius;
     private ArmorStand armorStand;
+    private Team team;
     private ShieldState state;
 
-    public Shield(Block block, int radius, ArmorStand armorStand) {
+    public Shield(Block block, int radius, ArmorStand armorStand, Team team) {
         this.block = block;
         this.radius = radius;
         this.armorStand = armorStand;
-        this.state = ShieldState.AWAITING_CHANGE;
+        this.team = team;
+
+        this.state = ShieldState.EDITING;
     }
 
     public Block getBlock() {
@@ -48,5 +52,10 @@ public class Shield {
 
     public ShieldState getState() {
         return state;
+    }
+
+    public Team getTeam()
+    {
+        return team;
     }
 }

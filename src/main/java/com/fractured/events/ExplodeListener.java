@@ -5,6 +5,7 @@ import com.fractured.team.Claim;
 import com.fractured.team.ClaimManager;
 import com.fractured.team.Team;
 import com.fractured.user.UserManager;
+import com.fractured.util.Utils;
 import com.fractured.util.globals.Messages;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,10 +32,20 @@ public class ExplodeListener implements Listener {
         }
 
 
-        if (claim.getTeam() != null && claim.getTeam() != team && claim.getTeam().isOffline())
+        if (claim.getTeam() != null && claim.getTeam() != team)
         {
-            event.setCancelled(true);
-            player.sendMessage(FracturedCore.getMessages().get(Messages.REGION_TEAM_OFFLINE));
+            if (claim.getShield())
+            {
+                //todo fixme config messages
+                player.sendMessage(Utils.color("&cThis region is protected by a shield!"));
+                event.setCancelled(true);
+            }
+
+            if (claim.getTeam().isOffline())
+            {
+                event.setCancelled(true);
+                player.sendMessage(FracturedCore.getMessages().get(Messages.REGION_TEAM_OFFLINE));
+            }
         }
     }
 }

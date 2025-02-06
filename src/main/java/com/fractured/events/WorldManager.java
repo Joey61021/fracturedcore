@@ -7,6 +7,7 @@ import com.fractured.team.ClaimManager;
 import com.fractured.team.Team;
 import com.fractured.user.User;
 import com.fractured.user.UserManager;
+import com.fractured.util.Utils;
 import com.fractured.util.globals.Messages;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -343,6 +344,14 @@ public class WorldManager implements Listener
         // If the enemy team is null, the event will not be cancelled, the original did cancel these events.
         if (claim != null && claim.getTeam() != team)
         {
+            if (claim.getShield())
+            {
+                //todo fixme config messages
+                player.sendMessage(Utils.color("&cThis region is protected by a shield!"));
+                event.setCancelled(true);
+                return;
+            }
+
             if (claim.getTeam().isOffline())
             {
                 event.setCancelled(true);
@@ -426,6 +435,14 @@ public class WorldManager implements Listener
         // If the enemy team is null, the event will not be cancelled, the original did cancel these events.
         if (!user.getBypassRegions() && claim != null && claim.getTeam() != team)
         {
+            if (claim.getShield())
+            {
+                //todo fixme config messages
+                player.sendMessage(Utils.color("&cThis region is protected by a shield!"));
+                event.setCancelled(true);
+                return;
+            }
+
             if (claim.getTeam().isOffline())
             {
                 event.setCancelled(true);

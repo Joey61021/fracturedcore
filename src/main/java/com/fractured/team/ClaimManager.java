@@ -29,23 +29,23 @@ public final class ClaimManager
      * here is, and cannot be saved in the database. For that, refer to
      * {@link ClaimManager#newStoredClaim(World, Team, int, int, int, int)}
      */
-    public static Claim newClaim(World world, Team team, int x0, int z0, int x1, int z1)
+    public static Claim newClaim(World world, Team team, int x0, int z0, int x1, int z1, boolean shield)
     {
         if (team == null)
         {
             throw new IllegalArgumentException("team cannot be null");
         }
 
-        Claim rax = new Claim(team, x0, z0, x1, z1);
+        Claim rax = new Claim(team, x0, z0, x1, z1, shield);
 
         worlds.get(world.getUID()).addClaim(rax);
 
         return rax;
     }
 
-    public static Claim newStoredClaim(World world, Team team, int x0, int z0, int x1, int z1)
+    public static Claim newStoredClaim(World world, Team team, int x0, int z0, int x1, int z1, boolean shield)
     {
-        Claim claim = newClaim(world, team, x0, z0, x1, z1);
+        Claim claim = newClaim(world, team, x0, z0, x1, z1, shield);
 
         FracturedCore.getStorage().saveClaim(world, claim);
 
@@ -75,15 +75,20 @@ public final class ClaimManager
         claims.add(claim);
     }
 
-    public Claim getClaim(int x, int z)
-    {
-        for (Claim claim : claims)
-        {
-            if (claim.contains(x, z))
-            {
-                return claim;
+    public Claim getClaim(int x, int z) {
+        Claim fetched = null;
+
+        for (Claim claim : claims) {
+            if (claim.contains(x, z)) {
+                if (claim.getShield()) {
+                    return claim;
+                }
+
+                if (fetched == null) {
+                    fetched = claim;
+                }
             }
         }
-        return null;
+        return fetched;
     }
 }

@@ -146,7 +146,7 @@ public class HikariStorage implements Storage
         return lastInsertId.get();
     }
 
-    private static final String GET_CLAIMS = "SELECT claims.team_id, claims.x0, claims.z0, claims.x1, claims.z1, worlds.uid FROM claims JOIN worlds ON claims.world_id = worlds.id;";
+    private static final String GET_CLAIMS = "SELECT claims.team_id, claims.x0, claims.z0, claims.x1, claims.z1, claims.shield, worlds.uid FROM claims JOIN worlds ON claims.world_id = worlds.id;";
 
     private static final String GET_TEAM_CACHE = "SELECT teams.id, teams.members, teams.s_x, teams.s_y, teams.s_z, teams.s_ya, teams.s_pi, teams.color, teams.name, worlds.uid FROM teams JOIN worlds ON worlds.id = teams.s_world;";
 
@@ -191,7 +191,7 @@ public class HikariStorage implements Storage
                         Team team = TeamCache.getTeam(rs.getInt("team_id"));
                         World world = getWorld(rs.getString("uid"));
                         // get world
-                        ClaimManager.newClaim(world, team, rs.getInt("x0"), rs.getInt("z0"), rs.getInt("x1"), rs.getInt("z1"));
+                        ClaimManager.newClaim(world, team, rs.getInt("x0"), rs.getInt("z0"), rs.getInt("x1"), rs.getInt("z1"), rs.getBoolean("shield"));
                     }
                 });
             }
@@ -199,8 +199,8 @@ public class HikariStorage implements Storage
     }
 
     private static final String UPSERT_CLAIM = """
-                                               INSERT INTO claim_entries (team_id, world_id, x0, z0, x1, z1)
-                                               VALUES (?, (SELECT id FROM world_entries WHERE world_uid = ?), ?, ?, ?, ?);
+                                               INSERT INTO claims (team_id, world_id, x0, z0, x1, z1, shield)
+                                               VALUES (?, (SELECT id FROM worlds WHERE uid = ?), ?, ?, ?, ?, ?);
                                                """;
 
     private void saveClaim(Connection conn, World world, Claim claim) throws SQLException
@@ -213,6 +213,8 @@ public class HikariStorage implements Storage
         stmt.setInt(4, claim.getZ0());
         stmt.setInt(5, claim.getX1());
         stmt.setInt(6, claim.getZ1());
+
+        stmt.setBoolean(7, claim.getShield());
 
         update(stmt);
     }

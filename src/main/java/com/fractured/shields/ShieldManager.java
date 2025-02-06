@@ -1,6 +1,9 @@
 package com.fractured.shields;
 
 import com.fractured.FracturedCore;
+import com.fractured.team.ClaimManager;
+import com.fractured.team.Team;
+import com.fractured.user.UserManager;
 import com.fractured.util.Utils;
 import com.fractured.util.globals.Messages;
 import org.bukkit.Location;
@@ -39,6 +42,13 @@ public class ShieldManager implements Listener {
         Player player = event.getPlayer();
         ItemStack item = event.getItemInHand();
         Block block = event.getBlock();
+        Team team = UserManager.getUser(player).getTeam();
+
+        // Do not proceed if team is null
+        if (team == null)
+        {
+            return;
+        }
 
         // Block is not a shield
         if (!item.getType().equals(Material.BEACON) || item.getItemMeta() == null || !item.getItemMeta().getDisplayName().toLowerCase().contains("shield"))
@@ -50,11 +60,11 @@ public class ShieldManager implements Listener {
         armorStand.setGravity(false);
         armorStand.setCustomNameVisible(true);
         armorStand.setVisible(false);
-        armorStand.setCustomName(Utils.color(ShieldState.AWAITING_CHANGE.getName()));
+        armorStand.setCustomName(Utils.color(ShieldState.EDITING.getName()));
 
         block.setMetadata("shield", new FixedMetadataValue(JavaPlugin.getPlugin(FracturedCore.class), true));
 
-        Shield shield = new Shield(block, 5, armorStand);
+        Shield shield = new Shield(block, 5, armorStand, team);
         shields.add(shield);
 
         initParameter(shield, 5);
@@ -81,6 +91,7 @@ public class ShieldManager implements Listener {
         Shield shield = getShield(block);
         if (shield == null)
         {
+            event.setCancelled(true);
             return;
         }
 
@@ -113,14 +124,20 @@ public class ShieldManager implements Listener {
         event.setCancelled(true);
 
         Player player = event.getPlayer();
-        if (player.isSneaking())
+        if (player.isSneaking() && shield.getState() == ShieldState.EDITING)
         {
+            setShieldRegion(shield);
             shield.setState(ShieldState.ACTIVE);
             removeParameter(shield);
 
             player.sendMessage(FracturedCore.getMessages().get(Messages.SHIELD_LOCKED));
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F);
             return;
+        }
+
+        if (shield.getState() != ShieldState.EDITING)
+        {
+            shield.setState(ShieldState.EDITING);
         }
 
         int newRadius = shield.getRadius()+1 > MAX_RADIUS ? MIN_RADIUS : shield.getRadius()+1;
@@ -140,9 +157,7 @@ public class ShieldManager implements Listener {
                 return shield;
             }
         }
-
-        // If no shields were found
-        return null;
+        return null; // If no shields were found
     }
 
     public static void initParameter(Shield shield, int radius) {
@@ -198,5 +213,50 @@ public class ShieldManager implements Listener {
             b.setType(block.getOriginalType(), false); // false prevents physics updates
             b.setBlockData(block.getOriginalBlockData());
         });
+    }
+
+    public static void setShieldRegion(Shield shield)
+    {
+        Location loc = shield.getBlock().getLocation();
+        int radius = shield.getRadius() / 2; // 10 blocks each way
+
+        int x = loc.getBlockX();
+        int z = loc.getBlockZ();
+
+        ClaimManager.newClaim(
+                loc.getWorld(),
+                shield.getTeam(),
+                x - radius, // Left edge (min X)
+                z - radius, // Top edge (min Z)
+                x + radius, // Right edge (max X)
+                z + radius, // Bottom edge (max Z)
+                true
+        );
+
+        ClaimManager.newStoredClaim(
+                loc.getWorld(),
+                shield.getTeam(),
+                x - radius, // Left edge (min X)
+                z - radius, // Top edge (min Z)
+                x + radius, // Right edge (max X)
+                z + radius, // Bottom edge (max Z)
+                true
+        );
+    }
+
+    public static void clearAllParameters()
+    {
+        for (Shield shield : shields)
+        {
+            if (!pooledBlocks.containsKey(shield))
+            {
+                continue;
+            }
+
+            removeParameter(shield);
+        }
+
+        shields.clear();
+        pooledBlocks.clear();
     }
 }
