@@ -67,6 +67,12 @@ public class ShieldManager implements Listener {
     {
         Block block = event.getBlock();
 
+        if (block.getType().equals(Material.RED_CONCRETE) || block.hasMetadata("shieldBorder"))
+        {
+            event.setCancelled(true);
+            return;
+        }
+
         if (!block.getType().equals(Material.BEACON) || !block.hasMetadata("shield"))
         {
             return;
@@ -146,7 +152,10 @@ public class ShieldManager implements Listener {
         fetchBlockRegion(blocks, shieldLoc.add(0, -1, 0), radius); // -1 to get floor
 
         pooledBlocks.put(shield, blocks);
-        blocks.forEach(block -> block.getBlock().setType(Material.RED_CONCRETE));
+        blocks.forEach(block -> {
+            block.getBlock().setType(Material.RED_CONCRETE);
+            block.getBlock().setMetadata("shieldBorder", new FixedMetadataValue(JavaPlugin.getPlugin(FracturedCore.class), true));
+        });
     }
 
     public static void fetchBlockRegion(Set<PooledBlock> blocks, Location location, int radius)
