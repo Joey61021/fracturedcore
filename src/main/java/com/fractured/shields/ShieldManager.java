@@ -14,9 +14,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -49,6 +52,8 @@ public class ShieldManager implements Listener {
         armorStand.setVisible(false);
         armorStand.setCustomName(Utils.color(ShieldState.AWAITING_CHANGE.getName()));
 
+        block.setMetadata("shield", new FixedMetadataValue(JavaPlugin.getPlugin(FracturedCore.class), true));
+
         Shield shield = new Shield(block, 5, armorStand);
         shields.add(shield);
 
@@ -58,11 +63,36 @@ public class ShieldManager implements Listener {
     }
 
     @EventHandler
+    public static void onBreak(BlockBreakEvent event)
+    {
+        Block block = event.getBlock();
+
+        if (!block.getType().equals(Material.BEACON) || !block.hasMetadata("shield"))
+        {
+            return;
+        }
+
+        Shield shield = getShield(block);
+        if (shield == null)
+        {
+            return;
+        }
+
+        if (pooledBlocks.containsKey(shield))
+        {
+            removeParameter(shield);
+        }
+
+        shield.getArmorStand().remove();
+        shields.remove(shield);
+    }
+
+    @EventHandler
     public static void onInteract(PlayerInteractEvent event)
     {
         Block clicked = event.getClickedBlock();
 
-        if (event.getAction() != Action.LEFT_CLICK_BLOCK || clicked == null || clicked.getType() != Material.BEACON)
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK || clicked == null || clicked.getType() != Material.BEACON)
         {
             return;
         }
@@ -131,16 +161,16 @@ public class ShieldManager implements Listener {
         Block block;
         for (int i = -radius; i <= radius; i++) {
             block = world.getBlockAt(x + i, y, z - radius);  // Top edge
-            blocks.add(new PooledBlock(block, block.getType()));
+            blocks.add(new PooledBlock(block));
 
             block = world.getBlockAt(x + i, y, z + radius); // Bottom edge
-            blocks.add(new PooledBlock(block, block.getType()));
+            blocks.add(new PooledBlock(block));
 
             block = world.getBlockAt(x - radius, y, z + i); // Left edge
-            blocks.add(new PooledBlock(block, block.getType()));
+            blocks.add(new PooledBlock(block));
 
             block = world.getBlockAt(x + radius, y, z + i); // Right edge
-            blocks.add(new PooledBlock(block, block.getType()));
+            blocks.add(new PooledBlock(block));
         }
     }
 
@@ -154,6 +184,10 @@ public class ShieldManager implements Listener {
         Set<PooledBlock> blocks = pooledBlocks.get(shield);
         pooledBlocks.remove(shield);
 
-        blocks.forEach(block -> block.getBlock().setType(block.getOriginalType()));
+        blocks.forEach(block -> {
+            Block b = block.getBlock();
+            b.setType(block.getOriginalType(), false); // false prevents physics updates
+            b.setBlockData(block.getOriginalBlockData());
+        });
     }
 }
