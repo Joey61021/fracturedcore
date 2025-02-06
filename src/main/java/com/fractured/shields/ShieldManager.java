@@ -34,7 +34,7 @@ public class ShieldManager implements Listener {
     public static Set<Shield> shields = new HashSet<>();
     public static Map<Shield, Set<PooledBlock>> pooledBlocks = new HashMap<>();
 
-    public static int MAX_RADIUS = 20;
+    public static int MAX_RADIUS = 25;
     public static int MIN_RADIUS = 5;
 
     @EventHandler
