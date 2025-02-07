@@ -1,3 +1,8 @@
+enchantments:
+  fire_resistance:
+  water_breathing:
+  venomous:
+  witherous:
 tab:
   header: "&eFractured &f| &e1.21.4 SMP"
   footer_no_team: "&7Your team: None"
@@ -31,9 +36,16 @@ commands:
   no_team_blocked: "&cYou cannot run this command without being in a team!"
   not_in_claim: "&cYou are not in any team claim."
   enemy_team_blocked: "&cYou cannot execute this command in an enemy region!"
+  custom_enchant:
+    usage: "&cUsage: /customenchant [enchantment] [level]"
+    unknown: "&cUnknown Enchantment."
+    invalid_level: "&cThe level must be an integer."
+    bad_item_type: "&cThis enchantment is not assignable to this item."
+    level_bounds: "&cThe level of this enchantment cannot exceed %level%."
   world:
     usage: "&cUsage:\n
             - /world teleport [world]\n
+            - /world regeneratechunk\n
             - /world generate [name]\n
             - /world list"
     teleport:
