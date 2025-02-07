@@ -5,7 +5,7 @@ import com.fractured.user.User;
 import com.fractured.user.UserManager;
 import com.fractured.util.globals.ConfigKeys;
 import com.fractured.util.globals.Messages;
-import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -169,5 +169,11 @@ public class TeamManager
         {
             addTeamCleared(staff, reason, player, user, team);
         }
+    }
+
+    public static void setTeamSpawn(Team team, Location location)
+    {
+        // fixme
+        // Logic here
     }
 }

@@ -73,7 +73,10 @@ commands:
     forcejoin:
     teleport:
       usage: "&cUsage: /team teleport [team | team_id]"
+      set: "%team% team's &fspawn has been set to &eX: &e%x%&f, Y: &e%y%&f, Z: &e%z%&f!"
     setspawn:
+      usage: "&cUsage:/n
+                - /team setspawn [team]"
       # This has a confirm because the command gets the claim that you're in and assumes that's what you're talking about
       confirm: "&cAre you sure that you want to set the spawn for %team% here? Type /confirm to proceed."
   team_chat:

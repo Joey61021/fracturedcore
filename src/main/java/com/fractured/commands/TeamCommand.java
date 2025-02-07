@@ -11,6 +11,7 @@ import com.fractured.util.globals.Messages;
 import com.fractured.util.globals.Permissions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -57,6 +58,7 @@ public final class TeamCommand
         teamSubCommands.register("menu", TeamCommand::teamMenu, "m");
         teamSubCommands.register("list", TeamCommand::teamList, "l");
         teamSubCommands.register("teleport", TeamCommand::teamTeleport, "tp");
+        teamSubCommands.register("setspawn", TeamCommand::setSpawn);
     }
 
     public static boolean team(final CommandSender sender, final Command cmd, final String label, final String[] args)
@@ -324,5 +326,47 @@ public final class TeamCommand
         }
 
         TeamCache.openMenu(player);
+    }
+
+    private static void setSpawn(final CommandSender sender, final Command cmd, final String label, final String[] args)
+    {
+        // /team set [user] [team | id]
+        // console not allowed,
+
+        if (!(sender instanceof Player))
+        {
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_CONSOLE_BLOCKED));
+            return;
+        }
+
+        if (!sender.hasPermission(Permissions.COMMAND_TEAM_ADMIN))
+        {
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_NO_PERMISSION));
+            return;
+        }
+
+        // setspawn, team, makes 2
+        if (args.length < 2)
+        {
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_FORCE_SET_USAGE));
+            return;
+        }
+
+        Team team = TeamCache.getTeam(args[1]);
+
+        if (team == null) {
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_INVALID_TEAM));
+            return;
+        }
+
+        // todo: confirmation
+        Location loc = ((Player) sender).getLocation();
+
+        TeamManager.setTeamSpawn(team, loc);
+        sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_SET_SPAWN_SET)
+                .replace("%team%", team.getName())
+                .replace("%x%", String.valueOf(loc.getX()))
+                .replace("%y%", String.valueOf(loc.getY()))
+                .replace("%z%", String.valueOf(loc.getZ())));
     }
 }

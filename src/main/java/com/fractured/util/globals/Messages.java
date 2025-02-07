@@ -46,6 +46,8 @@ public final class Messages
     public static final TextConfigKey COMMAND_TEAM_JOIN_USAGE = textKey("commands.team.join.usage");
     public static final TextConfigKey COMMAND_TEAM_GENERAL_USAGE = textKey("commands.team.usage");
     public static final TextConfigKey COMMAND_TEAM_GENERAL_STAFF_USAGE = textKey("commands.team.staff_usage");
+    public static final TextConfigKey COMMAND_TEAM_SET_SPAWN_USAGE = textKey("commands.team.setspawn.usage");
+    public static final TextConfigKey COMMAND_TEAM_SET_SPAWN_SET = textKey("commands.team.setspawn.set");
 
     public static final TextConfigKey COMMAND_WORLD_USAGE = textKey("commands.world.usage");
     public static final TextConfigKey COMMAND_WORLD_TELEPORT_USAGE = textKey("commands.world.teleport.usage");

@@ -450,12 +450,12 @@ public class WorldManager implements Listener
             } else
             {
                 // If last alert location is less than 5 blocks away, cancel to prevent spam
-                if (user.getLastAlert() != null && player.getLocation().distance(user.getLastAlert()) < 10)
+                if (user.getLastAlert() != null && loc.distance(user.getLastAlert()) < 10)
                 {
                     return;
                 }
                 // Alert the enemy team
-                user.setLastAlert(player.getLocation());
+                user.setLastAlert(loc);
                 claim.getTeam().alert("There is activity in your claim at (" + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ() + ")!");
             }
         }
