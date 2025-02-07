@@ -2,14 +2,16 @@ package com.fractured;
 
 import com.fractured.cevents.EventManager;
 import com.fractured.commands.*;
+import com.fractured.commands.team.HomeCommand;
+import com.fractured.commands.team.SetHomeCommand;
+import com.fractured.commands.team.TeamChatCommand;
+import com.fractured.commands.team.TeamCommand;
 import com.fractured.config.Config;
-import com.fractured.enchants.EnchantmentListener;
+import com.fractured.enchants.EnchantManager;
 import com.fractured.events.*;
 import com.fractured.events.inventory.InventoryClickListener;
 import com.fractured.events.inventory.InventoryCloseListener;
 import com.fractured.menu.MenuManager;
-import com.fractured.shields.PooledBlock;
-import com.fractured.shields.Shield;
 import com.fractured.shields.ShieldManager;
 import com.fractured.storage.Storage;
 import com.fractured.user.UserManager;
@@ -20,6 +22,8 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public final class FracturedCore extends JavaPlugin {
     /* I've switched this to a more functional design. Instead of relying on the
@@ -44,10 +48,20 @@ public final class FracturedCore extends JavaPlugin {
     }
 
     // You no longer need to pass the plugin to the scheduler
-    public static void runAsync(Runnable runnable)
+    public static BukkitTask runAsync(Runnable runnable)
     {
         // todo switch to virtual threads?
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, runnable);
+        return Bukkit.getScheduler().runTaskAsynchronously(plugin, runnable);
+    }
+
+    public static BukkitTask runDelay(Runnable runnable, long delay)
+    {
+        return Bukkit.getScheduler().runTaskLater(plugin, runnable, delay);
+    }
+
+    public static BukkitTask runDelay(BukkitRunnable runnable, long delay)
+    {
+        return runnable.runTaskLater(plugin, delay);
     }
 
     public static NamespacedKey newNamespacedKey(String key)
@@ -70,7 +84,7 @@ public final class FracturedCore extends JavaPlugin {
         return storage;
     }
 
-    private MenuManager menuManager;
+    private static MenuManager menuManager;
 
     private void registerEvents() {
         final PluginManager manager = getServer().getPluginManager();
@@ -79,7 +93,7 @@ public final class FracturedCore extends JavaPlugin {
         manager.registerEvents(menuManager, this);
         manager.registerEvents(new ShieldManager(), this);
         manager.registerEvents(new WorldManager(), this);
-        manager.registerEvents(new EnchantmentListener(), this);
+        manager.registerEvents(new EnchantManager(), this);
 
         manager.registerEvents(new ChatListener(), this);
         manager.registerEvents(new DeathListener(), this);
@@ -113,6 +127,7 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("test").setExecutor(TestCommand::test);
         getCommand("customenchant").setExecutor(CustomEnchantCommand::customEnchant);
         getCommand("bypassregions").setExecutor(BypassRegionsCommand::bypassRegions);
+        getCommand("setmaxhealth").setExecutor(SetMaxHealthCommand::setMaxHealth);
     }
 
     @Override

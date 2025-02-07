@@ -1,8 +1,8 @@
 package com.fractured.commands;
 
 import com.fractured.FracturedCore;
-import com.fractured.enchants.CustomEnchantment;
-import com.fractured.enchants.EnchantmentManager;
+import com.fractured.enchants.Enchant;
+import com.fractured.enchants.EnchantManager;
 import com.fractured.util.globals.Messages;
 import com.fractured.util.globals.Permissions;
 import org.bukkit.command.Command;
@@ -33,11 +33,11 @@ public final class CustomEnchantCommand
             return true;
         }
 
-        CustomEnchantment enchant;
+        Enchant enchant;
 
         try
         {
-            enchant = CustomEnchantment.getByName(args[0].toLowerCase());
+            enchant = Enchant.valueOf(args[0].toUpperCase());
         } catch (IllegalArgumentException e)
         {
             sender.sendMessage("Unknown enchantment: " + args[0]);
@@ -56,7 +56,7 @@ public final class CustomEnchantCommand
             return true;
         }
 
-        switch (EnchantmentManager.enchant(((Player) sender).getInventory().getItemInMainHand(), enchant, level))
+        switch (EnchantManager.enchant(((Player) sender).getInventory().getItemInMainHand(), enchant, level))
         {
             case 0:
                 sender.sendMessage("Enchanted.");

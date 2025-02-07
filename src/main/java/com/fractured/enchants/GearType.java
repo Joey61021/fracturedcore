@@ -19,6 +19,7 @@ public final class GearType
     public static final int AXE = 1 << 9;
     public static final int PICKAXE = 1 << 10;
     public static final int TOOLS = SHOVEL | AXE | PICKAXE;
+    public static final int ALL = ARMOR | RANGED | SWORD | TRIDENT | TOOLS;
 
     private GearType()
     {
