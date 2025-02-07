@@ -38,3 +38,4 @@ commands:
     aliases: [cenchant]
   bypassregions:
     aliases: [regionbypass, br]
+  setmaxhealth:
