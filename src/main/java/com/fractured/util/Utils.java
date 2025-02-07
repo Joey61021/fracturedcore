@@ -10,6 +10,19 @@ public final class Utils
 
     }
 
+    public static String romanNumeral(int num)
+    {
+        return switch (num)
+        {
+            case 1 -> "I";
+            case 2 -> "II";
+            case 3 -> "III";
+            case 4 -> "IV";
+            case 5 -> "V";
+            default -> Integer.toString(num);
+        };
+    }
+
     public static String color(String s)
     {
         return ChatColor.translateAlternateColorCodes('&', s);
