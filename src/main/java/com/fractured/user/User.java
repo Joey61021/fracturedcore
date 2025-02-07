@@ -1,5 +1,6 @@
 package com.fractured.user;
 
+import com.fractured.enchants.LifestealRunnable;
 import com.fractured.team.Team;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -17,10 +18,6 @@ public class User
     private boolean inTeamChat;
     private Team team;
     /**
-     * Mapping the upgrade_id to the upgrade level
-     */
-    private final Map<Integer, Integer> upgrades;
-    /**
      * Last region alert location to prevent spam
      */
     private Location lastAlert;
@@ -29,7 +26,6 @@ public class User
     public User(UUID uuid)
     {
         this.uuid = uuid;
-        upgrades = new HashMap<>();
         lastAlert = null;
         bypassRegions = false;
     }
