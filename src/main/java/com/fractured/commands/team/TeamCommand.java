@@ -1,4 +1,4 @@
-package com.fractured.commands;
+package com.fractured.commands.team;
 
 import com.fractured.FracturedCore;
 import com.fractured.commands.subcommand.SubCommandRegistry;
