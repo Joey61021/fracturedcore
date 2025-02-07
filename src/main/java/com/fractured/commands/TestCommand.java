@@ -1,8 +1,8 @@
 package com.fractured.commands;
 
 import com.fractured.FracturedCore;
-import com.fractured.enchants.CustomEnchantment;
-import com.fractured.enchants.EnchantmentManager;
+import com.fractured.enchants.Enchant;
+import com.fractured.enchants.EnchantManager;
 import com.fractured.util.globals.Messages;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -14,8 +14,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public final class TestCommand
 {
-
-
     public static boolean test(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
         if (!(sender instanceof Player))
@@ -30,22 +28,8 @@ public final class TestCommand
             return true;
         }
 
-        ItemStack item = new ItemStack(Material.NETHERITE_PICKAXE);
-        ItemMeta meta = item.getItemMeta();
 
-        if (meta != null)
-        {
-            meta.addEnchant(Enchantment.EFFICIENCY, 5, true);
-            meta.addEnchant(Enchantment.UNBREAKING, 3, true);
-            meta.addEnchant(Enchantment.FORTUNE, 3, true);
-            meta.addEnchant(Enchantment.MENDING, 1, true);
-
-            item.setItemMeta(meta);
-
-            EnchantmentManager.enchant(item, CustomEnchantment.AUTO_SMELT, 1);
-        }
-
-        ((Player) sender).getInventory().addItem(item);
+        Player player = (Player) sender;
         return true;
     }
 
