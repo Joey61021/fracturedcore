@@ -38,7 +38,7 @@ public class TradeManager {
         TradeRequest activeRequest = getActiveRequest(player);
         if (activeRequest != null && System.currentTimeMillis() - activeRequest.getTimestamp() < COOLDOWN)
         {
-            player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TRADE_ALREADY_ACTIVE).replace("%time%", COOLDOWN - (System.currentTimeMillis() - activeRequest.getTimestamp()) + "s"));
+            player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TRADE_ALREADY_ACTIVE).replace("%time%", (COOLDOWN - (System.currentTimeMillis() - activeRequest.getTimestamp()))*1000 + "s"));
             return;
         }
 
