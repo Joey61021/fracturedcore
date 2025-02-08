@@ -139,15 +139,15 @@ commands:
   bypass_regions:
     toggle_off: "&fRegion bypass has been toggled &c&lOFF&f!"
     toggle_on: "&fRegion bypass has been toggled &a&lON&f!"
-shield:
-  place: "&b&lSHIELD &fhas been established"
-  change_radius: "&b&lSHIELD &fradius has been changed to &e%radius%&f!"
-  locked: "&b&lSHIELD &fconfiguration has been set and is now &a&lACTIVE"
-trade:
-  usage: "&cUsage:\n- /trade [player]"
-  already_active: "&cYou already have an active trade request, please wait %time% before sending another!"
-  send: "&6&lTRADE! &fA trade request has been sent to %player%&f!"
-  received: "&6&lTRADE! &r%player% &fhas sent you a trade request, execute &b/trade accept &fto confirm!"
+  shield:
+    place: "&b&lSHIELD &fhas been established"
+    change_radius: "&b&lSHIELD &fradius has been changed to &e%radius%&f!"
+    locked: "&b&lSHIELD &fconfiguration has been set and is now &a&lACTIVE"
+  trade:
+    usage: "&cUsage:\n- /trade [player]"
+    already_active: "&cYou already have an active trade request, please wait %time% before sending another!"
+    send: "&6&lTRADE! &fA trade request has been sent to %player%&f!"
+    received: "&6&lTRADE! &r%player% &fhas sent you a trade request, execute &b/trade accept &fto confirm!"
 deaths:
   kill: "%victim% &fdied"
   world_border: "%victim% left the confines of this world"
