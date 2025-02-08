@@ -127,6 +127,7 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("test").setExecutor(TestCommand::test);
         getCommand("customenchant").setExecutor(CustomEnchantCommand::customEnchant);
         getCommand("bypassregions").setExecutor(BypassRegionsCommand::bypassRegions);
+        getCommand("trade").setExecutor(TradeCommand::trade);
         getCommand("setmaxhealth").setExecutor(SetMaxHealthCommand::setMaxHealth);
     }
 
