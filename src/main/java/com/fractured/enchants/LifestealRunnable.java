@@ -2,13 +2,13 @@ package com.fractured.enchants;
 
 import com.fractured.FracturedCore;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class LifestealRunnable extends BukkitRunnable
+public class LifestealRunnable implements Runnable
 {
     // fixme server shutting down / crashing / logging out
     private static final Map<UUID, Map<UUID, LifestealRunnable>> lifesteals = new HashMap<>();
@@ -36,6 +36,8 @@ public class LifestealRunnable extends BukkitRunnable
 
     private double healthBorrowed = 0;
 
+    private BukkitTask task;
+
     public LifestealRunnable(LivingEntity target, LivingEntity damager)
     {
         this.target = target;
@@ -44,12 +46,12 @@ public class LifestealRunnable extends BukkitRunnable
 
     public void start()
     {
-        FracturedCore.runDelay(this, 3 * 20);
+        task = FracturedCore.runDelay(this, 3 * 20);
     }
 
     public void restart()
     {
-        cancel();
+        task.cancel();
         start();
     }
 
