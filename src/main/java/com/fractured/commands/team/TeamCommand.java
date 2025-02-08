@@ -362,7 +362,8 @@ public final class TeamCommand
         // todo: confirmation
         Location loc = ((Player) sender).getLocation();
 
-        TeamManager.setTeamSpawn(team, loc);
+        team.setSpawn(loc);
+
         sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_SET_SPAWN_SET)
                 .replace("%team%", team.getName())
                 .replace("%x%", String.valueOf(loc.getX()))

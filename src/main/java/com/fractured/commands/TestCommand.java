@@ -4,7 +4,9 @@ import com.fractured.FracturedCore;
 import com.fractured.enchants.Enchant;
 import com.fractured.enchants.EnchantManager;
 import com.fractured.util.globals.Messages;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
@@ -27,9 +29,6 @@ public final class TestCommand
             sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_NO_PERMISSION));
             return true;
         }
-
-
-        Player player = (Player) sender;
         return true;
     }
 

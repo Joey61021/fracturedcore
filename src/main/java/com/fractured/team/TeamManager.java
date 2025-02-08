@@ -46,9 +46,6 @@ public class TeamManager
         user.setTeam(team);
         team.addMember(player);
 
-        // Messages
-        player.sendMessage("Joined " + team.getName() + " team...");
-
         if (FracturedCore.getFracturedConfig().get(ConfigKeys.STARTER_ITEMS))
         {
             player.getInventory().addItem(new ItemStack(Material.WOODEN_SWORD));
@@ -121,7 +118,6 @@ public class TeamManager
         });
 
         // Removing them from a team
-        player.sendMessage("You have been removed from " + user.getTeam().getName() + " team.");
         user.getTeam().removeMember(player);
         // This goes last because preprocessing requires the user's last team before it be changed.
         user.setTeam(null);
@@ -169,11 +165,5 @@ public class TeamManager
         {
             addTeamCleared(staff, reason, player, user, team);
         }
-    }
-
-    public static void setTeamSpawn(Team team, Location location)
-    {
-        // fixme
-        // Logic here
     }
 }

@@ -36,6 +36,8 @@ public final class JoinListener implements Listener
 
         if (team == null)
         {
+            player.getInventory().setHelmet(null);
+
             player.setPlayerListFooter(FracturedCore.getMessages().get(Messages.TAB_FOOTER_NO_TEAM));
             player.setHealth(player.getMaxHealth());
             player.setFoodLevel(20);

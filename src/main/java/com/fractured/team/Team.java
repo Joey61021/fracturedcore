@@ -29,14 +29,18 @@ public class Team
      */
     private final int teamId;
     private int totalMembers;
+    private final List<Player> onlineTeamMembers;
+    private final Map<Integer, UpgradeRequisite> upgrades;
+    private final Inventory upgradesMenu;
+
     private final String name;
     private final ChatColor color;
     private final Material beacon;
-    private final Location spawn;
-    private final List<Player> onlineTeamMembers;
+
+    private Location spawn;
     private ItemStack helmet;
-    private final Map<Integer, UpgradeRequisite> upgrades;
-    private final Inventory upgradesMenu;
+
+    private boolean locked;
 
     private static final String TEAM_UPGRADES = "Team Upgrades";
 
@@ -69,20 +73,15 @@ public class Team
         MenuManager.register(TEAM_UPGRADES, teamUpgrades);
     }
 
-    private static final Map<Character, Color> colorMap = Map.of(
-            'c', Color.RED,
-            '9', Color.BLUE,
-            'a', Color.GREEN
-    );
-
     public Team(int teamId, int totalMembers, String name, char color, Location spawn)
     {
         // Stuff from the database
         this.teamId = teamId;
         this.totalMembers = totalMembers;
         this.name = name;
-        this.color = ChatColor.getByChar(color);
         this.spawn = spawn;
+
+        this.color = ChatColor.getByChar(color);
 
         beacon = Utils.getGlassFrom(color);
 
@@ -94,7 +93,14 @@ public class Team
 
         LeatherArmorMeta meta = (LeatherArmorMeta) helmet.getItemMeta();
 
-        meta.setColor(colorMap.getOrDefault(color, Color.YELLOW));
+        meta.setColor(
+                switch (color)
+                {
+                    case 'c' -> Color.RED;
+                    case '9' -> Color.BLUE;
+                    case 'a' -> Color.GREEN;
+                    default -> Color.YELLOW;
+                });
 
         meta.addEnchant(Enchantment.PROTECTION, 5, true);
         meta.setUnbreakable(true);
@@ -112,6 +118,7 @@ public class Team
         //upgrades.get
     }
 
+    // Called when the team member joins the server or when they're added to the team
     private void setPlayer(Player player)
     {
         onlineTeamMembers.add(player);
@@ -121,6 +128,8 @@ public class Team
         // Tab List
         player.setPlayerListName(player.getDisplayName());
         player.setPlayerListFooter(FracturedCore.getMessages().get(Messages.TAB_FOOTER_TEAM).replace("%color%", color.toString()).replace("%team%", name));
+
+        player.getInventory().setHelmet(helmet);
     }
 
     private void clearPlayer(Player player)
@@ -138,8 +147,10 @@ public class Team
     public void addMember(Player player)
     {
         ++totalMembers; // fixme save at shutdown in the database
-        player.getInventory().setHelmet(helmet);
         setPlayer(player);
+
+        // Messages
+        alert(player.getDisplayName() + ChatColor.WHITE + " joined the team.");
     }
 
     /**
@@ -148,7 +159,8 @@ public class Team
     public void memberJoined(Player player)
     {
         setPlayer(player);
-        // alert()
+
+        alert(player.getDisplayName() + ChatColor.WHITE + " joined.");
     }
 
     /**
@@ -156,6 +168,9 @@ public class Team
      */
     public void removeMember(Player player)
     {
+        // send the message before you remove the player so that they know
+        alert(player.getDisplayName() + ChatColor.WHITE + " was removed from the team.");
+
         --totalMembers;
         clearPlayer(player);
         player.getInventory().setHelmet(null);
@@ -167,6 +182,8 @@ public class Team
     public void memberQuit(Player player)
     {
         clearPlayer(player);
+
+        alert(player.getDisplayName() + ChatColor.WHITE + " left.");
     }
 
     public void alert(String message)
@@ -223,6 +240,12 @@ public class Team
         return spawn;
     }
 
+    public void setSpawn(Location spawn)
+    {
+        this.spawn = spawn;
+        // todo db query on plugin exit
+    }
+
     public ItemStack helmet()
     {
         return helmet;
@@ -231,5 +254,15 @@ public class Team
     public Inventory getUpgradesMenu()
     {
         return upgradesMenu;
+    }
+
+    public boolean locked()
+    {
+        return locked;
+    }
+
+    public void setLocked(boolean locked)
+    {
+        this.locked = locked;
     }
 }
