@@ -13,10 +13,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.PrepareGrindstoneEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -25,6 +27,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -140,17 +143,17 @@ public final class EnchantManager implements Listener
 
         for (NamespacedKey key0 : enchants.getKeys())
         {
-            PersistentDataContainer event = enchants.get(key0, PersistentDataType.TAG_CONTAINER);
-
-            if (event != null)
+            if (enchants.has(key0, PersistentDataType.INTEGER))
             {
+                lore.add(Enchant.getByKey(key0).display() + " " + romanNumeral(enchants.get(key0, PersistentDataType.INTEGER)));
+            } else
+            {
+                PersistentDataContainer event = enchants.get(key0, PersistentDataType.TAG_CONTAINER);
+
                 for (NamespacedKey key1 : event.getKeys())
                 {
                     lore.add(Enchant.getByKey(key1).display() + " " + romanNumeral(event.get(key1, PersistentDataType.INTEGER)));
                 }
-            } else
-            {
-                lore.add(Enchant.getByKey(key0).display() + " " + romanNumeral(enchants.get(key0, PersistentDataType.INTEGER)));
             }
         }
         // Save lore
@@ -424,33 +427,42 @@ public final class EnchantManager implements Listener
         // TODO
     }
 
+    private static PersistentDataContainer getEventHandles(ItemMeta meta, NamespacedKey event)
+    {
+        if (meta == null)
+        {
+            return null;
+        }
+
+        PersistentDataContainer enchants = meta.getPersistentDataContainer().get(FRACTURED_ENCHANTMENTS, PersistentDataType.TAG_CONTAINER);
+
+        if (enchants == null)
+        {
+            return null;
+        }
+
+        return enchants.get(event, PersistentDataType.TAG_CONTAINER);
+    }
+
     /**
      * Handles lifesteal, venomous, wither, shred, and conductance
      */
     @EventHandler
     public static void onAttack(EntityDamageByEntityEvent event)
     {
-        if (!(event.getDamager() instanceof Player attacker))
+        if (!(event.getDamager() instanceof LivingEntity attacker))
         {
             return;
         }
 
-        ItemStack item = attacker.getEquipment().getItemInMainHand();
+        EntityEquipment equipment = attacker.getEquipment();
 
-        // We just care about accessing the item meta
-        if (item.getItemMeta() == null)
+        if (equipment == null)
         {
             return;
         }
 
-        PersistentDataContainer enchants = item.getItemMeta().getPersistentDataContainer().get(FRACTURED_ENCHANTMENTS, PersistentDataType.TAG_CONTAINER);
-
-        if (enchants == null)
-        {
-            return;
-        }
-
-        PersistentDataContainer eventCallbacks = enchants.get(ENTITY_DAMAGE_BY_ENTITY_EVENT, PersistentDataType.TAG_CONTAINER);
+        PersistentDataContainer eventCallbacks = getEventHandles(equipment.getItemInMainHand().getItemMeta(), ENTITY_DAMAGE_BY_ENTITY_EVENT);
 
         if (eventCallbacks == null)
         {
@@ -469,22 +481,7 @@ public final class EnchantManager implements Listener
     @EventHandler
     public static void onBreak(BlockBreakEvent event)
     {
-        ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
-
-        // We just care about accessing the item meta
-        if (item.getItemMeta() == null)
-        {
-            return;
-        }
-
-        PersistentDataContainer enchants = item.getItemMeta().getPersistentDataContainer().get(FRACTURED_ENCHANTMENTS, PersistentDataType.TAG_CONTAINER);
-
-        if (enchants == null)
-        {
-            return;
-        }
-
-        PersistentDataContainer eventCallbacks = enchants.get(BLOCK_BREAK_EVENT, PersistentDataType.TAG_CONTAINER);
+        PersistentDataContainer eventCallbacks = getEventHandles(event.getPlayer().getInventory().getItemInMainHand().getItemMeta(), BLOCK_BREAK_EVENT);
 
         if (eventCallbacks == null)
         {
@@ -495,6 +492,13 @@ public final class EnchantManager implements Listener
         {
             blockBreakCallbacks.get(key).accept(event, eventCallbacks.get(key, PersistentDataType.INTEGER));
         }
+    }
+
+    public static void onDeath(EntityDeathEvent event)
+    {
+        LivingEntity entity = event.getEntity();
+
+
     }
 
     @EventHandler
@@ -538,6 +542,28 @@ public final class EnchantManager implements Listener
     @EventHandler
     public static void onShoot(ProjectileLaunchEvent event)
     {
+        ProjectileSource entity = event.getEntity().getShooter();
 
+        if (entity instanceof LivingEntity)
+        {
+            EntityEquipment equipment = ((LivingEntity) entity).getEquipment();
+
+            if (equipment == null)
+            {
+                return;
+            }
+
+            PersistentDataContainer eventHandles = getEventHandles(equipment.getItemInMainHand().getItemMeta(), PROJECTILE_LAUNCH_EVENT);
+
+            if (eventHandles == null)
+            {
+                return;
+            }
+
+            for (NamespacedKey key : eventHandles.getKeys())
+            {
+                projectileLaunchCallbacks.get(key).accept(event, eventHandles.get(key, PersistentDataType.INTEGER));
+            }
+        }
     }
 }
