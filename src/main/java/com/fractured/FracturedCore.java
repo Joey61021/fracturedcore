@@ -129,6 +129,7 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("bypassregions").setExecutor(BypassRegionsCommand::bypassRegions);
         getCommand("trade").setExecutor(TradeCommand::trade);
         getCommand("setmaxhealth").setExecutor(SetMaxHealthCommand::setMaxHealth);
+        getCommand("spawn").setExecutor(SpawnCommand::spawn);
     }
 
     @Override
