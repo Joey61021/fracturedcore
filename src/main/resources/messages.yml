@@ -143,6 +143,8 @@ shield:
   place: "&b&lSHIELD &fhas been established"
   change_radius: "&b&lSHIELD &fradius has been changed to &e%radius%&f!"
   locked: "&b&lSHIELD &fconfiguration has been set and is now &a&lACTIVE"
+trade:
+  usage: "&cUsage:\n- /trade [player]"
 deaths:
   kill: "%victim% &fdied"
   world_border: "%victim% left the confines of this world"

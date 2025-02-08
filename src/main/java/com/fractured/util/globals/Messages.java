@@ -97,6 +97,8 @@ public final class Messages
     public static final TextConfigKey COMMAND_BYPASS_REGIONS_TOGGLE_OFF = textKey("commands.bypass_regions.toggle_off");
     public static final TextConfigKey COMMAND_BYPASS_REGIONS_TOGGLE_ON = textKey("commands.bypass_regions.toggle_on");
 
+    public static final TextConfigKey COMMAND_TRADE_USAGE = textKey("commands.trade.usage");
+
     public static final TextConfigKey TAB_HEADER = textKey("tab.header");
     public static final TextConfigKey TAB_FOOTER_NO_TEAM = textKey("tab.footer_no_team");
     public static final TextConfigKey TAB_FOOTER_TEAM = textKey("tab.footer_team");
