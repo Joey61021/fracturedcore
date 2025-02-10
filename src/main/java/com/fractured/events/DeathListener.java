@@ -87,7 +87,7 @@ public class DeathListener implements Listener {
 
     private static void callDeath(EntityDamageEvent.DamageCause cause, Player victim, @Nullable Entity attacker)
     {
-        String attackerName = "&7None";
+        String attackerName = Utils.color("&7None");
         if (attacker != null) {
             attackerName = attacker instanceof Player ? ((Player) attacker).getDisplayName() : attacker.getName();
         }
