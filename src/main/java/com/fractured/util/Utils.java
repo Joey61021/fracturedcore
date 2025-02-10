@@ -2,6 +2,7 @@ package com.fractured.util;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.LivingEntity;
 
 public final class Utils
 {

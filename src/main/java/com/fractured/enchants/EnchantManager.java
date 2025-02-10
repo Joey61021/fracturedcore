@@ -292,7 +292,7 @@ public final class EnchantManager implements Listener
         Block block = event.getBlock();
 
         Set<Block> blocks = new HashSet<>();
-        getNearbyBlocks(false, block, 3 * level, blocks);
+        getNearbyBlocks(true, block, 3 * level, blocks);
 
         blocks.forEach(Block::breakNaturally);
         blocks.clear();
@@ -393,12 +393,20 @@ public final class EnchantManager implements Listener
                     Block relative = world.getBlockAt(bx + x, by + y, bz + z);
 
                     // Check if within spherical radius
-                    if ((relative.getType().equals(block.getType()) || checkType) && relative.getLocation().distance(block.getLocation()) <= radius) {
+                    if ((relative.getType().equals(block.getType()) || checkType) && canBeBroken(relative.getType()) && relative.getLocation().distance(block.getLocation()) <= radius) {
                         blocks.add(relative);
                     }
                 }
             }
         }
+    }
+
+    public static boolean canBeBroken(Material material)
+    {
+        return switch (material) {
+            case BEDROCK, OBSIDIAN -> false;
+            default -> true;
+        };
     }
 
     // For the soul bound enchant, temporarily keep the items for when the player respawns.

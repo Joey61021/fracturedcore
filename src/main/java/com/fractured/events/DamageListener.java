@@ -5,25 +5,33 @@ import com.fractured.FracturedCore;
 import com.fractured.team.Team;
 import com.fractured.user.User;
 import com.fractured.user.UserManager;
+import com.fractured.util.Utils;
 import com.fractured.util.globals.ConfigKeys;
 import com.fractured.util.globals.Messages;
 import com.fractured.util.globals.Permissions;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class EntityDamageListener implements Listener
+public class DamageListener implements Listener
 {
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event)
     {
         Entity victim = event.getEntity();
         Entity damager = event.getDamager();
+
+        if (!(victim instanceof LivingEntity))
+        {
+            return;
+        }
 
         // if friendly fire is off (we should cancel the event if the same team is attacking itself)
         if (!FracturedCore.getFracturedConfig().get(ConfigKeys.FRIENDLY_FIRE))
@@ -54,6 +62,8 @@ public class EntityDamageListener implements Listener
         // AXE OF PERUN ENCHANT LOGIC
         // fixme
 
+        updateName((LivingEntity) victim);
+
         if (!(victim instanceof Player) || !(damager instanceof Player))
         {
             return;
@@ -69,11 +79,41 @@ public class EntityDamageListener implements Listener
         if (item.getType().equals(Material.IRON_AXE) && item.getItemMeta().hasEnchant(Enchantment.UNBREAKING))
         {
             // todo fixme - chance is dependant on level, so for this instance level is 2, so 2*20
-            double chance = 2*20;
-            if (Math.random()*100 <= chance)
+            double chance = 2 * 20;
+            if (Math.random() * 100 <= chance)
             {
                 victim.getWorld().strikeLightning(victim.getLocation());
             }
         }
+    }
+
+    @EventHandler
+    public static void onDamage(EntityDamageEvent event)
+    {
+        if (!(event.getEntity() instanceof LivingEntity))
+        {
+            return;
+        }
+
+        updateName((LivingEntity) event.getEntity());
+    }
+
+    public static void updateName(LivingEntity entity)
+    {
+        double health = entity.getHealth() / entity.getMaxHealth() * 10;
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < 10; i++)
+        {
+            if (health >= i)
+            {
+                sb.append("&c❤");
+                continue;
+            }
+            sb.append("&7❤");
+        }
+
+        entity.setCustomNameVisible(true);
+        entity.setCustomName(Utils.color(sb.toString()));
     }
 }

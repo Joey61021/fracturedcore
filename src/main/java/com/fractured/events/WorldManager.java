@@ -422,8 +422,10 @@ public class WorldManager implements Listener
             event.getItem().getItemMeta().hasEnchant(Enchantment.UNBREAKING) &&
             clicked.getLocation().distance(BEACON) < 3)
         {
-            // todo subtract just one
-            player.setItemInHand(null);
+            ItemStack val = player.getItemInHand();
+            item.setAmount(val.getAmount() - 1);
+            player.setItemInHand(val);
+
             event.getClickedBlock().setType(team.beacon());
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F);
         }
@@ -456,7 +458,7 @@ public class WorldManager implements Listener
                 }
                 // Alert the enemy team
                 user.setLastAlert(loc);
-                claim.getTeam().alert("There is activity in your claim at (" + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ() + ")!");
+                claim.getTeam().alert("&cThere is activity in your claim at (" + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ() + ")!");
             }
         }
     }

@@ -190,7 +190,7 @@ public class Team
     {
         for (Player player : onlineTeamMembers)
         {
-            player.sendMessage(message);
+            player.sendMessage(Utils.color(message));
         }
     }
 
