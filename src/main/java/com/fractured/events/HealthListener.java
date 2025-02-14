@@ -64,7 +64,7 @@ public class HealthListener implements Listener
         // AXE OF PERUN ENCHANT LOGIC
         // fixme
 
-        updateName((LivingEntity) victim);
+        updateName((LivingEntity) victim, 0);
 
         if (!(victim instanceof Player) || !(damager instanceof Player))
         {
@@ -97,7 +97,7 @@ public class HealthListener implements Listener
             return;
         }
 
-        updateName((LivingEntity) event.getEntity());
+        updateName((LivingEntity) event.getEntity(), event.getFinalDamage());
     }
 
     @EventHandler
@@ -108,17 +108,18 @@ public class HealthListener implements Listener
             return;
         }
 
-        updateName((LivingEntity) event.getEntity());
+        updateName((LivingEntity) event.getEntity(), 0);
     }
 
-    public static void updateName(LivingEntity entity)
+    public static void updateName(LivingEntity entity, double damage)
     {
         if (entity instanceof ArmorStand)
         {
             return;
         }
 
-        double health = entity.getHealth() / entity.getMaxHealth() * 100;
+        // Remove final damage from health, if any
+        double health = (entity.getHealth() - damage) / entity.getMaxHealth() * 100;
         entity.setCustomNameVisible(true);
         entity.setCustomName(Utils.color((health < 25 ? "&c" : health < 50 ? "&e" : "&a") + Math.round(health) + "%"));
     }
