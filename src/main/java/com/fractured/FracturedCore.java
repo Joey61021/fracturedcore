@@ -89,6 +89,7 @@ public final class FracturedCore extends JavaPlugin {
     private void registerEvents() {
         final PluginManager manager = getServer().getPluginManager();
 
+        manager.registerEvents(new BossManager(), this);
         manager.registerEvents(new UserManager(), this);
         manager.registerEvents(menuManager, this);
         manager.registerEvents(new ShieldManager(), this);
@@ -130,6 +131,7 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("trade").setExecutor(TradeCommand::trade);
         getCommand("setmaxhealth").setExecutor(SetMaxHealthCommand::setMaxHealth);
         getCommand("spawn").setExecutor(SpawnCommand::spawn);
+        getCommand("boss").setExecutor(BossCommand::boss);
     }
 
     @Override

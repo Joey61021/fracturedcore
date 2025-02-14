@@ -2,6 +2,7 @@ package com.fractured.util.globals;
 
 import com.fractured.config.keys.TextConfigKey;
 import net.md_5.bungee.api.ChatColor;
+import org.w3c.dom.Text;
 
 import static com.fractured.config.DataSupplier.textKey;
 
@@ -28,6 +29,9 @@ public final class Messages
     public static final TextConfigKey UPGRADES_MAX_LEVEL = textKey("upgrades.max_level");
     public static final TextConfigKey UPGRADES_NOT_ENOUGH = textKey("upgrades.not_enough");
     public static final TextConfigKey UPGRADES_UPGRADED = textKey("upgrades.upgraded");
+
+    public static final TextConfigKey BOSS_SPAWNED = textKey("boss.spawned");
+    public static final TextConfigKey BOSS_KILLED = textKey("boss.killed");
 
     public static final TextConfigKey COMMAND_INVALID_TARGET = textKey("commands.invalid_target");
     public static final TextConfigKey INVALID_WORLD = textKey("commands.invalid_world");
@@ -101,6 +105,8 @@ public final class Messages
     public static final TextConfigKey COMMAND_TRADE_ALREADY_ACTIVE = textKey("commands.trade.already_active");
     public static final TextConfigKey COMMAND_TRADE_SENT = textKey("commands.trade.sent");
     public static final TextConfigKey COMMAND_TRADE_RECEIVED = textKey("commands.trade.received");
+
+    public static final TextConfigKey COMMAND_BOSS_SPAWNED = textKey("commands.boss.spawned");
 
     public static final TextConfigKey TAB_HEADER = textKey("tab.header");
     public static final TextConfigKey TAB_FOOTER_NO_TEAM = textKey("tab.footer_no_team");
