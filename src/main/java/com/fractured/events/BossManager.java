@@ -8,12 +8,13 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -51,24 +52,30 @@ public class BossManager implements Listener {
         Bukkit.getOnlinePlayers().forEach(target -> target.playSound(target.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 1.0F, 1.0F));
     }
 
-    @EventHandler
-    public static void onTarget(EntityTargetEvent event)
+    public static Player getNearestTarget(Location location)
     {
-//        Entity is not a boss
-        if (event.getEntity().getType() != EntityType.IRON_GOLEM || !event.getEntity().hasMetadata("boss"))
-        {
-            return;
+        Player nearestTarget = null;
+        double closestDistance = Double.MAX_VALUE;
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (!player.getWorld().equals(location.getWorld()))
+            {
+                continue; // Skip if in a different world
+            }
+
+            double distance = player.getLocation().distance(location);
+            if (distance < 40 && distance < closestDistance)
+            {
+                closestDistance = distance;
+                nearestTarget = player;
+            }
         }
 
-        if (!(event.getTarget() instanceof Player))
-        {
-            return;
-        }
-        event.setTarget(event.getTarget());
+        return nearestTarget;
     }
 
     @EventHandler
-    public static void onKill(EntityDeathEvent event)
+    public static void onDeath(EntityDeathEvent event)
     {
         //        Entity is not a boss
         if (event.getEntity().getType() != EntityType.IRON_GOLEM || !event.getEntity().hasMetadata("boss"))
@@ -83,8 +90,27 @@ public class BossManager implements Listener {
         items.add(new ItemStack(Material.NETHERITE_INGOT, 3));
         items.add(new ItemStack(Material.DIAMOND, 3));
         event.getDrops().addAll(items);
+    }
 
-        Bukkit.broadcastMessage(FracturedCore.getMessages().get(Messages.BOSS_KILLED));
+    @EventHandler
+    public static void onDeath(EntityDamageByEntityEvent event)
+    {
+//        Entity is not a boss
+        if (!(event.getDamager() instanceof Player) || event.getEntity().getType() != EntityType.IRON_GOLEM || !event.getEntity().hasMetadata("boss"))
+        {
+            return;
+        }
+
+        Player damager = (Player) event.getDamager();
+        IronGolem victim = (IronGolem) event.getEntity();
+
+//        Entity is not dead
+        if (victim.getHealth() - event.getFinalDamage() > 0)
+        {
+            return;
+        }
+
+        Bukkit.broadcastMessage(FracturedCore.getMessages().get(Messages.BOSS_KILLED).replace("%killer%", damager.getDisplayName()));
         Bukkit.getOnlinePlayers().forEach(target -> target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F));
     }
 }

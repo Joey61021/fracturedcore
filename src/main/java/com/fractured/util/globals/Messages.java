@@ -2,7 +2,6 @@ package com.fractured.util.globals;
 
 import com.fractured.config.keys.TextConfigKey;
 import net.md_5.bungee.api.ChatColor;
-import org.w3c.dom.Text;
 
 import static com.fractured.config.DataSupplier.textKey;
 

@@ -11,6 +11,7 @@ import com.fractured.util.globals.Messages;
 import com.fractured.util.globals.Permissions;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -18,9 +19,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class DamageListener implements Listener
+public class HealthListener implements Listener
 {
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event)
@@ -98,22 +100,26 @@ public class DamageListener implements Listener
         updateName((LivingEntity) event.getEntity());
     }
 
-    public static void updateName(LivingEntity entity)
+    @EventHandler
+    public static void onHeal(EntityRegainHealthEvent event)
     {
-        double health = entity.getHealth() / entity.getMaxHealth() * 10;
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < 10; i++)
+        if (!(event.getEntity() instanceof LivingEntity))
         {
-            if (health >= i)
-            {
-                sb.append("&c❤");
-                continue;
-            }
-            sb.append("&7❤");
+            return;
         }
 
+        updateName((LivingEntity) event.getEntity());
+    }
+
+    public static void updateName(LivingEntity entity)
+    {
+        if (entity instanceof ArmorStand)
+        {
+            return;
+        }
+
+        double health = entity.getHealth() / entity.getMaxHealth() * 100;
         entity.setCustomNameVisible(true);
-        entity.setCustomName(Utils.color(sb.toString()));
+        entity.setCustomName(Utils.color((health < 25 ? "&c" : health < 50 ? "&e" : "&a") + Math.round(health) + "%"));
     }
 }
