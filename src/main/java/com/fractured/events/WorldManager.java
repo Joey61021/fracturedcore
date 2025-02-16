@@ -20,9 +20,12 @@ import org.bukkit.event.block.BlockEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityTeleportEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Random;
 
 public class WorldManager implements Listener
 {
@@ -387,6 +390,16 @@ public class WorldManager implements Listener
                 //todo fixme config messages
                 claim.getTeam().alert("A block was changed in your claim at (" + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ() + ")!");
             }
+        }
+    }
+
+    @EventHandler
+    public static void onFood(FoodLevelChangeEvent event)
+    {
+        Random rand = new Random(); // Reduce hunger depletion rate by 50%
+        if (event.getEntity().getFoodLevel() > event.getFoodLevel() && rand.nextDouble() >= 0.5)
+        {
+            event.setCancelled(true);
         }
     }
 

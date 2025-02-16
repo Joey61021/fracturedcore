@@ -4,6 +4,7 @@ import com.fractured.team.*;
 import com.fractured.user.User;
 import com.fractured.user.UserManager;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -52,9 +53,20 @@ public class PAPIExpansion extends PlaceholderExpansion
         Claim claim = ClaimManager.getClaim(player.getLocation());
 
         return switch (identifier) {
-            case "team" -> Utils.color(team == null ? "&7None" : team.color() + team.getName());
-            case "region" -> Utils.color(claim == null ? "&7None" : claim.getTeam().color() + claim.getTeam().getName());
+            case "team" -> Utils.color(team == null ? "&7None" : convertColor(team.color()) + team.getName());
+            case "region" -> Utils.color(claim == null ? "&7None" : convertColor(claim.getTeam().color()) + claim.getTeam().getName());
             default -> null;
+        };
+    }
+
+    public static String convertColor(ChatColor color)
+    {
+        return switch (color) {
+            case RED -> "&c";
+            case BLUE -> "&9";
+            case GREEN -> "&a";
+            case YELLOW -> "&e";
+            default -> "&7";
         };
     }
 }
