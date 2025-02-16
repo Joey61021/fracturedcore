@@ -15,6 +15,7 @@ import com.fractured.menu.MenuManager;
 import com.fractured.shields.ShieldManager;
 import com.fractured.storage.Storage;
 import com.fractured.user.UserManager;
+import com.fractured.util.PAPIExpansion;
 import com.fractured.util.globals.ConfigKeys;
 import com.fractured.util.globals.Messages;
 import org.bukkit.Bukkit;
@@ -105,7 +106,6 @@ public final class FracturedCore extends JavaPlugin {
         manager.registerEvents(new LeaveListener(), this);
         manager.registerEvents(new InventoryClickListener(), this);
 
-        manager.registerEvents(new KillListener(), this);
         manager.registerEvents(new RespawnListener(), this);
         manager.registerEvents(new SleepListener(), this);
     }
@@ -128,7 +128,6 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("test").setExecutor(TestCommand::test);
         getCommand("customenchant").setExecutor(CustomEnchantCommand::customEnchant);
         getCommand("bypassregions").setExecutor(BypassRegionsCommand::bypassRegions);
-        getCommand("trade").setExecutor(TradeCommand::trade);
         getCommand("setmaxhealth").setExecutor(SetMaxHealthCommand::setMaxHealth);
         getCommand("spawn").setExecutor(SpawnCommand::spawn);
         getCommand("boss").setExecutor(BossCommand::boss);
@@ -141,7 +140,8 @@ public final class FracturedCore extends JavaPlugin {
     }
 
     @Override
-    public void onEnable() {
+    public void onEnable()
+    {
         config = new Config(this, ConfigKeys.class, "config.yml");
         messages = new Config(this, Messages.class, "messages.yml");
         storage = Storage.newStorage(config);
@@ -156,6 +156,12 @@ public final class FracturedCore extends JavaPlugin {
 
         // Register custom events (cevents)
         EventManager.init();
+
+        // Register placeholderapi
+        if( Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")){
+            //Registering placeholder will be use here
+            new PAPIExpansion().register();
+        }
     }
 
     @Override

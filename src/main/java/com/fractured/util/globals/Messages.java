@@ -100,11 +100,6 @@ public final class Messages
     public static final TextConfigKey COMMAND_BYPASS_REGIONS_TOGGLE_OFF = textKey("commands.bypass_regions.toggle_off");
     public static final TextConfigKey COMMAND_BYPASS_REGIONS_TOGGLE_ON = textKey("commands.bypass_regions.toggle_on");
 
-    public static final TextConfigKey COMMAND_TRADE_USAGE = textKey("commands.trade.usage");
-    public static final TextConfigKey COMMAND_TRADE_ALREADY_ACTIVE = textKey("commands.trade.already_active");
-    public static final TextConfigKey COMMAND_TRADE_SENT = textKey("commands.trade.sent");
-    public static final TextConfigKey COMMAND_TRADE_RECEIVED = textKey("commands.trade.received");
-
     public static final TextConfigKey COMMAND_BOSS_SPAWNED = textKey("commands.boss.spawned");
 
     public static final TextConfigKey TAB_HEADER = textKey("tab.header");

@@ -3,6 +3,8 @@ version: '1.0'
 main: com.fractured.FracturedCore
 api-version: '1.21'
 
+softdepend: [PlaceholderAPI]
+
 commands:
   coords:
     aliases: [coordinates]
@@ -38,8 +40,6 @@ commands:
     aliases: [cenchant]
   bypassregions:
     aliases: [regionbypass, br]
-  trade:
-    aliases: []
   setmaxhealth:
     aliases: []
   boss:

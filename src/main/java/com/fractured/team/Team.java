@@ -35,7 +35,7 @@ public class Team
 
     private final String name;
     private final ChatColor color;
-    private final Material beacon;
+    private final Material beacon; // TODO -- setup beacon glass
 
     private Location spawn;
     private ItemStack helmet;

@@ -12,10 +12,14 @@ storage:
     port: 3306
 locations:
   over_world: "world"
-  beacon:
-    x: 0.5
-    y: 64.0
-    z: 0.5
+  spawn_pos1:
+    x: -75.0
+    y: 150.0
+    z: 75.0
+  spawn_pos2:
+    x: 75.0
+    y: 300.0
+    z: -75.0
 command:
   stuck:
     enabled: true

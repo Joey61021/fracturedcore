@@ -39,6 +39,14 @@ public class DeathListener implements Listener {
             return;
         }
 
+        Entity entity = event.getEntity();
+
+        if (WorldManager.isInSpawn(entity.getLocation()))
+        {
+            event.setCancelled(true);
+            return;
+        }
+
         if (victim.getHealth() - event.getFinalDamage() <= 0)
         {
             victim.getInventory().setHelmet(null);

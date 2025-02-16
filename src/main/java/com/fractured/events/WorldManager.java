@@ -11,7 +11,6 @@ import com.fractured.util.Utils;
 import com.fractured.util.globals.Messages;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
@@ -19,16 +18,22 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class WorldManager implements Listener
 {
-    private static final World OVER_WORLD;
-    private static Location BEACON;
+    public static final World OVER_WORLD;
+
+    public static Location SPAWN_POS1;
+    public static Location SPAWN_POS2;
 
     private static final String DEFAULT_WORLD_PATH = "locations.over_world";
-    private static final String BEACON_PATH = "locations.beacon";
+    private static final String SPAWN_POS1_PATH = "locations.spawn_pos1";
+    private static final String SPAWN_POS2_PATH = "locations.spawn_pos2";
 
     static
     {
@@ -41,8 +46,31 @@ public class WorldManager implements Listener
             throw new IllegalArgumentException("Unable to find the over world world at " + DEFAULT_WORLD_PATH);
         } else
         {
-            BEACON = getLocation(config, BEACON_PATH);
+            SPAWN_POS1 = getLocation(config, SPAWN_POS1_PATH);
+            SPAWN_POS2 = getLocation(config, SPAWN_POS2_PATH);
         }
+    }
+
+    public static boolean isInSpawn(Location location)
+    {
+        return isInRegion(location, SPAWN_POS1, SPAWN_POS2);
+    }
+
+    private static boolean isInRegion(Location loc, Location pos1, Location pos2)
+    {
+        if (loc.getWorld() != WorldManager.getSpawn().getWorld())
+        {
+            return false;
+        }
+
+        double minX = Math.min(pos1.getX(), pos2.getX());
+        double maxX = Math.max(pos1.getX(), pos2.getX());
+        double minY = Math.min(pos1.getY(), pos2.getY());
+        double maxY = Math.max(pos1.getY(), pos2.getY());
+        double minZ = Math.min(pos1.getZ(), pos2.getZ());
+        double maxZ = Math.max(pos1.getZ(), pos2.getZ());
+
+        return pos1.getWorld().equals(loc.getWorld()) && loc.getX() > minX && loc.getX() < maxX && loc.getY() > minY && loc.getY() < maxY && loc.getZ() > minZ && loc.getZ() < maxZ;
     }
 
     public static Location getLocation(Config config, String path)
@@ -224,10 +252,9 @@ public class WorldManager implements Listener
     }
 
     /**
-     * This method does three things,
+     * This method does two things,
      * 1) Generates new team borders and sets the world border
-     * 2) Updates beacon location in the config and in the computer
-     * 3) Reloads team claims by recommitting them to the database and then reloading the ClaimManager completely.
+     * 2) Reloads team claims by recommitting them to the database and then reloading the ClaimManager completely.
      * @param radius Positive
      */
     public static void generateTeamBorders(int radius, Location location)
@@ -256,12 +283,6 @@ public class WorldManager implements Listener
         generateXBorder(radius, x0 - radius - 1, y0, z0, world, Material.GREEN_CONCRETE, Material.YELLOW_CONCRETE);
         generateZBorder(radius, x0, y0, z0 - radius - 1, world, Material.RED_CONCRETE, Material.GREEN_CONCRETE);
 
-        // Generate beacon, glass
-        world.getBlockAt(x0, y0 - 1, z0).setType(Material.BEACON);
-        // (set beacon location)
-        setLocation(FracturedCore.getFracturedConfig(), "locations.beacon", BEACON = new Location(world, x0, y0, z0));
-        world.getBlockAt(x0, y0, z0).setType(Material.GLASS);
-
         // Generate iron blocks
         for (int x = 0; x < 3; x++)
         {
@@ -278,8 +299,6 @@ public class WorldManager implements Listener
 
     public static void extendTeamBorders(int size)
     {
-
-
 //        for (int a = 0; a < BEACON.getBlockY() + 1 - MIN_HEIGHT; a++)
 //        {
 //            world.getBlockAt(x, y - a, z).setType(Material.BEDROCK);
@@ -326,6 +345,14 @@ public class WorldManager implements Listener
             return;
         }
 
+        Location loc = event.getBlock().getLocation();
+
+        if (isInSpawn(loc))
+        {
+            event.setCancelled(true);
+            return;
+        }
+
         User user = UserManager.getUser(player.getUniqueId());
         Team team = user.getTeam();
 
@@ -335,8 +362,6 @@ public class WorldManager implements Listener
             event.setCancelled(true);
             return;
         }
-
-        Location loc = event.getBlock().getLocation();
 
         Claim claim = ClaimManager.getClaim(loc);
 
@@ -359,8 +384,50 @@ public class WorldManager implements Listener
             } else
             {
                 // Alert the enemy team
+                //todo fixme config messages
                 claim.getTeam().alert("A block was changed in your claim at (" + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ() + ")!");
             }
+        }
+    }
+
+    @EventHandler
+    public static void onSpawn(CreatureSpawnEvent event)
+    {
+        if (isInSpawn(event.getLocation()))
+        {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public static void onTeleport(EntityTeleportEvent event)
+    {
+        if (isInSpawn(event.getTo()))
+        {
+            event.setCancelled(true); // Prevent ender pearls into spawn region
+        }
+    }
+
+    @EventHandler
+    public static void onMove(PlayerMoveEvent event)
+    {
+        Player player = event.getPlayer();
+        User user = UserManager.getUser(player.getUniqueId());
+
+        if (user == null)
+        {
+            return;
+        }
+
+        Team team = user.getTeam();
+        if (team != null)
+        {
+            return;
+        }
+
+        if (player.getLocation().distance(getSpawn()) > 50)
+        {
+            player.teleport(getSpawn());
         }
     }
 
@@ -414,20 +481,6 @@ public class WorldManager implements Listener
         {
             event.setCancelled(true);
             return;
-        }
-
-        if (clicked.getWorld() == BEACON.getWorld() &&
-            item.getType().equals(Material.PRISMARINE_SHARD) &&
-            event.getItem().getItemMeta() != null &&
-            event.getItem().getItemMeta().hasEnchant(Enchantment.UNBREAKING) &&
-            clicked.getLocation().distance(BEACON) < 3)
-        {
-            ItemStack val = player.getItemInHand();
-            item.setAmount(val.getAmount() - 1);
-            player.setItemInHand(val);
-
-            event.getClickedBlock().setType(team.beacon());
-            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F);
         }
 
         Location loc = event.getClickedBlock().getLocation();
