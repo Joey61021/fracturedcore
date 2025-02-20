@@ -34,6 +34,10 @@ blocked_commands:
   - "/shopgive"
   - "/trade"
   - "/tradesystem"
+  - "/end"
+  - "/endroom"
+  - "/fracturedsmp:end"
+  - "/fracturedsmp:endroom"
 command:
   stuck:
     enabled: true

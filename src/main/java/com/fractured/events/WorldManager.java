@@ -40,7 +40,7 @@ public class WorldManager implements Listener
     private static final String SPAWN_PATH = "locations.spawn";
     private static final String SPAWN_POS1_PATH = "locations.spawn_pos1";
     private static final String SPAWN_POS2_PATH = "locations.spawn_pos2";
-    private static final String END_ROOM_PATH = "locations.spawn_pos2";
+    private static final String END_ROOM_PATH = "locations.end_room";
 
     static
     {
@@ -357,9 +357,10 @@ public class WorldManager implements Listener
             return;
         }
 
-        Location loc = event.getBlock().getLocation();
+        Block block = event.getBlock();
+        Location loc = block.getLocation();
 
-        if (isInSpawn(loc))
+        if (isInSpawn(loc) && block.getType() != Material.END_PORTAL_FRAME)
         {
             event.setCancelled(true);
             player.sendMessage(FracturedCore.getMessages().get(Messages.REGION_SPAWN_REGION));
@@ -380,7 +381,7 @@ public class WorldManager implements Listener
 
         // The behavior here is changed slightly from the original.
         // If the enemy team is null, the event will not be cancelled, the original did cancel these events.
-        if (claim != null && claim.getTeam() != team)
+        if (claim != null && claim.getTeam() != team && !isInSpawn(loc))
         {
             if (claim.getShield())
             {
