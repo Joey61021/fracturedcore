@@ -33,12 +33,14 @@ public class WorldManager implements Listener
     public static Location SPAWN;
     public static Location SPAWN_POS1;
     public static Location SPAWN_POS2;
+    public static Location END_ROOM; // End room to accommodate difficulties in relation to accessing the end
 
     private static final String DEFAULT_WORLD_PATH = "locations.over_world";
 
     private static final String SPAWN_PATH = "locations.spawn";
     private static final String SPAWN_POS1_PATH = "locations.spawn_pos1";
     private static final String SPAWN_POS2_PATH = "locations.spawn_pos2";
+    private static final String END_ROOM_PATH = "locations.spawn_pos2";
 
     static
     {
@@ -60,6 +62,7 @@ public class WorldManager implements Listener
             SPAWN = getLocation(config, SPAWN_PATH);
             SPAWN_POS1 = getLocation(config, SPAWN_POS1_PATH);
             SPAWN_POS2 = getLocation(config, SPAWN_POS2_PATH);
+            END_ROOM = getLocation(config, END_ROOM_PATH);
 
             OVER_WORLD.setSpawnLocation(SPAWN);
         }

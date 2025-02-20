@@ -44,3 +44,5 @@ commands:
     aliases: []
   tpa:
     aliases: [teleportrequest]
+  end:
+    aliases: [endroom]

@@ -132,6 +132,7 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("setmaxhealth").setExecutor(SetMaxHealthCommand::setMaxHealth);
         getCommand("spawn").setExecutor(SpawnCommand::spawn);
         getCommand("tpa").setExecutor(TpaCommand::tpa);
+        getCommand("endroom").setExecutor(EndCommand::end);
     }
 
     @Override

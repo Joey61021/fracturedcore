@@ -24,6 +24,10 @@ locations:
     x: 75.0
     y: 300.0
     z: -75.0
+  end_room:
+    x: 26.5
+    y: 224.5
+    z: -6.5
 # Commands to block if a player isn't in a team
 blocked_commands:
   - "/shop"
