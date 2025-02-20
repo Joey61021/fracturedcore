@@ -8,6 +8,7 @@ import com.fractured.user.UserManager;
 import com.fractured.util.globals.Messages;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -42,8 +43,10 @@ public final class JoinListener implements Listener
             player.setHealth(player.getMaxHealth());
             player.setFoodLevel(20);
             player.setFireTicks(0);
-            player.teleport(WorldManager.getSpawn());
+            player.teleport(WorldManager.SPAWN);
             TeamCache.openMenu(player); // open team menu
+            player.setPlayerListName(ChatColor.GRAY + player.getName());
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F);
             event.setJoinMessage(ChatColor.GRAY + player.getName() + ChatColor.WHITE + " has connected");
         }
         else

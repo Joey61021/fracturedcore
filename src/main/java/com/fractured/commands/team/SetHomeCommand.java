@@ -33,7 +33,7 @@ public final class SetHomeCommand
         }
 
         Claim claim = ClaimManager.getClaim(player.getLocation());
-        if (player.getLocation().getWorld() != WorldManager.getSpawn().getWorld() || claim == null || claim.getTeam() == null || claim.getTeam() != team)
+        if (player.getLocation().getWorld() != WorldManager.SPAWN.getWorld() || claim == null || claim.getTeam() == null || claim.getTeam() != team)
         {
             player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_HOME_INVALID_REGION));
             return false;

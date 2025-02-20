@@ -18,7 +18,7 @@
     @EventHandler
     public void onSleep(PlayerBedEnterEvent event) {
         Location bedLoc = event.getBed().getLocation();
-        if (bedLoc.getWorld() != WorldManager.getSpawn().getWorld()) {
+        if (bedLoc.getWorld() != WorldManager.SPAWN.getWorld()) {
             return;
         }
 

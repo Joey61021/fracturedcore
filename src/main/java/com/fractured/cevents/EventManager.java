@@ -81,7 +81,7 @@ public class EventManager {
             // 250 radius of spawn
             int min = -250;
             int max = 250;
-            Location spawn = WorldManager.getSpawn();
+            Location spawn = WorldManager.SPAWN;
 
             if (spawn.getWorld() == null) {
                 return;

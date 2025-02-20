@@ -6,6 +6,7 @@ import com.fractured.commands.team.HomeCommand;
 import com.fractured.commands.team.SetHomeCommand;
 import com.fractured.commands.team.TeamChatCommand;
 import com.fractured.commands.team.TeamCommand;
+import com.fractured.commands.tpa.TpaCommand;
 import com.fractured.config.Config;
 import com.fractured.enchants.EnchantManager;
 import com.fractured.events.*;
@@ -90,7 +91,6 @@ public final class FracturedCore extends JavaPlugin {
     private void registerEvents() {
         final PluginManager manager = getServer().getPluginManager();
 
-        manager.registerEvents(new BossManager(), this);
         manager.registerEvents(new UserManager(), this);
         manager.registerEvents(menuManager, this);
         manager.registerEvents(new ShieldManager(), this);
@@ -98,6 +98,7 @@ public final class FracturedCore extends JavaPlugin {
         manager.registerEvents(new EnchantManager(), this);
 
         manager.registerEvents(new ChatListener(), this);
+        manager.registerEvents(new CommandListener(), this);
         manager.registerEvents(new DeathListener(), this);
         manager.registerEvents(new HealthListener(), this);
         manager.registerEvents(new ExplodeListener(), this);
@@ -130,13 +131,12 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("bypassregions").setExecutor(BypassRegionsCommand::bypassRegions);
         getCommand("setmaxhealth").setExecutor(SetMaxHealthCommand::setMaxHealth);
         getCommand("spawn").setExecutor(SpawnCommand::spawn);
-        getCommand("boss").setExecutor(BossCommand::boss);
+        getCommand("tpa").setExecutor(TpaCommand::tpa);
     }
 
     @Override
-    public void onLoad()
-    {
-        // load
+    public void onLoad() {
+
     }
 
     @Override
@@ -159,7 +159,6 @@ public final class FracturedCore extends JavaPlugin {
 
         // Register placeholderapi
         if( Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")){
-            //Registering placeholder will be use here
             new PAPIExpansion().register();
         }
     }
@@ -168,7 +167,7 @@ public final class FracturedCore extends JavaPlugin {
     public void onDisable()
     {
         // fixme wait for db to flush? Consult the bukkit async scheduler probably
-        // Also make any additional db updates for saving like the team cache maybe? Anything
+        // Also make any additional db updates for saving like the team cache maybe?
 
         if (ShieldManager.pooledBlocks.size() > 0)
         {

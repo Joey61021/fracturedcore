@@ -9,6 +9,7 @@ import com.fractured.util.Utils;
 import com.fractured.util.globals.ConfigKeys;
 import com.fractured.util.globals.Messages;
 import com.fractured.util.globals.Permissions;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
@@ -18,12 +19,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class HealthListener implements Listener
 {
+
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event)
     {
@@ -32,6 +34,12 @@ public class HealthListener implements Listener
 
         if (!(victim instanceof LivingEntity))
         {
+            return;
+        }
+
+        if (!(victim instanceof Player))
+        {
+            Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(FracturedCore.class), () -> updateName((LivingEntity) victim), 1);
             return;
         }
 
@@ -64,9 +72,7 @@ public class HealthListener implements Listener
         // AXE OF PERUN ENCHANT LOGIC
         // fixme
 
-        updateName((LivingEntity) victim, 0);
-
-        if (!(victim instanceof Player) || !(damager instanceof Player))
+        if (!(damager instanceof Player))
         {
             return;
         }
@@ -90,28 +96,17 @@ public class HealthListener implements Listener
     }
 
     @EventHandler
-    public static void onDamage(EntityDamageEvent event)
-    {
-        if (!(event.getEntity() instanceof LivingEntity))
-        {
-            return;
-        }
-
-        updateName((LivingEntity) event.getEntity(), event.getFinalDamage());
-    }
-
-    @EventHandler
     public static void onHeal(EntityRegainHealthEvent event)
     {
-        if (!(event.getEntity() instanceof LivingEntity))
+        if (!(event.getEntity() instanceof LivingEntity) || !event.getEntity().isCustomNameVisible())
         {
             return;
         }
 
-        updateName((LivingEntity) event.getEntity(), 0);
+        updateName((LivingEntity) event.getEntity());
     }
 
-    public static void updateName(LivingEntity entity, double damage)
+    public static void updateName(LivingEntity entity)
     {
         if (entity instanceof ArmorStand)
         {
@@ -119,7 +114,7 @@ public class HealthListener implements Listener
         }
 
         // Remove final damage from health, if any
-        double health = (entity.getHealth() - damage) / entity.getMaxHealth() * 100;
+        double health = entity.getHealth() / entity.getMaxHealth() * 100;
         entity.setCustomNameVisible(true);
         entity.setCustomName(Utils.color((health < 25 ? "&c" : health < 50 ? "&e" : "&a") + Math.round(health) + "%"));
     }

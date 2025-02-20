@@ -42,5 +42,5 @@ commands:
     aliases: [regionbypass, br]
   setmaxhealth:
     aliases: []
-  boss:
-    aliases: [spawnboss]
+  tpa:
+    aliases: [teleportrequest]

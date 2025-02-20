@@ -34,7 +34,7 @@ public final class HomeCommand
         }
 
         Claim claim = ClaimManager.getClaim(player.getLocation());
-        if (player.getLocation().getWorld() != WorldManager.getSpawn().getWorld() || claim == null || claim.getTeam() == null || claim.getTeam() != team)
+        if (player.getLocation().getWorld() != WorldManager.SPAWN.getWorld() || claim == null || claim.getTeam() == null || claim.getTeam() != team)
         {
             player.sendMessage(FracturedCore.getMessages().get(Messages.ENEMY_TEAM_BLOCKED));
             return false;

@@ -11,19 +11,18 @@ import com.fractured.util.Utils;
 import com.fractured.util.globals.Messages;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
@@ -31,10 +30,13 @@ public class WorldManager implements Listener
 {
     public static final World OVER_WORLD;
 
+    public static Location SPAWN;
     public static Location SPAWN_POS1;
     public static Location SPAWN_POS2;
 
     private static final String DEFAULT_WORLD_PATH = "locations.over_world";
+
+    private static final String SPAWN_PATH = "locations.spawn";
     private static final String SPAWN_POS1_PATH = "locations.spawn_pos1";
     private static final String SPAWN_POS2_PATH = "locations.spawn_pos2";
 
@@ -42,15 +44,24 @@ public class WorldManager implements Listener
     {
         Config config = FracturedCore.getFracturedConfig();
 
-        OVER_WORLD = Bukkit.getWorld(config.getString(DEFAULT_WORLD_PATH));
+        String path = config.getString(DEFAULT_WORLD_PATH);
+        if (path == null)
+        {
+            throw new IllegalArgumentException("Invalid default world path at " + DEFAULT_WORLD_PATH);
+        }
+
+        OVER_WORLD = Bukkit.getWorld(path);
 
         if (OVER_WORLD == null)
         {
             throw new IllegalArgumentException("Unable to find the over world world at " + DEFAULT_WORLD_PATH);
         } else
         {
+            SPAWN = getLocation(config, SPAWN_PATH);
             SPAWN_POS1 = getLocation(config, SPAWN_POS1_PATH);
             SPAWN_POS2 = getLocation(config, SPAWN_POS2_PATH);
+
+            OVER_WORLD.setSpawnLocation(SPAWN);
         }
     }
 
@@ -61,7 +72,7 @@ public class WorldManager implements Listener
 
     private static boolean isInRegion(Location loc, Location pos1, Location pos2)
     {
-        if (loc.getWorld() != WorldManager.getSpawn().getWorld())
+        if (loc.getWorld() != WorldManager.SPAWN.getWorld())
         {
             return false;
         }
@@ -214,8 +225,8 @@ public class WorldManager implements Listener
             int i;
 
             // Start at the next chunk, we already did one
-            // (dist - rx) >> 4 is how many chunks we need to decorate.
-            for (i = 1; i <= (dist - rx) >> 4; ++i)
+            // (dist - rx) / 16 is how many chunks we need to decorate.
+            for (i = 1; i <= (dist + rx) / 16; ++i)
             {
                 chunk = world.getChunkAt(cx + i, cz);
 
@@ -336,11 +347,6 @@ public class WorldManager implements Listener
 //        }
     }
 
-    public static Location getSpawn()
-    {
-        return OVER_WORLD.getSpawnLocation();
-    }
-
     private static <E extends BlockEvent & Cancellable> void onBlockChange(Player player, E event)
     {
         if (player.getGameMode() == GameMode.CREATIVE || UserManager.getUser(player.getUniqueId()).getBypassRegions())
@@ -353,6 +359,7 @@ public class WorldManager implements Listener
         if (isInSpawn(loc))
         {
             event.setCancelled(true);
+            player.sendMessage(FracturedCore.getMessages().get(Messages.REGION_SPAWN_REGION));
             return;
         }
 
@@ -396,6 +403,15 @@ public class WorldManager implements Listener
     @EventHandler
     public static void onFood(FoodLevelChangeEvent event)
     {
+        Player player = (Player) event.getEntity();
+        Team team = UserManager.getUser(player.getUniqueId()).getTeam();
+
+        if (team == null)
+        {
+            event.setFoodLevel(20);
+            return; // Cancel food level change if the player is not in a team
+        }
+
         Random rand = new Random(); // Reduce hunger depletion rate by 50%
         if (event.getEntity().getFoodLevel() > event.getFoodLevel() && rand.nextDouble() >= 0.5)
         {
@@ -409,38 +425,6 @@ public class WorldManager implements Listener
         if (isInSpawn(event.getLocation()))
         {
             event.setCancelled(true);
-        }
-    }
-
-    @EventHandler
-    public static void onTeleport(EntityTeleportEvent event)
-    {
-        if (isInSpawn(event.getTo()))
-        {
-            event.setCancelled(true); // Prevent ender pearls into spawn region
-        }
-    }
-
-    @EventHandler
-    public static void onMove(PlayerMoveEvent event)
-    {
-        Player player = event.getPlayer();
-        User user = UserManager.getUser(player.getUniqueId());
-
-        if (user == null)
-        {
-            return;
-        }
-
-        Team team = user.getTeam();
-        if (team != null)
-        {
-            return;
-        }
-
-        if (player.getLocation().distance(getSpawn()) > 50)
-        {
-            player.teleport(getSpawn());
         }
     }
 
@@ -460,8 +444,9 @@ public class WorldManager implements Listener
     public static void onInteract(PlayerInteractEvent event)
     {
         Player player = event.getPlayer();
+        Action action = event.getAction();
 
-        if (player.getGameMode() == GameMode.CREATIVE)
+        if (player.getGameMode() == GameMode.CREATIVE || action != Action.RIGHT_CLICK_BLOCK)
         {
             return;
         }
@@ -478,21 +463,8 @@ public class WorldManager implements Listener
 
         Block clicked = event.getClickedBlock();
 
-        if (clicked == null || clicked.getType() == Material.AIR)
+        if (clicked == null || clicked.getType() == Material.AIR || !(clicked.getState() instanceof Chest))
         {
-            return;
-        }
-
-        ItemStack item = event.getItem();
-
-        if (item == null || item.getType().equals(Material.AIR))
-        {
-            return;
-        }
-
-        if (item.getType().name().contains("helmet") && event.getAction().name().toLowerCase().contains("right"))
-        {
-            event.setCancelled(true);
             return;
         }
 

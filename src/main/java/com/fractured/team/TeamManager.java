@@ -44,6 +44,7 @@ public class TeamManager
         // This goes last because preprocessing requires the user's last team before it be changed.
         user.setTeam(team);
         team.addMember(player);
+        player.teleport(team.spawn());
 
         if (FracturedCore.getFracturedConfig().get(ConfigKeys.STARTER_ITEMS))
         {

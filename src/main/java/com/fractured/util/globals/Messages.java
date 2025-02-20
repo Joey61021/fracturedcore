@@ -17,8 +17,11 @@ public final class Messages
     public static final TextConfigKey CANNOT_SLEEP_HERE = textKey("generic.cannot_sleep_here");
     public static final TextConfigKey ENEMY_TEAM_BLOCKED = textKey("generic.enemy_team_blocked");
     public static final TextConfigKey MUST_BE_INT = textKey("generic.must_be_int");
+    public static final TextConfigKey NO_PLAYER = textKey("generic.no_player");
     public static final TextConfigKey TELEPORTING = textKey("generic.teleporting");
+    public static final TextConfigKey PROCESS_COMMAND = textKey("generic.process_command");
 
+    public static final TextConfigKey REGION_SPAWN_REGION = textKey("generic.region.spawn_region");
     public static final TextConfigKey REGION_TEAM_ALERTED = textKey("generic.region.team_alerted");
     public static final TextConfigKey REGION_TEAM_OFFLINE = textKey("generic.region.team_offline");
     public static final TextConfigKey REGION_ALERT_BLOCK_PLACE = textKey("generic.region.block_place");
@@ -28,9 +31,6 @@ public final class Messages
     public static final TextConfigKey UPGRADES_MAX_LEVEL = textKey("upgrades.max_level");
     public static final TextConfigKey UPGRADES_NOT_ENOUGH = textKey("upgrades.not_enough");
     public static final TextConfigKey UPGRADES_UPGRADED = textKey("upgrades.upgraded");
-
-    public static final TextConfigKey BOSS_SPAWNED = textKey("boss.spawned");
-    public static final TextConfigKey BOSS_KILLED = textKey("boss.killed");
 
     public static final TextConfigKey COMMAND_INVALID_TARGET = textKey("commands.invalid_target");
     public static final TextConfigKey INVALID_WORLD = textKey("commands.invalid_world");
@@ -86,6 +86,12 @@ public final class Messages
 
     public static final TextConfigKey COMMAND_DISCORD = textKey("commands.discord");
 
+    public static final TextConfigKey COMMAND_TPA_USAGE = textKey("commands.tpa.usage");
+    public static final TextConfigKey COMMAND_TPA_ALREADY_SENT = textKey("commands.tpa.already_sent");
+    public static final TextConfigKey COMMAND_TPA_SENT = textKey("commands.tpa.sent");
+    public static final TextConfigKey COMMAND_TPA_RECEIVED = textKey("commands.tpa.received");
+    public static final TextConfigKey COMMAND_TPA_ACCEPTED = textKey("commands.tpa.accepted");
+
     public static final TextConfigKey COMMAND_HOME_INVALID_REGION = textKey("commands.home.invalid_region");
     public static final TextConfigKey COMMAND_HOME_SET = textKey("commands.home.set_home");
 
@@ -99,8 +105,6 @@ public final class Messages
 
     public static final TextConfigKey COMMAND_BYPASS_REGIONS_TOGGLE_OFF = textKey("commands.bypass_regions.toggle_off");
     public static final TextConfigKey COMMAND_BYPASS_REGIONS_TOGGLE_ON = textKey("commands.bypass_regions.toggle_on");
-
-    public static final TextConfigKey COMMAND_BOSS_SPAWNED = textKey("commands.boss.spawned");
 
     public static final TextConfigKey TAB_HEADER = textKey("tab.header");
     public static final TextConfigKey TAB_FOOTER_NO_TEAM = textKey("tab.footer_no_team");

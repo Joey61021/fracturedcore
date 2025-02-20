@@ -53,20 +53,19 @@ public class PAPIExpansion extends PlaceholderExpansion
         Claim claim = ClaimManager.getClaim(player.getLocation());
 
         return switch (identifier) {
-            case "team" -> Utils.color(team == null ? "&7None" : convertColor(team.color()) + team.getName());
-            case "region" -> Utils.color(claim == null ? "&7None" : convertColor(claim.getTeam().color()) + claim.getTeam().getName());
+            case "team" -> Utils.color(team == null ? "<gray>None" : convertColor(team.color()) + team.getName());
+            case "region" -> Utils.color(claim == null ? "<gray>None" : convertColor(claim.getTeam().color()) + claim.getTeam().getName());
             default -> null;
         };
     }
 
-    public static String convertColor(ChatColor color)
-    {
+    public static String convertColor(ChatColor color) {
         return switch (color) {
-            case RED -> "&c";
-            case BLUE -> "&9";
-            case GREEN -> "&a";
-            case YELLOW -> "&e";
-            default -> "&7";
+            case RED -> "<red>";
+            case BLUE -> "<blue>";
+            case GREEN -> "<green>";
+            case YELLOW -> "<yellow>";
+            default -> "<gray>";
         };
     }
 }
