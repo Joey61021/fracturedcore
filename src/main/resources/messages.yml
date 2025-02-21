@@ -109,20 +109,6 @@ commands:
     not_in_region: "&cYou must be in your team's region to run this command!"
     teleported: "&fYou have been teleported to %team% team's &fspawn!"
   stuck:
-  borders:
-    usage: "&cUsage:\n
-            - /borders generate [size]\n
-            - /borders extend [size]"
-    information_header: "&eBorder &f| &eInformation"
-    information_column: "&f- %world% size: &a%size%"
-    generate:
-      confirm: "&cAre you sure you want to generate team borders at your current location? Doing so will cause immense lag to the server. Type /confirm to proceed."
-      begin: "&7Generating, please wait..."
-      end: "&7Generated. Be sure that the team claims are set accordingly."
-    extend:
-      confirm: "&cAre you sure you want to extend the team borders? Doing so will cause immense lag to the server. Type /confirm to proceed."
-      begin: "&7Extending, please wait..."
-      end: "&7Extended. Be sure that the team claims are updated accordingly."
   discord: "&fJoin our Discord server at: &9&nhttps://discord.gg/2JTY7Fffjs"
   tpa:
     usage: "&cUsage:\n- /tpa [player]"
@@ -150,6 +136,15 @@ commands:
     place: "&b&lSHIELD &fhas been established"
     change_radius: "&b&lSHIELD &fradius has been changed to &e%radius%&f!"
     locked: "&b&lSHIELD &fconfiguration has been set and is now &a&lACTIVE"
+  createkit:
+    usage: "&cUsage:\n- /createkit [cooldown] [name]"
+    saved: "&a%name% &fhas been saved with a cooldown of &e%cooldown%s&f!"
+  kit:
+    usage: "&cUsage:\n- /kit [name]"
+    received: "&fYou have received the &a%kit% &fkit!"
+    not_found: "&cThis kit does not exist!"
+  kits:
+    opening: "&fOpening &ekits &fmenu..."
 deaths:
   kill: "%victim% &fdied"
   world_border: "%victim% left the confines of this world"

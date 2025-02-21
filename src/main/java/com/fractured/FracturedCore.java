@@ -2,6 +2,9 @@ package com.fractured;
 
 import com.fractured.cevents.EventManager;
 import com.fractured.commands.*;
+import com.fractured.commands.kits.CreateKitCommand;
+import com.fractured.commands.kits.KitCommand;
+import com.fractured.commands.kits.KitsCommand;
 import com.fractured.commands.team.HomeCommand;
 import com.fractured.commands.team.SetHomeCommand;
 import com.fractured.commands.team.TeamChatCommand;
@@ -12,10 +15,12 @@ import com.fractured.enchants.EnchantManager;
 import com.fractured.events.*;
 import com.fractured.events.inventory.InventoryClickListener;
 import com.fractured.events.inventory.InventoryCloseListener;
+import com.fractured.kits.KitManager;
 import com.fractured.menu.MenuManager;
 import com.fractured.shields.ShieldManager;
 import com.fractured.storage.Storage;
 import com.fractured.user.UserManager;
+import com.fractured.util.EmptyClass;
 import com.fractured.util.PAPIExpansion;
 import com.fractured.util.globals.ConfigKeys;
 import com.fractured.util.globals.Messages;
@@ -37,6 +42,7 @@ public final class FracturedCore extends JavaPlugin {
 
     private static Config config;
     private static Config messages;
+    private static Config kits;
     private static Storage storage;
 
     /**
@@ -81,6 +87,11 @@ public final class FracturedCore extends JavaPlugin {
         return messages;
     }
 
+    public static Config getKits()
+    {
+        return kits;
+    }
+
     public static Storage getStorage()
     {
         return storage;
@@ -96,6 +107,7 @@ public final class FracturedCore extends JavaPlugin {
         manager.registerEvents(new ShieldManager(), this);
         manager.registerEvents(new WorldManager(), this);
         manager.registerEvents(new EnchantManager(), this);
+        manager.registerEvents(new KitManager(), this);
 
         manager.registerEvents(new ChatListener(), this);
         manager.registerEvents(new CommandListener(), this);
@@ -117,7 +129,6 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("teamchat").setExecutor(TeamChatCommand::teamchat);
         getCommand("team").setExecutor(TeamCommand::team);
         getCommand("configs").setExecutor(ConfigsCommand::configs);
-        getCommand("borders").setExecutor(BordersCommand::borders);
         getCommand("discord").setExecutor(DiscordCommand::discord);
         getCommand("upgrades").setExecutor(UpgradesCommand::upgrades);
         getCommand("confirm").setExecutor(ConfirmationManager::confirm);
@@ -126,13 +137,15 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("home").setExecutor(HomeCommand::home);
         getCommand("event").setExecutor(EventCommand::event);
         getCommand("shield").setExecutor(ShieldCommand::shield);
-        getCommand("test").setExecutor(TestCommand::test);
         getCommand("customenchant").setExecutor(CustomEnchantCommand::customEnchant);
         getCommand("bypassregions").setExecutor(BypassRegionsCommand::bypassRegions);
         getCommand("setmaxhealth").setExecutor(SetMaxHealthCommand::setMaxHealth);
         getCommand("spawn").setExecutor(SpawnCommand::spawn);
         getCommand("tpa").setExecutor(TpaCommand::tpa);
         getCommand("endroom").setExecutor(EndCommand::end);
+        getCommand("createkit").setExecutor(CreateKitCommand::createkit);
+        getCommand("kit").setExecutor(KitCommand::kit);
+        getCommand("kits").setExecutor(KitsCommand::kits);
     }
 
     @Override
@@ -145,6 +158,7 @@ public final class FracturedCore extends JavaPlugin {
     {
         config = new Config(this, ConfigKeys.class, "config.yml");
         messages = new Config(this, Messages.class, "messages.yml");
+        kits = new Config(this, EmptyClass.class, "kits.yml");
         storage = Storage.newStorage(config);
 
         menuManager = new MenuManager();

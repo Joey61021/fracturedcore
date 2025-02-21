@@ -14,8 +14,6 @@ commands:
     aliases: []
   configs:
     aliases: [config]
-  borders:
-    aliases: [border]
   spawn:
     aliases: []
   discord:
@@ -34,8 +32,6 @@ commands:
     aliases: []
   shield:
     aliases: []
-  test:
-    aliases: []
   customenchant:
     aliases: [cenchant]
   bypassregions:
@@ -46,3 +42,9 @@ commands:
     aliases: [teleportrequest]
   end:
     aliases: [endroom]
+  createkit:
+    aliases: []
+  kit:
+    aliases: []
+  kits:
+    aliases: []

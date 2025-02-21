@@ -1,11 +1,9 @@
 package com.fractured.enchants;
 
 import com.fractured.FracturedCore;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -71,6 +69,7 @@ public final class EnchantManager implements Listener
         blockBreakCallbacks.register(Enchant.TIMBER, EnchantManager::timber);
         blockBreakCallbacks.register(Enchant.AUTO_SMELT, EnchantManager::autoSmelt);
         blockBreakCallbacks.register(Enchant.CHUNKER, EnchantManager::chunker);
+        blockBreakCallbacks.register(Enchant.HARVESTER, EnchantManager::harvester);
 
         projectileLaunchCallbacks.register(Enchant.AIM_BOT, EnchantManager::aimbot);
         projectileLaunchCallbacks.register(Enchant.DRAW, EnchantManager::draw);
@@ -320,6 +319,26 @@ public final class EnchantManager implements Listener
 
         arrow.setVelocity(arrow.getVelocity().multiply(1 + level * 0.5));
     }
+
+    public static void harvester(BlockBreakEvent event, int level)
+    {
+        Block block = event.getBlock();
+        BlockData blockData = block.getBlockData();
+
+        if (!(blockData instanceof Ageable))
+        {
+            return;
+        }
+
+        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(FracturedCore.class), () ->
+        {
+            block.setType(block.getType());
+            Ageable ageable = (Ageable) block.getBlockData();
+            ageable.setAge(0);
+            block.setBlockData((BlockData) ageable);
+        }, 2L);
+    }
+
 
     public static void startHomingArrow(Player shooter, Arrow arrow)
     {

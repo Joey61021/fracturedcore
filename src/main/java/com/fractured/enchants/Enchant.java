@@ -65,7 +65,8 @@ public enum Enchant
     /**
      * Arrows automatically aim to a player
      */
-    AIM_BOT(ChatColor.RESET + ChatColor.GRAY.toString() + "Aim Bot", PROJECTILE_LAUNCH_EVENT, "aim", GearType.RANGED, 3)
+    AIM_BOT(ChatColor.RESET + ChatColor.GRAY.toString() + "Aim Bot", PROJECTILE_LAUNCH_EVENT, "aim", GearType.RANGED, 3),
+    HARVESTER(ChatColor.RESET + ChatColor.GRAY.toString() + "Harvester", BLOCK_BREAK_EVENT, "aim", GearType.HOE, 1)
 
     ;
 
@@ -134,6 +135,7 @@ public enum Enchant
             case Material.BOW -> BOW;
             case Material.CROSSBOW -> CROSSBOW;
             case Material.TRIDENT -> TRIDENT;
+            case Material.WOODEN_HOE, Material.STONE_HOE, Material.GOLDEN_HOE, Material.DIAMOND_HOE, Material.NETHERITE_HOE -> HOE;
             default -> 0;
         };
     }

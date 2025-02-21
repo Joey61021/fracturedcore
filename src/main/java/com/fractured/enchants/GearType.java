@@ -18,6 +18,7 @@ public final class GearType
     public static final int SHOVEL = 1 << 8;
     public static final int AXE = 1 << 9;
     public static final int PICKAXE = 1 << 10;
+    public static final int HOE = 1 << 11;
     public static final int TOOLS = SHOVEL | AXE | PICKAXE;
     public static final int ALL = ARMOR | RANGED | SWORD | TRIDENT | TOOLS;
 

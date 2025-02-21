@@ -2,6 +2,7 @@ package com.fractured.util.globals;
 
 import com.fractured.config.keys.TextConfigKey;
 import net.md_5.bungee.api.ChatColor;
+import org.w3c.dom.Text;
 
 import static com.fractured.config.DataSupplier.textKey;
 
@@ -73,16 +74,6 @@ public final class Messages
     public static final TextConfigKey CMD_SPAWN_NOT_IN_REGION = textKey("commands.spawn.not-in-region");
     public static final TextConfigKey CMD_SPAWN_TELEPORTED = textKey("commands.spawn.teleported");
 
-    public static final TextConfigKey COMMAND_BORDERS_USAGE = textKey("commands.borders.usage");
-    public static final TextConfigKey COMMAND_BORDERS_INFORMATION_HEADER = textKey("commands.borders.information_header");
-    public static final TextConfigKey COMMAND_BORDERS_INFORMATION_COLUMN = textKey("commands.borders.information_column");
-    public static final TextConfigKey COMMAND_BORDERS_GENERATE_CONFIRM = textKey("commands.borders.generate.confirm");
-    public static final TextConfigKey COMMAND_BORDERS_GENERATE_START = textKey("commands.borders.generate.begin");
-    public static final TextConfigKey COMMAND_BORDERS_GENERATE_END = textKey("commands.borders.generate.end");
-    public static final TextConfigKey COMMAND_BORDERS_EXTEND_CONFIRM = textKey("commands.borders.extend.confirm");
-    public static final TextConfigKey COMMAND_BORDERS_EXTEND_START = textKey("commands.borders.generate.begin");
-    public static final TextConfigKey COMMAND_BORDERS_EXTEND_END = textKey("commands.borders.generate.end");
-
     public static final TextConfigKey COMMAND_SETTINGS_CONSOLE_USAGE = textKey("commands.settings.console_usage");
     public static final TextConfigKey COMMAND_SETTINGS_PLAYER_USAGE = textKey("commands.settings.player_usage");
     public static final TextConfigKey COMMAND_SETTINGS_SET = textKey("commands.settings.set");
@@ -109,6 +100,15 @@ public final class Messages
 
     public static final TextConfigKey COMMAND_BYPASS_REGIONS_TOGGLE_OFF = textKey("commands.bypass_regions.toggle_off");
     public static final TextConfigKey COMMAND_BYPASS_REGIONS_TOGGLE_ON = textKey("commands.bypass_regions.toggle_on");
+
+    public static final TextConfigKey COMMAND_CREATEKIT_USAGE = textKey("commands.createkit.usage");
+    public static final TextConfigKey COMMAND_CREATEKIT_SAVED = textKey("commands.createkit.saved");
+
+    public static final TextConfigKey COMMAND_KIT_USAGE = textKey("commands.kit.usage");
+    public static final TextConfigKey COMMAND_KIT_RECEIVED = textKey("commands.kit.received");
+    public static final TextConfigKey COMMAND_KIT_NOT_FOUND = textKey("commands.kit.not_found");
+
+    public static final TextConfigKey COMMAND_KITS_OPENING = textKey("commands.kits.opening");
 
     public static final TextConfigKey TAB_HEADER = textKey("tab.header");
     public static final TextConfigKey TAB_FOOTER_NO_TEAM = textKey("tab.footer_no_team");
