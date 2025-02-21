@@ -339,7 +339,6 @@ public final class EnchantManager implements Listener
         }, 2L);
     }
 
-
     public static void startHomingArrow(Player shooter, Arrow arrow)
     {
         new BukkitRunnable()

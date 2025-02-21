@@ -46,6 +46,7 @@ commands:
     invalid_level: "&cThe level must be an integer."
     bad_item_type: "&cThis enchantment is not assignable to this item."
     level_bounds: "&cThe level of this enchantment cannot exceed %level%."
+    applied: "&e%enchant% &fhas been applied to your held item."
   world:
     usage: "&cUsage:\n
             - /world teleport [world]\n

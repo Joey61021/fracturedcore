@@ -43,6 +43,13 @@ public final class Messages
     public static final TextConfigKey COMMAND_TARGET_ALREADY_IN_TEAM = textKey("commands.target_already_in_team");
     public static final TextConfigKey COMMAND_TEAM_ALREADY_IN_TEAM = textKey("commands.already_in_team");
 
+    public static final TextConfigKey COMMAND_CUSTOM_ENCHANT_USAGE = textKey("commands.custom_enchant.usage");
+    public static final TextConfigKey COMMAND_CUSTOM_ENCHANT_UNKNOWN = textKey("commands.custom_enchant.unknown");
+    public static final TextConfigKey COMMAND_CUSTOM_ENCHANT_INVALID_LEVEL = textKey("commands.custom_enchant.invalid_level");
+    public static final TextConfigKey COMMAND_CUSTOM_ENCHANT_BAD_ITEM_TYPE = textKey("commands.custom_enchant.bad_item_type");
+    public static final TextConfigKey COMMAND_CUSTOM_ENCHANT_LEVEL_BOUNDS = textKey("commands.custom_enchant.level_bounds");
+    public static final TextConfigKey COMMAND_CUSTOM_ENCHANT_APPLIED = textKey("commands.custom_enchant.applied");
+
     public static final TextConfigKey COMMAND_TEAM_TELEPORT_USAGE = textKey("commands.team.teleport.usage");
     public static final TextConfigKey COMMAND_TEAM_REMOVE_USAGE = textKey("commands.team.remove.usage");
     public static final TextConfigKey COMMAND_TEAM_REMOVE_NOT_IN_TEAM = textKey("commands.team.remove.not_in_team");

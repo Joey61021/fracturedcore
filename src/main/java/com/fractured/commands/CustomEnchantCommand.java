@@ -28,8 +28,7 @@ public final class CustomEnchantCommand
         // /cenchant [enchantment] [level]
         if (args.length < 2)
         {
-            //todo
-            sender.sendMessage("Usage: /customenchant [enchantment] [level]");
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_CUSTOM_ENCHANT_USAGE));
             return true;
         }
 
@@ -40,7 +39,7 @@ public final class CustomEnchantCommand
             enchant = Enchant.valueOf(args[0].toUpperCase());
         } catch (IllegalArgumentException e)
         {
-            sender.sendMessage("Unknown enchantment: " + args[0]);
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_CUSTOM_ENCHANT_UNKNOWN));
             return true;
         }
 
@@ -51,21 +50,20 @@ public final class CustomEnchantCommand
             level = Integer.parseInt(args[1]);
         } catch (NumberFormatException e)
         {
-            // todo
-            sender.sendMessage("Level must be an integer");
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.MUST_BE_INT));
             return true;
         }
 
         switch (EnchantManager.enchant(((Player) sender).getInventory().getItemInMainHand(), enchant, level))
         {
             case 0:
-                sender.sendMessage("Enchanted.");
+                sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_CUSTOM_ENCHANT_APPLIED).replace("%enchant%", enchant.display()));
                 break;
             case 1:
-                sender.sendMessage("Too high of a level: (Must be below " + enchant.maxLevel() + ")");
+                sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_CUSTOM_ENCHANT_LEVEL_BOUNDS).replace("%level%", String.valueOf(enchant.maxLevel())));
                 break;
             case 2:
-                sender.sendMessage("Not assignable to this item.");
+                sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_CUSTOM_ENCHANT_BAD_ITEM_TYPE));
                 break;
         }
 

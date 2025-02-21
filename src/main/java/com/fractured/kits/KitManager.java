@@ -19,6 +19,13 @@ public class KitManager implements Listener
 
     public static Set<Kit> kits = new HashSet<>();
 
+    public static void initKits()
+    {
+        kits.clear(); // Just in case this gets run twice
+
+        Config kits = FracturedCore.getKits();
+    }
+
     public static void addKit(String name, int cooldown, Set<KitItem> items)
     {
         kits.add(new Kit(kits.size(), name, cooldown, items));
