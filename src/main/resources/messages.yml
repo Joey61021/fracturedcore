@@ -78,6 +78,8 @@ commands:
          - /team teleport [team | team_id]"
     remove:
       usage: "&cUsage: /team remove [username]"
+      not_in_team: "&cTarget is not in a team!"
+      target_removed: "&cRemoved target from their team"
       removed: "You have been removed from %color%%team%&f team."
     set:
       usage: "&cUsage: /team set [username] [team | team_id]"

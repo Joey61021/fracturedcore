@@ -44,6 +44,9 @@ public final class Messages
 
     public static final TextConfigKey COMMAND_TEAM_TELEPORT_USAGE = textKey("commands.team.teleport.usage");
     public static final TextConfigKey COMMAND_TEAM_REMOVE_USAGE = textKey("commands.team.remove.usage");
+    public static final TextConfigKey COMMAND_TEAM_REMOVE_NOT_IN_TEAM = textKey("commands.team.remove.not_in_team");
+    public static final TextConfigKey COMMAND_TEAM_REMOVE_TARGET_REMOVED = textKey("commands.team.clear.target_removed");
+    public static final TextConfigKey COMMAND_TEAM_REMOVE_REMOVED = textKey("commands.team.clear.removed");
     public static final TextConfigKey COMMAND_TEAM_SET_USAGE = textKey("commands.team.set.usage");
     public static final TextConfigKey COMMAND_TEAM_FORCE_SET_USAGE = textKey("commands.team.force_set.usage");
     public static final TextConfigKey COMMAND_TEAM_FORCE_SET_INVALID_TEAM = textKey("commands.team.force_set.invalid_team");

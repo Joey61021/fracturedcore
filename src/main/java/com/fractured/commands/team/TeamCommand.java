@@ -163,14 +163,15 @@ public final class TeamCommand
         }
 
         User user = UserManager.getUser(target.getUniqueId());
+        Team team = user.getTeam(); // To be displayed later
 
         if (!TeamManager.removeTeam(sender, null, target, user))
         {
-            // todo
-            sender.sendMessage("Target not in team!");
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_REMOVE_NOT_IN_TEAM));
         } else
         {
-            sender.sendMessage("Removed target from their team.");
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_REMOVE_TARGET_REMOVED));
+            target.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_REMOVE_REMOVED).replace("%team%", team.color() + team.getName()));
         }
     }
 
