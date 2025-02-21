@@ -1,12 +1,11 @@
 package com.fractured.user;
 
-import com.fractured.enchants.LifestealRunnable;
 import com.fractured.team.Team;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.UUID;
 
 public class User
 {
@@ -22,6 +21,7 @@ public class User
      */
     private Location lastAlert;
     private boolean bypassRegions;
+    private long lastMessageTimestamp = 0;
 
     public User(UUID uuid)
     {
@@ -91,5 +91,15 @@ public class User
     public boolean getBypassRegions()
     {
         return bypassRegions;
+    }
+
+    public long getLastMessageTimestamp()
+    {
+        return lastMessageTimestamp;
+    }
+
+    public void setLastMessageTimestamp()
+    {
+        this.lastMessageTimestamp = System.currentTimeMillis();
     }
 }

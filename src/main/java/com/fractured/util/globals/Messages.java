@@ -20,6 +20,7 @@ public final class Messages
     public static final TextConfigKey NO_PLAYER = textKey("generic.no_player");
     public static final TextConfigKey TELEPORTING = textKey("generic.teleporting");
     public static final TextConfigKey PROCESS_COMMAND = textKey("generic.process_command");
+    public static final TextConfigKey CHAT_COOLDOWN = textKey("generic.chat_cooldown");
 
     public static final TextConfigKey REGION_SPAWN_REGION = textKey("generic.region.spawn_region");
     public static final TextConfigKey REGION_TEAM_ALERTED = textKey("generic.region.team_alerted");

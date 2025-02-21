@@ -11,6 +11,8 @@ public final class Permissions
     public static final String COMMAND_CUSTOM_ENCHANT = "fractured.command.custom_enchant";
     public static final String COMMAND_SET_MAX_HEALTH = "fractured.command.set_max_health";
 
+    public static final String CHAT_BYPASS = "fractured.chat.bypass"; // Bypass chat cooldowns and filters
+
     private Permissions()
     {
 
