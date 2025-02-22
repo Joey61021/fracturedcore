@@ -33,7 +33,7 @@ public final class KitCommand
 
             for (Kit kits : KitManager.activeKits)
             {
-                stringBuilder.append(Utils.color(kitsOnCooldown.contains(kits) ? "&m" : "&r" + kits.getName() + "&r")).append(" ");
+                stringBuilder.append(Utils.color((kitsOnCooldown.contains(kits) ? "&m" : "&r") + kits.getName() + "&r")).append(" ");
             }
 
             player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_KIT_AVAILABLE).replace("%kits%", stringBuilder.toString()));

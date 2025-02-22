@@ -19,7 +19,7 @@ public class KitManager implements Listener
 {
 
     public static Set<Kit> activeKits = new HashSet<>();
-    public static Set<KitCooldown> cooldowns = new HashSet<>();
+    public static Set<KitCooldown> activeCooldowns = new HashSet<>();
 
     public static void initKits()
     {
@@ -101,7 +101,7 @@ public class KitManager implements Listener
     public static KitCooldown getCooldown(Player player, Kit kit)
     {
         KitCooldown cooldown = null;
-        for (KitCooldown cooldowns : cooldowns)
+        for (KitCooldown cooldowns : activeCooldowns)
         {
             if (cooldowns.getUuid().equals(player.getUniqueId()) && cooldowns.getKitId() == kit.getId())
             {
@@ -115,8 +115,13 @@ public class KitManager implements Listener
     public static Set<Kit> getKitsOnCooldown(Player player)
     {
         Set<Kit> kits = new HashSet<>();
-        for (KitCooldown cooldowns : cooldowns)
+        for (KitCooldown cooldowns : activeCooldowns)
         {
+            if (System.currentTimeMillis() - cooldowns.getTimestamp() >= cooldowns.getCooldown() * 1000L)
+            {
+                activeCooldowns.remove(cooldowns);
+                continue;
+            }
             if (cooldowns.getUuid().equals(player.getUniqueId()))
             {
                 kits.add(getKit(cooldowns.getKitId()));
@@ -139,7 +144,7 @@ public class KitManager implements Listener
                 return;
             }
 
-            cooldowns.remove(cooldown);
+            activeCooldowns.remove(cooldown);
         }
 
         Inventory inventory = player.getInventory();
@@ -148,7 +153,7 @@ public class KitManager implements Listener
             inventory.addItem(new ItemStack(item.getMaterial(), item.getAmount()));
         }
 
-        cooldowns.add(new KitCooldown(player.getUniqueId(), kit.getId(), kit.getCooldown()));
+        activeCooldowns.add(new KitCooldown(player.getUniqueId(), kit.getId(), kit.getCooldown()));
         player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_KIT_RECEIVED).replace("%kit%", kit.getName()));
     }
 

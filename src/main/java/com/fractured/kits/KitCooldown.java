@@ -6,12 +6,14 @@ public class KitCooldown {
 
     private final UUID uuid;
     private final int kitId;
+    private final int cooldown;
     private final long timestamp;
 
     public KitCooldown(UUID uuid, int kitId, int cooldown)
     {
         this.uuid = uuid;
         this.kitId = kitId;
+        this.cooldown = cooldown;
         this.timestamp = System.currentTimeMillis();
     }
 
@@ -23,6 +25,11 @@ public class KitCooldown {
     public int getKitId()
     {
         return kitId;
+    }
+
+    public int getCooldown()
+    {
+        return cooldown;
     }
 
     public long getTimestamp()
