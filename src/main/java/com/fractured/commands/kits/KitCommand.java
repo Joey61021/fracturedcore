@@ -3,10 +3,13 @@ package com.fractured.commands.kits;
 import com.fractured.FracturedCore;
 import com.fractured.kits.Kit;
 import com.fractured.kits.KitManager;
+import com.fractured.util.Utils;
 import com.fractured.util.globals.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.Set;
 
 public final class KitCommand
 {
@@ -25,7 +28,15 @@ public final class KitCommand
 
         if (args.length == 0)
         {
-            player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_KIT_USAGE));
+            StringBuilder stringBuilder = new StringBuilder();
+            Set<Kit> kitsOnCooldown = KitManager.getKitsOnCooldown(player);
+
+            for (Kit kits : KitManager.activeKits)
+            {
+                stringBuilder.append(Utils.color(kitsOnCooldown.contains(kits) ? "&m" : "&r" + kits.getName() + "&r")).append(" ");
+            }
+
+            player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_KIT_AVAILABLE).replace("%kits%", stringBuilder.toString()));
             return true;
         }
 

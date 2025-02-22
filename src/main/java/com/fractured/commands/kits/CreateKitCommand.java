@@ -2,6 +2,7 @@ package com.fractured.commands.kits;
 
 import com.fractured.FracturedCore;
 import com.fractured.config.Config;
+import com.fractured.kits.Kit;
 import com.fractured.kits.KitItem;
 import com.fractured.kits.KitManager;
 import com.fractured.util.globals.Messages;
@@ -12,6 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -44,6 +46,13 @@ public final class CreateKitCommand
             return true;
         }
 
+        Kit kit = KitManager.getKit(args[1]);
+        if (kit != null)
+        {
+            player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_CREATEKIT_ALREADY_EXISTS));
+            return true;
+        }
+
         int cooldown;
         try
         {
@@ -58,7 +67,7 @@ public final class CreateKitCommand
         Inventory inv = player.getInventory();
         String name = args[1].toLowerCase();
 
-        kits.set(name + ".cooldown", cooldown);
+        kits.set("kits." + name + ".cooldown", cooldown);
         Set<KitItem> kitItems = new HashSet<>();
 
         int i = 0; // Increment only if it's a valid item
@@ -69,8 +78,14 @@ public final class CreateKitCommand
                 continue;
             }
 
-            kits.set("kits." + name + "." + i + ".material", item.getType().toString().toUpperCase()); // e.g. STONE_SWORD
-            kits.set("kits." + name + "." + i + ".amount", item.getAmount());
+            kits.set("kits." + name + ".items." + i + ".material", item.getType().toString().toUpperCase()); // e.g. STONE_SWORD
+            kits.set("kits." + name + ".items." + i + ".amount", item.getAmount());
+
+            ItemMeta meta = item.getItemMeta();
+            if (meta != null && meta.hasDisplayName())
+            {
+                kits.set("kits." + name + ".items." + i + ".name", meta.getDisplayName());
+            }
 
             kitItems.add(new KitItem(item.getType(), item.getAmount()));
 

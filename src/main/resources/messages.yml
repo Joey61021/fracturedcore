@@ -139,13 +139,19 @@ commands:
     locked: "&b&lSHIELD &fconfiguration has been set and is now &a&lACTIVE"
   createkit:
     usage: "&cUsage:\n- /createkit [cooldown] [name]"
+    already_exists: "&cThis kit already exists!"
     saved: "&a%name% &fhas been saved with a cooldown of &e%cooldown%s&f!"
   kit:
-    usage: "&cUsage:\n- /kit [name]"
+    available: "&6Kits: &f%kits%"
+    on_cooldown: "&cYou cannot use this kit for another &4%time%&cs!"
     received: "&fYou have received the &a%kit% &fkit!"
     not_found: "&cThis kit does not exist!"
   kits:
     opening: "&fOpening &ekits &fmenu..."
+  deletekit:
+    usage: "&cUsage:\n- /deletekit [name]"
+    not_found: "&cThis kit does not exist!"
+    deleted: "&fYou have &cdeleted &fthe &e%kit%&f!"
 deaths:
   kill: "%victim% &fdied"
   world_border: "%victim% left the confines of this world"

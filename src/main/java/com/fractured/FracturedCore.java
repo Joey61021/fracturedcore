@@ -3,6 +3,7 @@ package com.fractured;
 import com.fractured.cevents.EventManager;
 import com.fractured.commands.*;
 import com.fractured.commands.kits.CreateKitCommand;
+import com.fractured.commands.kits.DeleteKitCommand;
 import com.fractured.commands.kits.KitCommand;
 import com.fractured.commands.kits.KitsCommand;
 import com.fractured.commands.team.HomeCommand;
@@ -146,6 +147,7 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("createkit").setExecutor(CreateKitCommand::createkit);
         getCommand("kit").setExecutor(KitCommand::kit);
         getCommand("kits").setExecutor(KitsCommand::kits);
+        getCommand("deletekit").setExecutor(DeleteKitCommand::deletekit);
     }
 
     @Override
@@ -171,6 +173,9 @@ public final class FracturedCore extends JavaPlugin {
 
         // Register custom events (cevents)
         EventManager.init();
+
+        // Cache kits
+        KitManager.initKits();
 
         // Register placeholderapi
         if( Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")){

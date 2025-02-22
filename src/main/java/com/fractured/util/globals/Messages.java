@@ -2,7 +2,6 @@ package com.fractured.util.globals;
 
 import com.fractured.config.keys.TextConfigKey;
 import net.md_5.bungee.api.ChatColor;
-import org.w3c.dom.Text;
 
 import static com.fractured.config.DataSupplier.textKey;
 
@@ -109,13 +108,19 @@ public final class Messages
     public static final TextConfigKey COMMAND_BYPASS_REGIONS_TOGGLE_ON = textKey("commands.bypass_regions.toggle_on");
 
     public static final TextConfigKey COMMAND_CREATEKIT_USAGE = textKey("commands.createkit.usage");
+    public static final TextConfigKey COMMAND_CREATEKIT_ALREADY_EXISTS = textKey("commands.createkit.already_exists");
     public static final TextConfigKey COMMAND_CREATEKIT_SAVED = textKey("commands.createkit.saved");
 
-    public static final TextConfigKey COMMAND_KIT_USAGE = textKey("commands.kit.usage");
+    public static final TextConfigKey COMMAND_KIT_AVAILABLE = textKey("commands.kit.available");
+    public static final TextConfigKey COMMAND_KIT_ON_COOLDOWN = textKey("commands.kit.on_cooldown");
     public static final TextConfigKey COMMAND_KIT_RECEIVED = textKey("commands.kit.received");
     public static final TextConfigKey COMMAND_KIT_NOT_FOUND = textKey("commands.kit.not_found");
 
     public static final TextConfigKey COMMAND_KITS_OPENING = textKey("commands.kits.opening");
+
+    public static final TextConfigKey COMMAND_DELETEKIT_USAGE = textKey("commands.deletekit.usage");
+    public static final TextConfigKey COMMAND_DELETEKIT_NOT_FOUND = textKey("commands.deletekit.not_found");
+    public static final TextConfigKey COMMAND_DELETEKIT_DELETED = textKey("commands.deletekit.deleted");
 
     public static final TextConfigKey TAB_HEADER = textKey("tab.header");
     public static final TextConfigKey TAB_FOOTER_NO_TEAM = textKey("tab.footer_no_team");

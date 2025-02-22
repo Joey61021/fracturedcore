@@ -46,7 +46,7 @@ public final class TpaCommand
             if (request.getRequester().equals(target.getUniqueId()))
             {
                 target.teleport(player);
-                player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TPA_ACCEPTED));
+                target.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TPA_ACCEPTED));
                 requests.remove(request);
                 return true;
             }
