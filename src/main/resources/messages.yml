@@ -110,11 +110,11 @@ commands:
     not_in_region: "&cYou must be in your team's region to run this command!"
     teleported: "&fYou have been teleported to %team% team's &fspawn!"
   stuck:
-  discord: "&fJoin our Discord server at: &9&nhttps://discord.gg/2JTY7Fffjs"
+  discord: "&fJoin our Discord server at: &9&nhttps://discord.gg/xebbqKbZBW"
   tpa:
     usage: "&cUsage:\n- /tpa [player]"
     already_sent: "&cYou have already sent a request, please try again in &4%time%&c!"
-    sent: "&aA teleport request has been sent to %receiver%&f!"
+    sent: "&aA teleport request has been sent to %receiver%!"
     received: "&6&l!!! %sender% &fhas requested to teleport to you. Run &b/tpa %sender% &fto accept! &6&l!!!"
     accepted: "&aYour tpa request has been accepted!"
   home:
