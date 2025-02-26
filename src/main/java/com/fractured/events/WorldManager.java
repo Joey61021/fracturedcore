@@ -23,6 +23,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
@@ -216,10 +217,17 @@ public class WorldManager implements Listener
     {
         Player player = event.getPlayer();
         Action action = event.getAction();
+        ItemStack item = player.getInventory().getItemInMainHand();
 
-        if (player.getGameMode() == GameMode.CREATIVE || action != Action.RIGHT_CLICK_BLOCK)
+        if (player.getGameMode() == GameMode.CREATIVE || (action != Action.RIGHT_CLICK_BLOCK && action != Action.RIGHT_CLICK_AIR))
         {
             return;
+        }
+
+        if (!item.getType().equals(Material.AIR) && item.toString().toLowerCase().contains("helmet"))
+        {
+            event.setCancelled(true);
+            return; // Prevent helmet equip
         }
 
         User user = UserManager.getUser(player.getUniqueId());
