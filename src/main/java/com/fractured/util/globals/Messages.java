@@ -130,6 +130,19 @@ public final class Messages
     public static final TextConfigKey SHIELD_CHANGE_RADIUS = textKey("shield.change_radius");
     public static final TextConfigKey SHIELD_LOCKED = textKey("shield.locked");
 
+    public static final TextConfigKey COMMAND_MESSAGE_USAGE = textKey("commands.message.usage");
+    public static final TextConfigKey COMMAND_MESSAGE_SELF = textKey("commands.message.self");
+    public static final TextConfigKey COMMAND_MESSAGE_FORMAT_RECEIVER = textKey("commands.message.format_receiver");
+    public static final TextConfigKey COMMAND_MESSAGE_FORMAT_SENDER = textKey("commands.message.format_sender");
+
+    public static final TextConfigKey COMMAND_SOCIAL_SPY_TOGGLE_ON = textKey("commands.social_spy.toggle_on");
+    public static final TextConfigKey COMMAND_SOCIAL_SPY_TOGGLE_OFF = textKey("commands.social_spy.toggle_off");
+    public static final TextConfigKey COMMAND_SOCIAL_SPY_FORMAT = textKey("commands.social_spy.format");
+
+    public static final TextConfigKey COMMAND_REPLY_USAGE = textKey("commands.reply.usage");
+    public static final TextConfigKey COMMAND_REPLY_NOT_ONLINE = textKey("commands.reply.not_online");
+    public static final TextConfigKey COMMAND_REPLY_NO_RECENT = textKey("commands.reply.no_recent");
+
     public static final String PLUGIN_RESTARTING = ChatColor.YELLOW + "Server Restarting...";
     public static final String PLUGIN_INVALID_STATE = ChatColor.RED + "&cInvalid state. Please contact a server administrator.";
 

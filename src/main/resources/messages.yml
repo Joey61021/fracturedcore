@@ -152,6 +152,19 @@ commands:
     usage: "&cUsage:\n- /deletekit [name]"
     not_found: "&cThis kit does not exist!"
     deleted: "&fYou have &cdeleted &fthe &e%kit%&f!"
+  message:
+    usage: "&cUsage:\n- /msg [player] [message]"
+    self: "&cYou cannot message yourself!"
+    format_receiver: "&7[6%sender% &7-> You] &e%message%"
+    format_sender: "&7[You -> &6%receiver%&7] &e%message%"
+  social_spy:
+    toggle_on: "&fSocial Spy has been toggled &a&lON &ffor &e%player%&f!"
+    toggle_off: "&fSocial Spy has been toggled &c&lOFF &ffor &e%player%&f!"
+    format: "&e[Social Spy] &7[&6%sender% &7-> &6%receiver%&7] &e%message%"
+  reply:
+    usage: "&cUsage:\n- /r [message]"
+    not_online: "&cThis player is no longer online!"
+    no_recent: "&cYou have no recent message to reply to!"
 deaths:
   kill: "%victim% &fdied"
   world_border: "%victim% left the confines of this world"

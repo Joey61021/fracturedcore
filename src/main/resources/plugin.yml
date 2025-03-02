@@ -50,3 +50,9 @@ commands:
     aliases: []
   deletekit:
     aliases: []
+  message:
+    aliases: [msg, m]
+  reply:
+    aliases: [r]
+  socialspy:
+    aliases: [ss]

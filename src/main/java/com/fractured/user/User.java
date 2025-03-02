@@ -19,15 +19,15 @@ public class User
     /**
      * Last region alert location to prevent spam
      */
-    private Location lastAlert;
-    private boolean bypassRegions;
+    private Location lastAlert = null;
+    private boolean bypassRegions = false;
     private long lastMessageTimestamp = 0;
+    private boolean socialSpy = false;
+    private UUID lastMessage = null;
 
     public User(UUID uuid)
     {
         this.uuid = uuid;
-        lastAlert = null;
-        bypassRegions = false;
     }
 
     public UUID getUuid()
@@ -101,5 +101,25 @@ public class User
     public void setLastMessageTimestamp()
     {
         this.lastMessageTimestamp = System.currentTimeMillis();
+    }
+
+    public boolean getSocialSpy()
+    {
+        return this.socialSpy;
+    }
+
+    public void setSocialSpy(boolean socialSpy)
+    {
+        this.socialSpy = socialSpy;
+    }
+
+    public UUID getLastMessage()
+    {
+        return this.lastMessage;
+    }
+
+    public void setLastMessage(UUID lastMessage)
+    {
+        this.lastMessage = lastMessage;
     }
 }

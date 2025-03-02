@@ -6,6 +6,9 @@ import com.fractured.commands.kits.CreateKitCommand;
 import com.fractured.commands.kits.DeleteKitCommand;
 import com.fractured.commands.kits.KitCommand;
 import com.fractured.commands.kits.KitsCommand;
+import com.fractured.commands.messages.MessageCommand;
+import com.fractured.commands.messages.ReplyCommand;
+import com.fractured.commands.messages.SocialSpyCommand;
 import com.fractured.commands.team.HomeCommand;
 import com.fractured.commands.team.SetHomeCommand;
 import com.fractured.commands.team.TeamChatCommand;
@@ -148,6 +151,9 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("kit").setExecutor(KitCommand::kit);
         getCommand("kits").setExecutor(KitsCommand::kits);
         getCommand("deletekit").setExecutor(DeleteKitCommand::deletekit);
+        getCommand("message").setExecutor(MessageCommand::message);
+        getCommand("reply").setExecutor(ReplyCommand::reply);
+        getCommand("socialspy").setExecutor(SocialSpyCommand::socialSpy);
     }
 
     @Override
