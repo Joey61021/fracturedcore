@@ -2,6 +2,8 @@ package com.fractured;
 
 import com.fractured.cevents.EventManager;
 import com.fractured.commands.*;
+import com.fractured.commands.home.DelHomeCommand;
+import com.fractured.commands.home.SetHomeCommand;
 import com.fractured.commands.kits.CreateKitCommand;
 import com.fractured.commands.kits.DeleteKitCommand;
 import com.fractured.commands.kits.KitCommand;
@@ -10,13 +12,13 @@ import com.fractured.commands.messages.MessageCommand;
 import com.fractured.commands.messages.ReplyCommand;
 import com.fractured.commands.messages.SocialSpyCommand;
 import com.fractured.commands.team.HomeCommand;
-import com.fractured.commands.team.SetHomeCommand;
 import com.fractured.commands.team.TeamChatCommand;
 import com.fractured.commands.team.TeamCommand;
 import com.fractured.commands.tpa.TpaCommand;
 import com.fractured.config.Config;
 import com.fractured.enchants.EnchantManager;
 import com.fractured.events.*;
+import com.fractured.events.home.HomeManager;
 import com.fractured.events.inventory.InventoryClickListener;
 import com.fractured.events.inventory.InventoryCloseListener;
 import com.fractured.kits.KitManager;
@@ -47,6 +49,7 @@ public final class FracturedCore extends JavaPlugin {
     private static Config config;
     private static Config messages;
     private static Config kits;
+    private static Config homes;
     private static Storage storage;
 
     /**
@@ -96,6 +99,11 @@ public final class FracturedCore extends JavaPlugin {
         return kits;
     }
 
+    public static Config getHomes()
+    {
+        return homes;
+    }
+
     public static Storage getStorage()
     {
         return storage;
@@ -112,6 +120,7 @@ public final class FracturedCore extends JavaPlugin {
         manager.registerEvents(new WorldManager(), this);
         manager.registerEvents(new EnchantManager(), this);
         manager.registerEvents(new KitManager(), this);
+        manager.registerEvents(new HomeManager(), this);
 
         manager.registerEvents(new ChatListener(), this);
         manager.registerEvents(new CommandListener(), this);
@@ -137,7 +146,6 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("upgrades").setExecutor(UpgradesCommand::upgrades);
         getCommand("confirm").setExecutor(ConfirmationManager::confirm);
         getCommand("world").setExecutor(WorldCommand::world);
-        getCommand("sethome").setExecutor(SetHomeCommand::sethome);
         getCommand("home").setExecutor(HomeCommand::home);
         getCommand("event").setExecutor(EventCommand::event);
         getCommand("shield").setExecutor(ShieldCommand::shield);
@@ -154,6 +162,9 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("message").setExecutor(MessageCommand::message);
         getCommand("reply").setExecutor(ReplyCommand::reply);
         getCommand("socialspy").setExecutor(SocialSpyCommand::socialSpy);
+        getCommand("sethome").setExecutor(SetHomeCommand::sethome);
+        getCommand("home").setExecutor(HomeCommand::home);
+        getCommand("delhome").setExecutor(DelHomeCommand::delhome);
     }
 
     @Override

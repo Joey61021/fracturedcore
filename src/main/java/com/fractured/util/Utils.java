@@ -1,11 +1,12 @@
 package com.fractured.util;
 
 import com.fractured.FracturedCore;
+import com.fractured.user.User;
 import com.fractured.user.UserManager;
+import com.fractured.util.globals.Messages;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 public final class Utils
@@ -82,7 +83,7 @@ public final class Utils
 
             if (user.getSocialSpy())
             {
-                players.sendMessage(PizzaCore.getMessages().get(Messages.COMMAND_SOCIAL_SPY_FORMAT).replace("%sender%", sender.getName()).replace("%receiver", receiver.getName()).replace("%message%", message));
+                players.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_SOCIAL_SPY_FORMAT).replace("%sender%", sender.getName()).replace("%receiver", receiver.getName()).replace("%message%", message));
             }
         }
     }

@@ -117,9 +117,6 @@ commands:
     sent: "&aA teleport request has been sent to %receiver%!"
     received: "&6&l!!! %sender% &fhas requested to teleport to you. Run &b/tpa %sender% &fto accept! &6&l!!!"
     accepted: "&aYour tpa request has been accepted!"
-  home:
-    invalid_region: "&cYou cannot set your home here!"
-    set_home: "&fYour home has been &eset&f!"
   event:
     usage: "&cUsage:\n
             - /event start [event]\n
@@ -165,6 +162,21 @@ commands:
     usage: "&cUsage:\n- /r [message]"
     not_online: "&cThis player is no longer online!"
     no_recent: "&cYou have no recent message to reply to!"
+  sethome:
+    usage: "&cUsage:\n- /sethome [name]"
+    too_many: "&cYou have too many homes!"
+    in_use: "&cThis home name is already in use!"
+    invalid_location: "&cYou cannot set your home here!"
+    set: "&aYou have create home %home%"
+  home:
+    available: "&eHomes: &f%homes%"
+    no_homes: "&cYou do not have any homes set!"
+    not_found: "&cThis home cannot be found!"
+    teleporting: "&fTeleporting to home &e%home%&f..."
+  delhome:
+    usage: "&cUsage:\n- /delhome [home]"
+    not_found: "&cThis home does not exist!"
+    deleted: "&aHome has been deleted!"
 deaths:
   kill: "%victim% &fdied"
   world_border: "%victim% left the confines of this world"

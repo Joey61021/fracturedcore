@@ -24,10 +24,6 @@ commands:
     aliases: []
   world:
     aliases: []
-  sethome:
-    aliases: []
-  home:
-    aliases: []
   event:
     aliases: []
   shield:
@@ -56,3 +52,9 @@ commands:
     aliases: [r]
   socialspy:
     aliases: [ss]
+  sethome:
+    aliases: [addhome, createhome]
+  home:
+    aliases: [homes]
+  delhome:
+    aliases: [removehome]

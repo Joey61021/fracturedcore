@@ -93,9 +93,6 @@ public final class Messages
     public static final TextConfigKey COMMAND_TPA_RECEIVED = textKey("commands.tpa.received");
     public static final TextConfigKey COMMAND_TPA_ACCEPTED = textKey("commands.tpa.accepted");
 
-    public static final TextConfigKey COMMAND_HOME_INVALID_REGION = textKey("commands.home.invalid_region");
-    public static final TextConfigKey COMMAND_HOME_SET = textKey("commands.home.set_home");
-
     public static final TextConfigKey COMMAND_EVENT_USAGE = textKey("commands.event.usage");
     public static final TextConfigKey COMMAND_EVENT_NONE_ACTIVE = textKey("commands.event.no_event_active");
     public static final TextConfigKey COMMAND_EVENT_INVALID = textKey("commands.event.invalid_event");
@@ -142,6 +139,21 @@ public final class Messages
     public static final TextConfigKey COMMAND_REPLY_USAGE = textKey("commands.reply.usage");
     public static final TextConfigKey COMMAND_REPLY_NOT_ONLINE = textKey("commands.reply.not_online");
     public static final TextConfigKey COMMAND_REPLY_NO_RECENT = textKey("commands.reply.no_recent");
+
+    public static final TextConfigKey COMMAND_SETHOME_USAGE = textKey("commands.sethome.usage");
+    public static final TextConfigKey COMMAND_SETHOME_TOO_MANY = textKey("commands.sethome.too_many");
+    public static final TextConfigKey COMMAND_SETHOME_IN_USE = textKey("commands.sethome.in_use");
+    public static final TextConfigKey COMMAND_SETHOME_INVALID_LOCATION = textKey("commands.sethome.invalid_location");
+    public static final TextConfigKey COMMAND_SETHOME_SET = textKey("commands.sethome.set");
+
+    public static final TextConfigKey COMMAND_HOME_AVAILABLE = textKey("commands.home.available");
+    public static final TextConfigKey COMMAND_HOME_NO_HOMES = textKey("commands.home.no_homes");
+    public static final TextConfigKey COMMAND_HOME_NOT_FOUND = textKey("commands.home.not_found");
+    public static final TextConfigKey COMMAND_HOME_TELEPORTING = textKey("commands.home.teleporting");
+
+    public static final TextConfigKey COMMAND_DELHOME_USAGE = textKey("commands.delhome.usage");
+    public static final TextConfigKey COMMAND_DELHOME_NOT_FOUND = textKey("commands.delhome.not_found");
+    public static final TextConfigKey COMMAND_DELHOME_DELETED = textKey("commands.delhome.deleted");
 
     public static final String PLUGIN_RESTARTING = ChatColor.YELLOW + "Server Restarting...";
     public static final String PLUGIN_INVALID_STATE = ChatColor.RED + "&cInvalid state. Please contact a server administrator.";
