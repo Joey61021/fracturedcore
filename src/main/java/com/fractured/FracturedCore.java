@@ -178,6 +178,7 @@ public final class FracturedCore extends JavaPlugin {
         config = new Config(this, ConfigKeys.class, "config.yml");
         messages = new Config(this, Messages.class, "messages.yml");
         kits = new Config(this, EmptyClass.class, "kits.yml");
+        homes = new Config(this, EmptyClass.class, "home.yml");
         storage = Storage.newStorage(config);
 
         menuManager = new MenuManager();
