@@ -49,7 +49,7 @@ public final class HomeCommand
         Home home = null;
         for (Home playerHomes : homes)
         {
-            if (!playerHomes.getName().equalsIgnoreCase(args[1].toLowerCase()))
+            if (!playerHomes.getName().equalsIgnoreCase(args[0].toLowerCase()))
             {
                 continue;
             }

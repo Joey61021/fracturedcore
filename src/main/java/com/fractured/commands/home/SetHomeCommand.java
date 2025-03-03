@@ -53,7 +53,7 @@ public final class SetHomeCommand
             return true;
         }
 
-        String name = args[1].toLowerCase(); // Needs to be lowercase
+        String name = args[0].toLowerCase(); // Needs to be lowercase
         if (HomeManager.exists(player, name))
         {
             player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_SETHOME_IN_USE));

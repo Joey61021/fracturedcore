@@ -29,7 +29,7 @@ public final class DelHomeCommand
             return true;
         }
 
-        String name = args[1].toLowerCase(); // Must be lowercase
+        String name = args[0].toLowerCase(); // Must be lowercase
         if (!HomeManager.exists(player, name))
         {
             player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_DELHOME_NOT_FOUND));
