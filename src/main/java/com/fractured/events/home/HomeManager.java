@@ -63,6 +63,10 @@ public class HomeManager implements Listener
 
         homes.remove(player.getUniqueId());
         homes.put(player.getUniqueId(), playerHomes);
+
+        Config homesConfig = FracturedCore.getHomes();
+        homesConfig.set(player.getUniqueId() + "." + name, null);
+        homesConfig.save();
     }
 
     @EventHandler
