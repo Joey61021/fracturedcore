@@ -82,7 +82,8 @@ public class HomeManager implements Listener
         {
             for (String section : homesConfig.getConfigurationSection(player.getUniqueId().toString()).getKeys(false))
             {
-                String worldString = homesConfig.getString(section + ".world");
+                String path = player.getUniqueId() + "." + section;
+                String worldString = homesConfig.getString(path + ".world");
                 World world = Bukkit.getWorld(worldString);
 
                 if (world == null)
@@ -91,8 +92,8 @@ public class HomeManager implements Listener
                     continue;
                 }
 
-                Location location = new Location(world, homesConfig.getInt(section + ".x"), homesConfig.getInt(section + ".y"), homesConfig.getInt(section + ".z"));
-                playerHomes.add(new Home(homesConfig.getString(section), location));
+                Location location = new Location(world, homesConfig.getInt(path + ".x"), homesConfig.getInt(path + ".y"), homesConfig.getInt(path + ".z"));
+                playerHomes.add(new Home(homesConfig.getString(path), location));
             }
         }
 
