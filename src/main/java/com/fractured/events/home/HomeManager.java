@@ -93,7 +93,7 @@ public class HomeManager implements Listener
                 }
 
                 Location location = new Location(world, homesConfig.getInt(path + ".x"), homesConfig.getInt(path + ".y"), homesConfig.getInt(path + ".z"));
-                playerHomes.add(new Home(homesConfig.getString(path), location));
+                playerHomes.add(new Home(section, location));
             }
         }
 
