@@ -155,6 +155,12 @@ public final class Messages
     public static final TextConfigKey COMMAND_DELHOME_NOT_FOUND = textKey("commands.delhome.not_found");
     public static final TextConfigKey COMMAND_DELHOME_DELETED = textKey("commands.delhome.deleted");
 
+    public static final TextConfigKey COMMAND_ENCHANT_USAGE = textKey("commands.enchant.usage");
+    public static final TextConfigKey COMMAND_ENCHANT_NO_ITEM = textKey("commands.enchant.no_item");
+    public static final TextConfigKey COMMAND_ENCHANT_INVALID_ENCHANT = textKey("commands.enchant.invalid_enchant");
+    public static final TextConfigKey COMMAND_ENCHANT_INVALID_RANGE = textKey("commands.enchant.invalid_range");
+    public static final TextConfigKey COMMAND_ENCHANT_ENCHANTED = textKey("commands.enchant.enchanted");
+
     public static final String PLUGIN_RESTARTING = ChatColor.YELLOW + "Server Restarting...";
     public static final String PLUGIN_INVALID_STATE = ChatColor.RED + "&cInvalid state. Please contact a server administrator.";
 

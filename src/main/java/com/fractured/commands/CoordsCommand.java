@@ -15,13 +15,12 @@ public final class CoordsCommand
 
     public static boolean coords(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
-        if (!(sender instanceof Player))
+        if (!(sender instanceof Player player))
         {
             sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_CONSOLE_BLOCKED));
             return true;
         }
 
-        Player player = (Player) sender;
         Location loc = player.getLocation();
         player.chat("My coords are: X: " + loc.getBlockX() + ", Y: " + loc.getBlockY() + ", Z: " + loc.getBlockZ() + "!");
         return true;

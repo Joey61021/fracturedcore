@@ -83,7 +83,7 @@ public final class Utils
 
             if (user.getSocialSpy())
             {
-                players.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_SOCIAL_SPY_FORMAT).replace("%sender%", sender.getName()).replace("%receiver", receiver.getName()).replace("%message%", message));
+                players.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_SOCIAL_SPY_FORMAT).replace("%sender%", sender.getName()).replace("%receiver%", receiver.getName()).replace("%message%", message));
             }
         }
     }
