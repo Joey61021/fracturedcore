@@ -140,21 +140,6 @@ public final class Messages
     public static final TextConfigKey COMMAND_REPLY_NOT_ONLINE = textKey("commands.reply.not_online");
     public static final TextConfigKey COMMAND_REPLY_NO_RECENT = textKey("commands.reply.no_recent");
 
-    public static final TextConfigKey COMMAND_SETHOME_USAGE = textKey("commands.sethome.usage");
-    public static final TextConfigKey COMMAND_SETHOME_TOO_MANY = textKey("commands.sethome.too_many");
-    public static final TextConfigKey COMMAND_SETHOME_IN_USE = textKey("commands.sethome.in_use");
-    public static final TextConfigKey COMMAND_SETHOME_INVALID_LOCATION = textKey("commands.sethome.invalid_location");
-    public static final TextConfigKey COMMAND_SETHOME_SET = textKey("commands.sethome.set");
-
-    public static final TextConfigKey COMMAND_HOME_AVAILABLE = textKey("commands.home.available");
-    public static final TextConfigKey COMMAND_HOME_NO_HOMES = textKey("commands.home.no_homes");
-    public static final TextConfigKey COMMAND_HOME_NOT_FOUND = textKey("commands.home.not_found");
-    public static final TextConfigKey COMMAND_HOME_TELEPORTING = textKey("commands.home.teleporting");
-
-    public static final TextConfigKey COMMAND_DELHOME_USAGE = textKey("commands.delhome.usage");
-    public static final TextConfigKey COMMAND_DELHOME_NOT_FOUND = textKey("commands.delhome.not_found");
-    public static final TextConfigKey COMMAND_DELHOME_DELETED = textKey("commands.delhome.deleted");
-
     public static final TextConfigKey COMMAND_ENCHANT_USAGE = textKey("commands.enchant.usage");
     public static final TextConfigKey COMMAND_ENCHANT_NO_ITEM = textKey("commands.enchant.no_item");
     public static final TextConfigKey COMMAND_ENCHANT_INVALID_ENCHANT = textKey("commands.enchant.invalid_enchant");

@@ -52,11 +52,5 @@ commands:
     aliases: [r]
   socialspy:
     aliases: [ss]
-  sethome:
-    aliases: [addhome, createhome]
-  home:
-    aliases: [homes]
-  delhome:
-    aliases: [removehome]
   enchant:
     aliases: [enchantment]

@@ -162,21 +162,6 @@ commands:
     usage: "&cUsage:\n- /r [message]"
     not_online: "&cThis player is no longer online!"
     no_recent: "&cYou have no recent message to reply to!"
-  sethome:
-    usage: "&cUsage:\n- /sethome [name]"
-    too_many: "&cYou have too many homes!"
-    in_use: "&cThis home name is already in use!"
-    invalid_location: "&cYou cannot set your home here!"
-    set: "&aYou have create home %home%"
-  home:
-    available: "&eHomes: &f%homes%"
-    no_homes: "&cYou do not have any homes set!"
-    not_found: "&cThis home cannot be found!"
-    teleporting: "&fTeleporting to home &e%home%&f..."
-  delhome:
-    usage: "&cUsage:\n- /delhome [home]"
-    not_found: "&cThis home does not exist!"
-    deleted: "&aHome has been deleted!"
   enchant:
     usage: "&cUsage:\n- /enchant [enchant] [level]"
     no_item: "&cYou must be holding a valid item to enchant!"

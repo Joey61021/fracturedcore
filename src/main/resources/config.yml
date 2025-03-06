@@ -39,11 +39,11 @@ blocked_commands:
   - "/fracturedsmp:end"
   - "/fracturedsmp:endroom"
   - "/home"
-  - "/fracturedsmp:home"
+  - "/sethome:home"
   - "/sethome"
-  - "/fracturedsmp:sethome"
+  - "/sethome:sethome"
   - "/delhome"
-  - "/fracturedsmp:delhome"
+  - "/sethome:delhome"
 command:
   stuck:
     enabled: true
