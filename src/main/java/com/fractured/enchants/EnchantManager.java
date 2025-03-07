@@ -23,8 +23,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -61,8 +59,6 @@ public final class EnchantManager implements Listener
     static
     {
         damageCallbacks.register(Enchant.LIFE_STEAL, EnchantManager::lifesteal);
-        damageCallbacks.register(Enchant.VENOMOUS, EnchantManager::venomous);
-        damageCallbacks.register(Enchant.WITHEROUS, EnchantManager::witherous);
         damageCallbacks.register(Enchant.SHRED, EnchantManager::shred);
         damageCallbacks.register(Enchant.CONDUCTANCE, EnchantManager::conductance);
 
@@ -204,40 +200,6 @@ public final class EnchantManager implements Listener
                 event.setDamage(8);
                 attacked.getWorld().strikeLightning(attacked.getLocation());
             }
-        }
-    }
-
-    public static void venomous(EntityDamageByEntityEvent event, int level)
-    {
-        Entity attacked = event.getEntity();
-
-        if (!(attacked instanceof LivingEntity))
-        {
-            return;
-        }
-
-        double chance = .5;
-
-        if (Math.random() < chance)
-        {
-            ((LivingEntity) attacked).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 1 * 20, 1));
-        }
-    }
-
-    public static void witherous(EntityDamageByEntityEvent event, int level)
-    {
-        Entity attacked = event.getEntity();
-
-        if (!(attacked instanceof LivingEntity))
-        {
-            return;
-        }
-
-        double chance = .5;
-
-        if (Math.random() < chance)
-        {
-            ((LivingEntity) attacked).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 1 * 20, 1));
         }
     }
 

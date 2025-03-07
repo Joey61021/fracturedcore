@@ -43,14 +43,7 @@ public enum Enchant
      * Steal a player's hearts
      */
     LIFE_STEAL(ChatColor.RESET + ChatColor.GRAY.toString() + "Life Steal", ENTITY_DAMAGE_BY_ENTITY_EVENT, "stl", GearType.SWORD, 3),
-    /**
-     * Inflict poison
-     */
-    VENOMOUS(ChatColor.RESET + ChatColor.GRAY.toString() + "Venomous",  ENTITY_DAMAGE_BY_ENTITY_EVENT, "vnm", GearType.SWORD, 2),
-    /**
-     * Inflict wither
-     */
-    WITHEROUS(ChatColor.RESET + ChatColor.GRAY.toString() + "Witherous",  ENTITY_DAMAGE_BY_ENTITY_EVENT, "wthr", GearType.SWORD, 2),
+
     /**
      * Deals more durability to your opponents armor
      */
@@ -66,7 +59,7 @@ public enum Enchant
      * Arrows automatically aim to a player
      */
     AIM_BOT(ChatColor.RESET + ChatColor.GRAY.toString() + "Aim Bot", PROJECTILE_LAUNCH_EVENT, "aim", GearType.RANGED, 3),
-    HARVESTER(ChatColor.RESET + ChatColor.GRAY.toString() + "Harvester", BLOCK_BREAK_EVENT, "aim", GearType.HOE, 1)
+    HARVESTER(ChatColor.RESET + ChatColor.GRAY.toString() + "Harvester", BLOCK_BREAK_EVENT, "harvester", GearType.HOE, 1)
 
     ;
 
