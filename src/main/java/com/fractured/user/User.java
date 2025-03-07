@@ -19,9 +19,11 @@ public class User
     /**
      * Last region alert location to prevent spam
      */
-    private Location lastAlert;
-    private boolean bypassRegions;
+    private Location lastAlert = null;
+    private boolean bypassRegions = false;
     private long lastMessageTimestamp = 0;
+    private boolean socialSpy = false;
+    private UUID lastMessage = null;
 
     private EventMeta eventMeta;
 
@@ -116,5 +118,25 @@ public class User
     public void setLastMessageTimestamp()
     {
         this.lastMessageTimestamp = System.currentTimeMillis();
+    }
+
+    public boolean getSocialSpy()
+    {
+        return this.socialSpy;
+    }
+
+    public void setSocialSpy(boolean socialSpy)
+    {
+        this.socialSpy = socialSpy;
+    }
+
+    public UUID getLastMessage()
+    {
+        return this.lastMessage;
+    }
+
+    public void setLastMessage(UUID lastMessage)
+    {
+        this.lastMessage = lastMessage;
     }
 }

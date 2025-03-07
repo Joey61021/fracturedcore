@@ -6,8 +6,9 @@ import com.fractured.commands.kits.CreateKitCommand;
 import com.fractured.commands.kits.DeleteKitCommand;
 import com.fractured.commands.kits.KitCommand;
 import com.fractured.commands.kits.KitsCommand;
-import com.fractured.commands.team.HomeCommand;
-import com.fractured.commands.team.SetHomeCommand;
+import com.fractured.commands.messages.MessageCommand;
+import com.fractured.commands.messages.ReplyCommand;
+import com.fractured.commands.messages.SocialSpyCommand;
 import com.fractured.commands.team.TeamChatCommand;
 import com.fractured.commands.team.TeamCommand;
 import com.fractured.commands.tpa.TpaCommand;
@@ -140,8 +141,6 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("upgrades").setExecutor(UpgradesCommand::upgrades);
         getCommand("confirm").setExecutor(ConfirmationManager::confirm);
         getCommand("world").setExecutor(WorldCommand::world);
-        getCommand("sethome").setExecutor(SetHomeCommand::sethome);
-        getCommand("home").setExecutor(HomeCommand::home);
         getCommand("event").setExecutor(EventCommand::event);
         getCommand("shield").setExecutor(ShieldCommand::shield);
         getCommand("customenchant").setExecutor(CustomEnchantCommand::customEnchant);
@@ -157,6 +156,10 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("advance").setExecutor(AdvanceCommand::advance);
         getCommand("npcsummon").setExecutor(NPCSummon::npcsummon);
         getCommand("test").setExecutor(TestCommand::test);
+        getCommand("message").setExecutor(MessageCommand::message);
+        getCommand("reply").setExecutor(ReplyCommand::reply);
+        getCommand("socialspy").setExecutor(SocialSpyCommand::socialSpy);
+        getCommand("enchant").setExecutor(EnchantCommand::enchant);
     }
 
     @Override

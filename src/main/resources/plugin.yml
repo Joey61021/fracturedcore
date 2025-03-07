@@ -27,10 +27,6 @@ commands:
     aliases: []
   world:
     aliases: []
-  sethome:
-    aliases: []
-  home:
-    aliases: []
   event:
     aliases: []
   shield:
@@ -53,3 +49,11 @@ commands:
     aliases: []
   deletekit:
     aliases: []
+  message:
+    aliases: [msg, m]
+  reply:
+    aliases: [r]
+  socialspy:
+    aliases: [ss]
+  enchant:
+    aliases: [enchantment]

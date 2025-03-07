@@ -38,6 +38,12 @@ blocked_commands:
   - "/endroom"
   - "/fracturedsmp:end"
   - "/fracturedsmp:endroom"
+  - "/home"
+  - "/sethome:home"
+  - "/sethome"
+  - "/sethome:sethome"
+  - "/delhome"
+  - "/sethome:delhome"
 command:
   stuck:
     enabled: true

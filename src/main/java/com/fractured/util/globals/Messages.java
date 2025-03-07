@@ -95,9 +95,6 @@ public final class Messages
     public static final TextConfigKey COMMAND_TPA_RECEIVED = textKey("commands.tpa.received");
     public static final TextConfigKey COMMAND_TPA_ACCEPTED = textKey("commands.tpa.accepted");
 
-    public static final TextConfigKey COMMAND_HOME_INVALID_REGION = textKey("commands.home.invalid_region");
-    public static final TextConfigKey COMMAND_HOME_SET = textKey("commands.home.set_home");
-
     public static final TextConfigKey COMMAND_EVENT_USAGE = textKey("commands.event.usage");
     public static final TextConfigKey COMMAND_EVENT_NONE_ACTIVE = textKey("commands.event.no_event_active");
     public static final TextConfigKey COMMAND_EVENT_INVALID = textKey("commands.event.invalid_event");
@@ -131,6 +128,25 @@ public final class Messages
     public static final TextConfigKey SHIELD_PLACE = textKey("shield.place");
     public static final TextConfigKey SHIELD_CHANGE_RADIUS = textKey("shield.change_radius");
     public static final TextConfigKey SHIELD_LOCKED = textKey("shield.locked");
+
+    public static final TextConfigKey COMMAND_MESSAGE_USAGE = textKey("commands.message.usage");
+    public static final TextConfigKey COMMAND_MESSAGE_SELF = textKey("commands.message.self");
+    public static final TextConfigKey COMMAND_MESSAGE_FORMAT_RECEIVER = textKey("commands.message.format_receiver");
+    public static final TextConfigKey COMMAND_MESSAGE_FORMAT_SENDER = textKey("commands.message.format_sender");
+
+    public static final TextConfigKey COMMAND_SOCIAL_SPY_TOGGLE_ON = textKey("commands.social_spy.toggle_on");
+    public static final TextConfigKey COMMAND_SOCIAL_SPY_TOGGLE_OFF = textKey("commands.social_spy.toggle_off");
+    public static final TextConfigKey COMMAND_SOCIAL_SPY_FORMAT = textKey("commands.social_spy.format");
+
+    public static final TextConfigKey COMMAND_REPLY_USAGE = textKey("commands.reply.usage");
+    public static final TextConfigKey COMMAND_REPLY_NOT_ONLINE = textKey("commands.reply.not_online");
+    public static final TextConfigKey COMMAND_REPLY_NO_RECENT = textKey("commands.reply.no_recent");
+
+    public static final TextConfigKey COMMAND_ENCHANT_USAGE = textKey("commands.enchant.usage");
+    public static final TextConfigKey COMMAND_ENCHANT_NO_ITEM = textKey("commands.enchant.no_item");
+    public static final TextConfigKey COMMAND_ENCHANT_INVALID_ENCHANT = textKey("commands.enchant.invalid_enchant");
+    public static final TextConfigKey COMMAND_ENCHANT_INVALID_RANGE = textKey("commands.enchant.invalid_range");
+    public static final TextConfigKey COMMAND_ENCHANT_ENCHANTED = textKey("commands.enchant.enchanted");
 
     public static final String PLUGIN_RESTARTING = ChatColor.YELLOW + "Server Restarting...";
     public static final String PLUGIN_INVALID_STATE = ChatColor.RED + "&cInvalid state. Please contact a server administrator.";

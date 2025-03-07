@@ -1,8 +1,13 @@
 package com.fractured.util;
 
+import com.fractured.FracturedCore;
+import com.fractured.user.User;
+import com.fractured.user.UserManager;
+import com.fractured.util.globals.Messages;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 
 public final class Utils
 {
@@ -51,5 +56,35 @@ public final class Utils
             case 'f' -> Material.WHITE_STAINED_GLASS;
             default -> Material.GLASS;
         };
+    }
+
+    public static void sendPlayerMessage(Player sender, Player receiver, String message)
+    {
+        User senderUser = UserManager.getUser(sender);
+        User receiverUser = UserManager.getUser(receiver);
+        if (senderUser == null || receiverUser == null)
+        {
+            return;
+        }
+
+        senderUser.setLastMessage(receiver.getUniqueId());
+        receiverUser.setLastMessage(sender.getUniqueId());
+
+        sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_MESSAGE_FORMAT_SENDER).replace("%receiver%", receiver.getName()).replace("%message%", message));
+        receiver.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_MESSAGE_FORMAT_RECEIVER).replace("%sender%", sender.getName()).replace("%message%", message));
+
+        for (Player players : Bukkit.getOnlinePlayers())
+        {
+            User user = UserManager.getUser(players);
+            if (user == null)
+            {
+                continue;
+            }
+
+            if (user.getSocialSpy())
+            {
+                players.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_SOCIAL_SPY_FORMAT).replace("%sender%", sender.getName()).replace("%receiver%", receiver.getName()).replace("%message%", message));
+            }
+        }
     }
 }
