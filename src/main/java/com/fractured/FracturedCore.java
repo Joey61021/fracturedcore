@@ -63,6 +63,11 @@ public final class FracturedCore extends JavaPlugin {
         return Bukkit.getScheduler().runTaskAsynchronously(plugin, runnable);
     }
 
+    public static BukkitTask runDelayAsync(Runnable runnable, long delay)
+    {
+        return Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, runnable, delay);
+    }
+
     public static BukkitTask runDelay(Runnable runnable, long delay)
     {
         return Bukkit.getScheduler().runTaskLater(plugin, runnable, delay);
@@ -122,6 +127,7 @@ public final class FracturedCore extends JavaPlugin {
 
         manager.registerEvents(new RespawnListener(), this);
         manager.registerEvents(new SleepListener(), this);
+        manager.registerEvents(new EventDispatcher(), this);
     }
 
     private void registerCommands()
@@ -148,6 +154,9 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("kit").setExecutor(KitCommand::kit);
         getCommand("kits").setExecutor(KitsCommand::kits);
         getCommand("deletekit").setExecutor(DeleteKitCommand::deletekit);
+        getCommand("advance").setExecutor(AdvanceCommand::advance);
+        getCommand("npcsummon").setExecutor(NPCSummon::npcsummon);
+        getCommand("test").setExecutor(TestCommand::test);
     }
 
     @Override
