@@ -23,11 +23,26 @@ public class User
     private boolean bypassRegions;
     private long lastMessageTimestamp = 0;
 
+    private EventMeta eventMeta;
+
     public User(UUID uuid)
     {
         this.uuid = uuid;
         lastAlert = null;
         bypassRegions = false;
+
+        // fixme this should NOT be here, it should be changed when the player joins or leaves an event or enters that event's claim
+        this.eventMeta = new PantheonMeta();
+    }
+
+    public void setEventMeta(EventMeta meta)
+    {
+        this.eventMeta = meta;
+    }
+
+    public EventMeta getEventMeta()
+    {
+        return eventMeta;
     }
 
     public UUID getUuid()
