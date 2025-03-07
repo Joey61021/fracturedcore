@@ -42,6 +42,8 @@ public final class Messages
     public static final TextConfigKey COMMAND_TARGET_ALREADY_IN_TEAM = textKey("commands.target_already_in_team");
     public static final TextConfigKey COMMAND_TEAM_ALREADY_IN_TEAM = textKey("commands.already_in_team");
 
+    public static final TextConfigKey COMMAND_NPC_SUMMON_USAGE = textKey("commands.npc_summon.usage");
+
     public static final TextConfigKey COMMAND_CUSTOM_ENCHANT_USAGE = textKey("commands.custom_enchant.usage");
     public static final TextConfigKey COMMAND_CUSTOM_ENCHANT_UNKNOWN = textKey("commands.custom_enchant.unknown");
     public static final TextConfigKey COMMAND_CUSTOM_ENCHANT_INVALID_LEVEL = textKey("commands.custom_enchant.invalid_level");

@@ -40,6 +40,8 @@ commands:
   no_team_blocked: "&cYou cannot run this command without being in a team!"
   not_in_claim: "&cYou are not in any team claim."
   enemy_team_blocked: "&cYou cannot execute this command in an enemy region!"
+  npc_summon:
+    usage: "&cUsage: /npcsummon [npc_id]"
   custom_enchant:
     usage: "&cUsage: /customenchant [enchantment] [level]"
     unknown: "&cUnknown Enchantment."

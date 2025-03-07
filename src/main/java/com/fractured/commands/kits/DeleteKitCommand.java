@@ -25,7 +25,7 @@ public final class DeleteKitCommand
             return true;
         }
 
-        if (!player.hasPermission(Permissions.COMMAND_CREATEKIT))
+        if (!player.hasPermission(Permissions.COMMAND_CREATE_KIT))
         {
             player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_NO_PERMISSION));
             return true;
