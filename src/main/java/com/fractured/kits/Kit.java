@@ -11,20 +11,17 @@ public class Kit
 
     private int id;
     private String name;
-    private int cooldown;
     private Set<KitItem> items;
     private Material material;
     private ChatColor color;
 
-    public Kit(int id, String name, int cooldown, Set<KitItem> items)
+    public Kit(int id, String name, Set<KitItem> items, Material material, ChatColor color)
     {
         this.id = id;
         this.name = name;
-        this.cooldown = cooldown;
         this.items = items;
-        // TODO -- configurable items, set default items for testing
-        this.material = Material.BOW;
-        this.color = ChatColor.GREEN;
+        this.material = material;
+        this.color = color;
     }
 
     public int getId()
@@ -35,11 +32,6 @@ public class Kit
     public String getName()
     {
         return Utils.color(name);
-    }
-
-    public int getCooldown()
-    {
-        return cooldown;
     }
 
     public Set<KitItem> getItems()

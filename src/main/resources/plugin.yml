@@ -1,4 +1,4 @@
-name: FracturedSMP
+name: FracturedCore
 version: '1.0'
 main: com.fractured.FracturedCore
 api-version: '1.21'

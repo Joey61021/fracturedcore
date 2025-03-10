@@ -164,7 +164,6 @@ public final class FracturedCore extends JavaPlugin {
 
     @Override
     public void onLoad() {
-
     }
 
     @Override
@@ -193,6 +192,8 @@ public final class FracturedCore extends JavaPlugin {
         if( Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")){
             new PAPIExpansion().register();
         }
+
+        System.out.println("UID : " + Bukkit.getWorld("world").getUID());
     }
 
     @Override

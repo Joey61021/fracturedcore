@@ -4,6 +4,7 @@ import com.fractured.FracturedCore;
 import com.fractured.config.Config;
 import com.fractured.util.globals.Messages;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,7 +20,6 @@ public class KitManager implements Listener
 {
 
     public static Set<Kit> activeKits = new HashSet<>();
-    public static Set<KitCooldown> activeCooldowns = new HashSet<>();
 
     public static void initKits()
     {
@@ -30,10 +30,10 @@ public class KitManager implements Listener
             Config kits = FracturedCore.getKits();
             for (String kit : kits.getConfigurationSection("kits").getKeys(false))
             {
-
-                System.out.println(kit); // debug shit
-
                 Set<KitItem> kitItems = new HashSet<>();
+
+                Material material = Material.valueOf(kits.getString("kits." + kit + ".material"));
+                ChatColor color = ChatColor.valueOf(kits.getString("kits." + kit + ".color"));
 
                 for (String item : kits.getConfigurationSection("kits." + kit + ".items").getKeys(false))
                 {
@@ -42,7 +42,7 @@ public class KitManager implements Listener
                     {
                         KitItem kitItem = new KitItem(Material.valueOf(kits.getString(path + ".material").toUpperCase()), kits.getInt(path + ".amount"));
 
-                        if (kits.isSet(path + "name"))
+                        if (kits.isSet(path + ".name"))
                         {
                             kitItem.setName(kits.getString(path + ".name"));
                         }
@@ -54,7 +54,7 @@ public class KitManager implements Listener
                     }
                 }
 
-                activeKits.add(new Kit(activeKits.size(), kit, 10, kitItems));
+                activeKits.add(new Kit(activeKits.size(), kit, kitItems, material, color));
             }
         } catch (Exception ignored)
         {
@@ -62,9 +62,14 @@ public class KitManager implements Listener
         }
     }
 
-    public static void addKit(String name, int cooldown, Set<KitItem> items)
+    public static void poolKits()
     {
-        activeKits.add(new Kit(activeKits.size(), name, cooldown, items));
+
+    }
+
+    public static void addKit(String name, Set<KitItem> items, Material material, ChatColor color)
+    {
+        activeKits.add(new Kit(activeKits.size(), name, items, material, color));
     }
 
     public static void removeKit(Kit kit)
@@ -85,75 +90,15 @@ public class KitManager implements Listener
         return null; // No kit found
     }
 
-    public static Kit getKit(int id)
-    {
-        for (Kit kit : activeKits)
-        {
-            if (kit.getId() == id)
-            {
-                return kit;
-            }
-        }
-
-        return null; // No kit found
-    }
-
-    public static KitCooldown getCooldown(Player player, Kit kit)
-    {
-        KitCooldown cooldown = null;
-        for (KitCooldown cooldowns : activeCooldowns)
-        {
-            if (cooldowns.getUuid().equals(player.getUniqueId()) && cooldowns.getKitId() == kit.getId())
-            {
-                cooldown = cooldowns;
-            }
-        }
-
-        return cooldown;
-    }
-
-    public static Set<Kit> getKitsOnCooldown(Player player)
-    {
-        Set<Kit> kits = new HashSet<>();
-        for (KitCooldown cooldowns : activeCooldowns)
-        {
-            if (System.currentTimeMillis() - cooldowns.getTimestamp() >= cooldowns.getCooldown() * 1000L)
-            {
-                activeCooldowns.remove(cooldowns);
-                continue;
-            }
-            if (cooldowns.getUuid().equals(player.getUniqueId()))
-            {
-                kits.add(getKit(cooldowns.getKitId()));
-            }
-        }
-
-        return kits;
-    }
-
     public static void applyKit(Player player, Kit kit)
     {
-        KitCooldown cooldown = getCooldown(player, kit);
-        if (cooldown != null)
-        {
-            long timeLapsed = System.currentTimeMillis() - cooldown.getTimestamp();
-            long cooldownTime = kit.getCooldown() * 1000L;
-            if (timeLapsed < cooldownTime)
-            {
-                player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_KIT_ON_COOLDOWN).replace("%time%", String.valueOf(Math.round((float) (cooldownTime - timeLapsed) / 1000L))));
-                return;
-            }
-
-            activeCooldowns.remove(cooldown);
-        }
-
         Inventory inventory = player.getInventory();
         for (KitItem item : kit.getItems())
         {
             inventory.addItem(new ItemStack(item.getMaterial(), item.getAmount()));
         }
 
-        activeCooldowns.add(new KitCooldown(player.getUniqueId(), kit.getId(), kit.getCooldown()));
+
         player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_KIT_RECEIVED).replace("%kit%", kit.getName()));
     }
 

@@ -111,7 +111,6 @@ public final class Messages
     public static final TextConfigKey COMMAND_CREATEKIT_SAVED = textKey("commands.createkit.saved");
 
     public static final TextConfigKey COMMAND_KIT_AVAILABLE = textKey("commands.kit.available");
-    public static final TextConfigKey COMMAND_KIT_ON_COOLDOWN = textKey("commands.kit.on_cooldown");
     public static final TextConfigKey COMMAND_KIT_RECEIVED = textKey("commands.kit.received");
     public static final TextConfigKey COMMAND_KIT_NOT_FOUND = textKey("commands.kit.not_found");
 

@@ -9,8 +9,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.Set;
-
 public final class KitCommand
 {
 
@@ -29,11 +27,10 @@ public final class KitCommand
         if (args.length == 0)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            Set<Kit> kitsOnCooldown = KitManager.getKitsOnCooldown(player);
 
             for (Kit kits : KitManager.activeKits)
             {
-                stringBuilder.append(Utils.color((kitsOnCooldown.contains(kits) ? "&m" : "&r") + kits.getName() + "&r")).append(" ");
+                stringBuilder.append(Utils.color(kits.getName() + "&r")).append(" ");
             }
 
             player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_KIT_AVAILABLE).replace("%kits%", stringBuilder.toString()));
