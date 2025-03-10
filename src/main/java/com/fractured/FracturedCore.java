@@ -158,7 +158,7 @@ public final class FracturedCore extends JavaPlugin
         registerEvents();
         registerCommands();
 
-        // After we've regsitered events and managers (LIke MenuManager)
+        // After we've regsitered events and managers (Like MenuManager)
         storage.initServerResources();
 
         // Register custom events (cevents)
@@ -179,7 +179,7 @@ public final class FracturedCore extends JavaPlugin
         // fixme wait for db to flush? Consult the bukkit async scheduler probably
         // Also make any additional db updates for saving like the team cache maybe?
 
-        if (ShieldManager.pooledBlocks.size() > 0)
+        if (!ShieldManager.pooledBlocks.isEmpty())
         {
             ShieldManager.clearAllParameters();
         }

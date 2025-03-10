@@ -40,7 +40,7 @@ public class ExplodeListener implements Listener
         Location location = event.getLocation();
         World world = location.getWorld();
 
-        if (world == null || world.equals(WorldManager.OVER_WORLD)) // only works in over world
+        if (world == null || !world.equals(WorldManager.OVER_WORLD)) // only works in over world
         {
             return;
         }
