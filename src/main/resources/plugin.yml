@@ -12,9 +12,6 @@ commands:
     aliases: [tc]
   team:
     aliases: []
-  test:
-  advance:
-  npcsummon:
   configs:
     aliases: [config]
   spawn:

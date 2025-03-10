@@ -31,16 +31,10 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-public final class FracturedCore extends JavaPlugin {
-    /* I've switched this to a more functional design. Instead of relying on the
-       FracturedCore plugin instance to gain access to these, or just passing an
-       instance of these to where ever it's needed during initialization, and
-       then storing those references in the class that it's passed to (dependency
-       injection), I've made all of these static, since there only ever needs
-       to exist one of these objects in the code at a time. */
+public final class FracturedCore extends JavaPlugin
+{
 
     private static Config config;
     private static Config messages;
@@ -60,23 +54,12 @@ public final class FracturedCore extends JavaPlugin {
     // You no longer need to pass the plugin to the scheduler
     public static BukkitTask runAsync(Runnable runnable)
     {
-        // todo switch to virtual threads?
         return Bukkit.getScheduler().runTaskAsynchronously(plugin, runnable);
-    }
-
-    public static BukkitTask runDelayAsync(Runnable runnable, long delay)
-    {
-        return Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, runnable, delay);
     }
 
     public static BukkitTask runDelay(Runnable runnable, long delay)
     {
         return Bukkit.getScheduler().runTaskLater(plugin, runnable, delay);
-    }
-
-    public static BukkitTask runDelay(BukkitRunnable runnable, long delay)
-    {
-        return runnable.runTaskLater(plugin, delay);
     }
 
     public static NamespacedKey newNamespacedKey(String key)
@@ -128,7 +111,6 @@ public final class FracturedCore extends JavaPlugin {
 
         manager.registerEvents(new RespawnListener(), this);
         manager.registerEvents(new SleepListener(), this);
-        manager.registerEvents(new EventDispatcher(), this);
     }
 
     private void registerCommands()
@@ -153,9 +135,6 @@ public final class FracturedCore extends JavaPlugin {
         getCommand("kit").setExecutor(KitCommand::kit);
         getCommand("kits").setExecutor(KitsCommand::kits);
         getCommand("deletekit").setExecutor(DeleteKitCommand::deletekit);
-        getCommand("advance").setExecutor(AdvanceCommand::advance);
-        getCommand("npcsummon").setExecutor(NPCSummon::npcsummon);
-        getCommand("test").setExecutor(TestCommand::test);
         getCommand("message").setExecutor(MessageCommand::message);
         getCommand("reply").setExecutor(ReplyCommand::reply);
         getCommand("socialspy").setExecutor(SocialSpyCommand::socialSpy);
@@ -192,8 +171,6 @@ public final class FracturedCore extends JavaPlugin {
         if( Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")){
             new PAPIExpansion().register();
         }
-
-        System.out.println("UID : " + Bukkit.getWorld("world").getUID());
     }
 
     @Override
