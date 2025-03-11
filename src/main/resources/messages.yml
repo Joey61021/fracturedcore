@@ -119,16 +119,10 @@ commands:
     sent: "&aA teleport request has been sent to %receiver%!"
     received: "&6&l!!! %sender% &fhas requested to teleport to you. Run &b/tpa %sender% &fto accept! &6&l!!!"
     accepted: "&aYour tpa request has been accepted!"
-  event:
-    usage: "&cUsage:\n
-            - /event start [event]\n
-            - /event stop"
-    no_event_active: "&cThere is no event active, to start one run /event start [event]!"
-    invalid_event: "&cSorry, but this is not a valid event!"
-    event_run: "&fEvent %event% &fis now being run for &a%time% &fminutes!"
-    event_active: "&cAn event is already active. Please wait for the event to finish or alternatively run /event stop."
-    event_stopped: "&cThe %event% &cevent event has been stopped!"
-    event_stopped_offline: "&cThe %event% event has been stopped because there are not enough players online!"
+    tpa_self: "&cYou cannot tpa to yourself!"
+    denied: "&cYour tpa request has been denied!"
+    expired: "&cYour tpa request has expired!"
+    logged: "&cYour tpa request to %player% has cancelled as they are no longer online!"
   bypass_regions:
     toggle_off: "&fRegion bypass has been toggled &c&lOFF&f!"
     toggle_on: "&fRegion bypass has been toggled &a&lON&f!"
@@ -136,20 +130,6 @@ commands:
     place: "&b&lSHIELD &fhas been established"
     change_radius: "&b&lSHIELD &fradius has been changed to &e%radius%&f!"
     locked: "&b&lSHIELD &fconfiguration has been set and is now &a&lACTIVE"
-  createkit:
-    usage: "&cUsage:\n- /createkit [cooldown] [name]"
-    already_exists: "&cThis kit already exists!"
-    saved: "&fThe &a%name% &fkit has been saved!"
-  kit:
-    available: "&6Kits: &f%kits%"
-    received: "&fYou have received the &a%kit% &fkit!"
-    not_found: "&cThis kit does not exist!"
-  kits:
-    opening: "&fOpening &ekits &fmenu..."
-  deletekit:
-    usage: "&cUsage:\n- /deletekit [name]"
-    not_found: "&cThis kit does not exist!"
-    deleted: "&fYou have &cdeleted &fthe &e%kit%&f!"
   message:
     usage: "&cUsage:\n- /msg [player] [message]"
     self: "&cYou cannot message yourself!"

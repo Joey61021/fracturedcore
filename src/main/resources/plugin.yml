@@ -24,8 +24,6 @@ commands:
     aliases: []
   world:
     aliases: []
-  event:
-    aliases: []
   shield:
     aliases: []
   customenchant:
@@ -35,17 +33,15 @@ commands:
   setmaxhealth:
     aliases: []
   tpa:
-    aliases: [teleportrequest]
+    aliases: []
+  tpahere:
+    aliases: []
+  tpadeny:
+    aliases: []
+  tpaaccept:
+    aliases: []
   end:
     aliases: [endroom]
-  createkit:
-    aliases: []
-  kit:
-    aliases: []
-  kits:
-    aliases: []
-  deletekit:
-    aliases: []
   message:
     aliases: [msg, m]
   reply:

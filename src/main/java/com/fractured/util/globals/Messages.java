@@ -94,6 +94,10 @@ public final class Messages
     public static final TextConfigKey COMMAND_TPA_SENT = textKey("commands.tpa.sent");
     public static final TextConfigKey COMMAND_TPA_RECEIVED = textKey("commands.tpa.received");
     public static final TextConfigKey COMMAND_TPA_ACCEPTED = textKey("commands.tpa.accepted");
+    public static final TextConfigKey COMMAND_TPA_TPA_SELF = textKey("commands.tpa.tpa_self");
+    public static final TextConfigKey COMMAND_TPA_DENIED = textKey("commands.tpa.denied");
+    public static final TextConfigKey COMMAND_TPA_EXPIRED = textKey("commands.tpa.expired");
+    public static final TextConfigKey COMMAND_TPA_LOGGED = textKey("commands.tpa.logged");
 
     public static final TextConfigKey COMMAND_EVENT_USAGE = textKey("commands.event.usage");
     public static final TextConfigKey COMMAND_EVENT_NONE_ACTIVE = textKey("commands.event.no_event_active");
@@ -105,21 +109,6 @@ public final class Messages
 
     public static final TextConfigKey COMMAND_BYPASS_REGIONS_TOGGLE_OFF = textKey("commands.bypass_regions.toggle_off");
     public static final TextConfigKey COMMAND_BYPASS_REGIONS_TOGGLE_ON = textKey("commands.bypass_regions.toggle_on");
-
-    public static final TextConfigKey COMMAND_CREATEKIT_USAGE = textKey("commands.createkit.usage");
-    public static final TextConfigKey COMMAND_CREATEKIT_ALREADY_EXISTS = textKey("commands.createkit.already_exists");
-    public static final TextConfigKey COMMAND_CREATEKIT_SAVED = textKey("commands.createkit.saved");
-
-    public static final TextConfigKey COMMAND_KIT_AVAILABLE = textKey("commands.kit.available");
-    public static final TextConfigKey COMMAND_KIT_RECEIVED = textKey("commands.kit.received");
-    public static final TextConfigKey COMMAND_KIT_NOT_FOUND = textKey("commands.kit.not_found");
-
-    public static final TextConfigKey COMMAND_KITS_OPENING = textKey("commands.kits.opening");
-
-    public static final TextConfigKey COMMAND_DELETEKIT_USAGE = textKey("commands.deletekit.usage");
-    public static final TextConfigKey COMMAND_DELETEKIT_NOT_FOUND = textKey("commands.deletekit.not_found");
-    public static final TextConfigKey COMMAND_DELETEKIT_DELETED = textKey("commands.deletekit.deleted");
-
     public static final TextConfigKey TAB_HEADER = textKey("tab.header");
     public static final TextConfigKey TAB_FOOTER_NO_TEAM = textKey("tab.footer_no_team");
     public static final TextConfigKey TAB_FOOTER_TEAM = textKey("tab.footer_team");

@@ -47,17 +47,17 @@ public class ExplodeListener implements Listener
 
         event.setCancelled(true);
 
-        float size = event.getYield();
+        int size = 3;
         world.createExplosion(location, size, false, false);
 
         Set<Block> blocks = new HashSet<>();
-        getNearbyBlocks((int) size, location.add(0, -1, 0), blocks); // Get nearby blocks under player
+        getNearbyBlocks(size, location.add(0, -1, 0), blocks); // Get nearby blocks under player
 
         Random random = new Random();
 
         for (Block b : blocks)
         {
-            if ((random.nextDouble() * 100) > 75)
+            if ((random.nextDouble() * 100) > 50)
             {
                 continue;
             }
