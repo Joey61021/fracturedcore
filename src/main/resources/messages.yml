@@ -123,6 +123,7 @@ commands:
     denied: "&cYour tpa request has been denied!"
     expired: "&cYour tpa request has expired!"
     logged: "&cYour tpa request to %player% has cancelled as they are no longer online!"
+    no_requests: "&cYou have no pending tpa requests!"
   bypass_regions:
     toggle_off: "&fRegion bypass has been toggled &c&lOFF&f!"
     toggle_on: "&fRegion bypass has been toggled &a&lON&f!"

@@ -23,12 +23,6 @@ public final class TpaAcceptCommand
             return true;
         }
 
-        if (args.length == 0)
-        {
-            player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TPA_USAGE));
-            return true;
-        }
-
         for (TpaRequest request : TpaManager.getRequests())
         {
             if (request.getRequested().equals(player.getUniqueId()))
@@ -46,6 +40,8 @@ public final class TpaAcceptCommand
                 return true;
             }
         }
+
+        player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TPA_NO_REQUESTS));
         return true;
     }
 }

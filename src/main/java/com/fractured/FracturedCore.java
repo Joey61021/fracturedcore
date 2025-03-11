@@ -120,7 +120,7 @@ public final class FracturedCore extends JavaPlugin
         getCommand("spawn").setExecutor(SpawnCommand::spawn);
         getCommand("tpa").setExecutor(TpaGenericCommand::tpa);
         getCommand("tpahere").setExecutor(TpaGenericCommand::tpa);
-        getCommand("tpaccept").setExecutor(TpaAcceptCommand::accept);
+        getCommand("tpaaccept").setExecutor(TpaAcceptCommand::accept);
         getCommand("tpadeny").setExecutor(TpaDenyCommand::deny);
         getCommand("endroom").setExecutor(EndCommand::end);
         getCommand("message").setExecutor(MessageCommand::message);
