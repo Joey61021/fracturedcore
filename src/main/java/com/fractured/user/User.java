@@ -24,6 +24,7 @@ public class User
     private long lastMessageTimestamp = 0;
     private boolean socialSpy = false;
     private UUID lastMessage = null;
+    private String lastChatMessage = "";
 
     public User(UUID uuid)
     {
@@ -123,5 +124,15 @@ public class User
     public void setLastMessage(UUID lastMessage)
     {
         this.lastMessage = lastMessage;
+    }
+
+    public String getLastChatMessage()
+    {
+        return lastChatMessage;
+    }
+
+    public void setLastChatMessage(String lastChatMessage)
+    {
+        this.lastChatMessage = lastChatMessage;
     }
 }

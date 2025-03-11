@@ -15,19 +15,18 @@ public final class Messages
     public static final TextConfigKey TEAM_INVENTORY_CLOSED = textKey("generic.team_inventory_closed");
     public static final TextConfigKey FRIENDLY_FIRE_DISABLED = textKey("generic.friendly_fire_disabled");
     public static final TextConfigKey CANNOT_SLEEP_HERE = textKey("generic.cannot_sleep_here");
-    public static final TextConfigKey ENEMY_TEAM_BLOCKED = textKey("generic.enemy_team_blocked");
     public static final TextConfigKey MUST_BE_INT = textKey("generic.must_be_int");
     public static final TextConfigKey NO_PLAYER = textKey("generic.no_player");
     public static final TextConfigKey TELEPORTING = textKey("generic.teleporting");
     public static final TextConfigKey PROCESS_COMMAND = textKey("generic.process_command");
     public static final TextConfigKey CHAT_COOLDOWN = textKey("generic.chat_cooldown");
+    public static final TextConfigKey SIMILAR_MESSAGE = textKey("generic.similar_message");
 
     public static final TextConfigKey REGION_SPAWN_REGION = textKey("generic.region.spawn_region");
     public static final TextConfigKey REGION_TEAM_ALERTED = textKey("generic.region.team_alerted");
     public static final TextConfigKey REGION_TEAM_OFFLINE = textKey("generic.region.team_offline");
-    public static final TextConfigKey REGION_ALERT_BLOCK_PLACE = textKey("generic.region.block_place");
-    public static final TextConfigKey REGION_ALERT_BLOCK_BREAK = textKey("generic.region.block_break");
-    public static final TextConfigKey REGION_ALERT_CHEST_OPEN = textKey("generic.region.chest_open");
+    public static final TextConfigKey REGION_ALERT_BLOCK_CHANGE = textKey("generic.region.block_change");
+    public static final TextConfigKey REGION_ALERT_ACTIVITY = textKey("generic.region.activity");
 
     public static final TextConfigKey UPGRADES_MAX_LEVEL = textKey("upgrades.max_level");
     public static final TextConfigKey UPGRADES_NOT_ENOUGH = textKey("upgrades.not_enough");
@@ -42,11 +41,8 @@ public final class Messages
     public static final TextConfigKey COMMAND_TARGET_ALREADY_IN_TEAM = textKey("commands.target_already_in_team");
     public static final TextConfigKey COMMAND_TEAM_ALREADY_IN_TEAM = textKey("commands.already_in_team");
 
-    public static final TextConfigKey COMMAND_NPC_SUMMON_USAGE = textKey("commands.npc_summon.usage");
-
     public static final TextConfigKey COMMAND_CUSTOM_ENCHANT_USAGE = textKey("commands.custom_enchant.usage");
     public static final TextConfigKey COMMAND_CUSTOM_ENCHANT_UNKNOWN = textKey("commands.custom_enchant.unknown");
-    public static final TextConfigKey COMMAND_CUSTOM_ENCHANT_INVALID_LEVEL = textKey("commands.custom_enchant.invalid_level");
     public static final TextConfigKey COMMAND_CUSTOM_ENCHANT_BAD_ITEM_TYPE = textKey("commands.custom_enchant.bad_item_type");
     public static final TextConfigKey COMMAND_CUSTOM_ENCHANT_LEVEL_BOUNDS = textKey("commands.custom_enchant.level_bounds");
     public static final TextConfigKey COMMAND_CUSTOM_ENCHANT_APPLIED = textKey("commands.custom_enchant.applied");

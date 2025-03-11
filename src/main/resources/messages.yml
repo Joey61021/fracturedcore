@@ -18,13 +18,13 @@ generic:
   teleporting: "&fYou are being &eteleported&f..."
   process_command: "&cYou are unable to process this command without being in a team!"
   chat_cooldown: "&cPlease wait &4%time%s &cbefore sending another message!"
+  similar_message: "&cYou cannot type a similar message!"
   region:
     spawn_region: "&cYou cannot perform this action in a protected region!"
     team_alerted: "&4The %team% team has been alerted of your location."
     team_offline: "&cYou are unable to complete this action while this team is offline!"
-    block_place: "&4&l!!! &c%player% has placed a block in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% &4&l!!!"
-    block_break: "&4&l!!! &c%player% has broken a block in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% &4&l!!!"
-    chest_open: "&4&l!!! &c%player% has opened a chest in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% &4&l!!!"
+    block_change: "&4&l!!! &c%player% has changed a block in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% &4&l!!!"
+    activity: "&4&l!!! &cThere is activity from %player% in %team% team's region at X: %locx%, Y: %locy%, Z: %locz% &4&l!!!"
 upgrades:
   max_level: "&cThis upgrade has already reached the maximum level!"
   not_enough: "&cYou do not have enough to purchase this upgrade!"
@@ -40,12 +40,9 @@ commands:
   no_team_blocked: "&cYou cannot run this command without being in a team!"
   not_in_claim: "&cYou are not in any team claim."
   enemy_team_blocked: "&cYou cannot execute this command in an enemy region!"
-  npc_summon:
-    usage: "&cUsage: /npcsummon [npc_id]"
   custom_enchant:
     usage: "&cUsage: /customenchant [enchantment] [level]"
     unknown: "&cUnknown Enchantment."
-    invalid_level: "&cThe level must be an integer."
     bad_item_type: "&cThis enchantment is not assignable to this item."
     level_bounds: "&cThe level of this enchantment cannot exceed %level%."
     applied: "&e%enchant% &fhas been applied to your held item."

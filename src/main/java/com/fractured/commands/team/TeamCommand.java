@@ -349,7 +349,7 @@ public final class TeamCommand
         // setspawn, team, makes 2
         if (args.length < 2)
         {
-            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_FORCE_SET_USAGE));
+            sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_SET_SPAWN_USAGE));
             return;
         }
 
@@ -360,9 +360,7 @@ public final class TeamCommand
             return;
         }
 
-        // todo: confirmation
         Location loc = ((Player) sender).getLocation();
-
         team.setSpawn(loc);
 
         sender.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TEAM_SET_SPAWN_SET)

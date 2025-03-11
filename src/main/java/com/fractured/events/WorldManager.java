@@ -24,6 +24,8 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.Random;
 
@@ -165,9 +167,21 @@ public class WorldManager implements Listener
                 player.sendMessage(FracturedCore.getMessages().get(Messages.REGION_TEAM_OFFLINE));
             } else
             {
+                // If last alert location is less than 5 blocks away, cancel to prevent spam
+                if (user.getLastAlert() != null && loc.distance(user.getLastAlert()) < 5)
+                {
+                    return;
+                }
                 // Alert the enemy team
-                //todo fixme config messages
-                claim.getTeam().alert("A block was changed in your claim at (" + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ() + ")!");
+                user.setLastAlert(loc);
+                claim.getTeam().alert(FracturedCore.getMessages().get(Messages.REGION_ALERT_BLOCK_CHANGE)
+                        .replace("%player%", player.getName())
+                        .replace("%team%", team.getName())
+                        .replace("%locx%", String.valueOf(loc.getBlockY()))
+                        .replace("%locy%", String.valueOf(loc.getBlockY()))
+                        .replace("%locz%", String.valueOf(loc.getBlockZ())));
+                player.sendMessage(FracturedCore.getMessages().get(Messages.REGION_TEAM_ALERTED).replace("%team%", team.getName()));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20 * 5, 0));
             }
         }
     }
@@ -269,13 +283,20 @@ public class WorldManager implements Listener
             } else
             {
                 // If last alert location is less than 5 blocks away, cancel to prevent spam
-                if (user.getLastAlert() != null && loc.distance(user.getLastAlert()) < 10)
+                if (user.getLastAlert() != null && loc.distance(user.getLastAlert()) < 5)
                 {
                     return;
                 }
                 // Alert the enemy team
                 user.setLastAlert(loc);
-                claim.getTeam().alert("&cThere is activity in your claim at (" + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ() + ")!");
+                claim.getTeam().alert(FracturedCore.getMessages().get(Messages.REGION_ALERT_ACTIVITY)
+                        .replace("%player%", player.getName())
+                        .replace("%team%", team.getName())
+                        .replace("%locx%", String.valueOf(loc.getBlockY()))
+                        .replace("%locy%", String.valueOf(loc.getBlockY()))
+                        .replace("%locz%", String.valueOf(loc.getBlockZ())));
+                player.sendMessage(FracturedCore.getMessages().get(Messages.REGION_TEAM_ALERTED).replace("%team%", team.getName()));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20 * 5, 0));
             }
         }
     }

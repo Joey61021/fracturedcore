@@ -36,7 +36,7 @@ public final class TpaAcceptCommand
                 }
 
                 target.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TPA_ACCEPTED));
-                player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TPA_ACCEPTED_REQUESTED));
+                player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TPA_ACCEPTED_REQUESTED).replace("%player%", target.getName()));
 
                 if (request.getTpaHere())
                 {
