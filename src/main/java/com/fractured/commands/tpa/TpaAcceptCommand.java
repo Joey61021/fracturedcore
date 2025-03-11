@@ -35,8 +35,15 @@ public final class TpaAcceptCommand
                     continue;
                 }
 
-                target.teleport(player);
                 target.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TPA_ACCEPTED));
+                player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TPA_ACCEPTED_REQUESTED));
+
+                if (request.getTpaHere())
+                {
+                    player.teleport(target);
+                    return true;
+                }
+                target.teleport(player);
                 return true;
             }
         }

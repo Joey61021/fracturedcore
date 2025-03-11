@@ -48,8 +48,16 @@ public final class TpaGenericCommand
             return true;
         }
 
-        TpaManager.addRequest(!cmd.getName().equalsIgnoreCase("tpahere"), player, target);
+        boolean tpaHere = cmd.getName().equalsIgnoreCase("tpahere"); // /tpahere was run?
+
+        TpaManager.addRequest(tpaHere, player, target);
         player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TPA_SENT).replace("%receiver%", target.getName()));
+
+        if (tpaHere)
+        {
+            target.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TPA_RECEIVED_HERE).replace("%sender%", player.getDisplayName()));
+            return true;
+        }
         target.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TPA_RECEIVED).replace("%sender%", player.getDisplayName()));
         return true;
     }

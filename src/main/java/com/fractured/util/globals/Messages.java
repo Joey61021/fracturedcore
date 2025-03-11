@@ -93,7 +93,9 @@ public final class Messages
     public static final TextConfigKey COMMAND_TPA_ALREADY_SENT = textKey("commands.tpa.already_sent");
     public static final TextConfigKey COMMAND_TPA_SENT = textKey("commands.tpa.sent");
     public static final TextConfigKey COMMAND_TPA_RECEIVED = textKey("commands.tpa.received");
+    public static final TextConfigKey COMMAND_TPA_RECEIVED_HERE = textKey("commands.tpa.received_here");
     public static final TextConfigKey COMMAND_TPA_ACCEPTED = textKey("commands.tpa.accepted");
+    public static final TextConfigKey COMMAND_TPA_ACCEPTED_REQUESTED = textKey("commands.tpa.accepted_requested");
     public static final TextConfigKey COMMAND_TPA_TPA_SELF = textKey("commands.tpa.tpa_self");
     public static final TextConfigKey COMMAND_TPA_DENIED = textKey("commands.tpa.denied");
     public static final TextConfigKey COMMAND_TPA_EXPIRED = textKey("commands.tpa.expired");

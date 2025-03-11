@@ -46,9 +46,9 @@ public class TpaManager implements Listener
         return 0;
     }
 
-    public static void addRequest(boolean to, Player requester, Player requested)
+    public static void addRequest(boolean tpaHere, Player requester, Player requested)
     {
-        TpaRequest request = new TpaRequest(to, requester.getUniqueId(), requested.getUniqueId());
+        TpaRequest request = new TpaRequest(tpaHere, requester.getUniqueId(), requested.getUniqueId());
         requests.add(request);
         wait(request, requester);
     }

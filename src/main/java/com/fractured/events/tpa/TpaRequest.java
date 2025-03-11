@@ -4,22 +4,22 @@ import java.util.UUID;
 
 public class TpaRequest {
 
-    private final boolean to;
+    private final boolean tpaHere;
     private final UUID requester;
     private final UUID requested;
     private final long timestamp;
 
-    public TpaRequest(boolean to, UUID requester, UUID requested)
+    public TpaRequest(boolean tpaHere, UUID requester, UUID requested)
     {
-        this.to = to; // requester is teleporting to requested?
+        this.tpaHere = tpaHere; // requester is teleporting to requested?
         this.requester = requester;
         this.requested = requested;
         this.timestamp = System.currentTimeMillis();
     }
 
-    public boolean getTo()
+    public boolean getTpaHere()
     {
-        return to;
+        return tpaHere;
     }
 
     public UUID getRequester() {
