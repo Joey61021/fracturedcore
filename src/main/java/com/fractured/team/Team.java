@@ -183,7 +183,7 @@ public class Team
     {
         clearPlayer(player);
 
-        alert(player.getDisplayName() + ChatColor.WHITE + " left.");
+        alert(color + player.getDisplayName() + ChatColor.WHITE + " left.");
     }
 
     public void alert(String message)

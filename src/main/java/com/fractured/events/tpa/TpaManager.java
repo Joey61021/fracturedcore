@@ -75,7 +75,7 @@ public class TpaManager implements Listener
                 Player target = Bukkit.getPlayer(request.getRequester());
                 if (target != null)
                 {
-                    target.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TPA_LOGGED));
+                    target.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TPA_LOGGED).replace("%player%", player.getName()));
                 }
 
                 requests.remove(request);
