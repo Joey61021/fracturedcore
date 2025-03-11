@@ -127,6 +127,10 @@ public final class Messages
     public static final TextConfigKey COMMAND_ENCHANT_INVALID_RANGE = textKey("commands.enchant.invalid_range");
     public static final TextConfigKey COMMAND_ENCHANT_ENCHANTED = textKey("commands.enchant.enchanted");
 
+    public static final TextConfigKey COMMAND_TAG_USAGE = textKey("commands.tag.usage");
+    public static final TextConfigKey COMMAND_TAG_PLAYER_LOGGED = textKey("commands.tag.player_logged");
+    public static final TextConfigKey COMMAND_TAG_ASSIGNED = textKey("commands.tag.assigned");
+
     public static final String PLUGIN_RESTARTING = ChatColor.YELLOW + "Server Restarting...";
     public static final String PLUGIN_INVALID_STATE = ChatColor.RED + "&cInvalid state. Please contact a server administrator.";
 

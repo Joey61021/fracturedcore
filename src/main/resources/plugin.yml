@@ -50,3 +50,5 @@ commands:
     aliases: [ss]
   enchant:
     aliases: [enchantment]
+  tag:
+    aliases: []

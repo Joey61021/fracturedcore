@@ -51,6 +51,10 @@ command:
   spawn:
     enabled: true
     duration: 60
+tags:
+  '0': "&b[Elite]"
+  '1': "&c[Warrior]"
+  '2': "&d[Imposter]"
 teams:
   member_cap_enabled: true
   # How many extra players a team is allowed over the other teams before that team is locked.

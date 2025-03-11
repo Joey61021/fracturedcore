@@ -149,6 +149,10 @@ commands:
     invalid_enchant: "&cThis enchantment does not exist!"
     invalid_range: "&cLevels must be within 0 and 255!"
     enchanted: "&aYour item has been enchanted with %enchant%!"
+  tag:
+    usage: "&cUsage:\n- /tag [player]"
+    player_logged: "&cThis player is no longer online!"
+    assigned: "&e%player% &fhas been assigned the &d%tag% &ftag!"
 deaths:
   kill: "%victim% &fdied"
   world_border: "%victim% left the confines of this world"

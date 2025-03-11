@@ -45,15 +45,16 @@ public final class ChatListener implements Listener
             user.setLastChatMessage(event.getMessage());
         }
 
+        String tag = user.getTag() == null ? "" : user.getTag() + " &r";
         if (user.isInTeamChat())
         {
             // team chat
             event.setCancelled(true);
-            team.alert(Utils.color(team.color() + "&l[" + team.getName().charAt(0) + "] &r" + player.getName() + ": &f" + event.getMessage()));
+            team.alert(Utils.color(team.color() + "&l[" + team.getName().charAt(0) + "] &r" + tag + player.getName() + ": &f" + event.getMessage()));
         } else
         {
             // public chat
-            event.setFormat((team != null ? team.color() : ChatColor.GRAY) + Utils.color("%1$s&f: %2$s"));
+            event.setFormat((team != null ? team.color() : ChatColor.GRAY) + Utils.color(tag + "%1$s&f: %2$s"));
         }
     }
 }

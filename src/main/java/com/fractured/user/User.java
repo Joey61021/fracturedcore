@@ -25,6 +25,8 @@ public class User
     private boolean socialSpy = false;
     private UUID lastMessage = null;
     private String lastChatMessage = "";
+    private String tag = null;
+    private UUID selectedPlayer = null; // used in admin menus
 
     public User(UUID uuid)
     {
@@ -134,5 +136,25 @@ public class User
     public void setLastChatMessage(String lastChatMessage)
     {
         this.lastChatMessage = lastChatMessage;
+    }
+
+    public String getTag()
+    {
+        return tag;
+    }
+
+    public void setTag(String tag)
+    {
+        this.tag = tag;
+    }
+
+    public UUID getSelectedPlayer()
+    {
+        return selectedPlayer;
+    }
+
+    public void setSelectedPlayer(UUID selectedPlayer)
+    {
+        this.selectedPlayer = selectedPlayer;
     }
 }

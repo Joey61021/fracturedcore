@@ -34,6 +34,7 @@ public final class FracturedCore extends JavaPlugin
 
     private static Config config;
     private static Config messages;
+    private static Config tags;
     private static Storage storage;
 
     /**
@@ -72,6 +73,11 @@ public final class FracturedCore extends JavaPlugin
         return messages;
     }
 
+    public static Config getTags()
+    {
+        return tags;
+    }
+
     public static Storage getStorage()
     {
         return storage;
@@ -88,6 +94,7 @@ public final class FracturedCore extends JavaPlugin
         manager.registerEvents(new WorldManager(), this);
         manager.registerEvents(new EnchantManager(), this);
         manager.registerEvents(new TpaManager(), this);
+        manager.registerEvents(new TagManager(), this);
 
         manager.registerEvents(new ChatListener(), this);
         manager.registerEvents(new CommandListener(), this);
@@ -127,6 +134,7 @@ public final class FracturedCore extends JavaPlugin
         getCommand("reply").setExecutor(ReplyCommand::reply);
         getCommand("socialspy").setExecutor(SocialSpyCommand::socialSpy);
         getCommand("enchant").setExecutor(EnchantCommand::enchant);
+        getCommand("tag").setExecutor(TagCommand::tag);
     }
 
     @Override
@@ -138,12 +146,15 @@ public final class FracturedCore extends JavaPlugin
     {
         config = new Config(this, ConfigKeys.class, "config.yml");
         messages = new Config(this, Messages.class, "messages.yml");
+        tags = new Config(this, Object.class, "tags.yml");
         storage = Storage.newStorage(config);
 
         menuManager = new MenuManager();
 
         registerEvents();
         registerCommands();
+
+        TagManager.init(); // init tags
 
         storage.initServerResources(); // After we've regsitered events and managers (Like MenuManager)
 
