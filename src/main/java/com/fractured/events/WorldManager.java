@@ -178,7 +178,7 @@ public class WorldManager implements Listener
                 user.setLastAlert();
                 claim.getTeam().alert(FracturedCore.getMessages().get(Messages.REGION_ALERT_BLOCK_CHANGE)
                         .replace("%player%", player.getName())
-                        .replace("%team%", team.getName())
+                        .replace("%team%", claim.getTeam().getName())
                         .replace("%locx%", String.valueOf(loc.getBlockY()))
                         .replace("%locy%", String.valueOf(loc.getBlockY()))
                         .replace("%locz%", String.valueOf(loc.getBlockZ())));
@@ -293,7 +293,7 @@ public class WorldManager implements Listener
                 user.setLastAlert();
                 claim.getTeam().alert(FracturedCore.getMessages().get(Messages.REGION_ALERT_ACTIVITY)
                         .replace("%player%", player.getName())
-                        .replace("%team%", team.getName())
+                        .replace("%team%", claim.getTeam().getName())
                         .replace("%locx%", String.valueOf(loc.getBlockY()))
                         .replace("%locy%", String.valueOf(loc.getBlockY()))
                         .replace("%locz%", String.valueOf(loc.getBlockZ())));
