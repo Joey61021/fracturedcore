@@ -33,6 +33,8 @@ public class WorldManager implements Listener
 {
     public static final World OVER_WORLD;
 
+    private static final int COOLDOWN = 5000;
+
     public static Location SPAWN;
     public static Location SPAWN_POS1;
     public static Location SPAWN_POS2;
@@ -167,20 +169,20 @@ public class WorldManager implements Listener
                 player.sendMessage(FracturedCore.getMessages().get(Messages.REGION_TEAM_OFFLINE));
             } else
             {
-                // If last alert location is less than 5 blocks away, cancel to prevent spam
-                if (user.getLastAlert() != null && loc.distance(user.getLastAlert()) < 5)
+                if (System.currentTimeMillis() - user.getLastAlert() < COOLDOWN)
                 {
                     return;
                 }
+
                 // Alert the enemy team
-                user.setLastAlert(loc);
+                user.setLastAlert();
                 claim.getTeam().alert(FracturedCore.getMessages().get(Messages.REGION_ALERT_BLOCK_CHANGE)
                         .replace("%player%", player.getName())
                         .replace("%team%", team.getName())
                         .replace("%locx%", String.valueOf(loc.getBlockY()))
                         .replace("%locy%", String.valueOf(loc.getBlockY()))
                         .replace("%locz%", String.valueOf(loc.getBlockZ())));
-                player.sendMessage(FracturedCore.getMessages().get(Messages.REGION_TEAM_ALERTED).replace("%team%", team.getName()));
+                player.sendMessage(FracturedCore.getMessages().get(Messages.REGION_TEAM_ALERTED).replace("%team%", claim.getTeam().getName()));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20 * 5, 0));
             }
         }
@@ -282,20 +284,20 @@ public class WorldManager implements Listener
                 player.sendMessage(FracturedCore.getMessages().get(Messages.REGION_TEAM_OFFLINE));
             } else
             {
-                // If last alert location is less than 5 blocks away, cancel to prevent spam
-                if (user.getLastAlert() != null && loc.distance(user.getLastAlert()) < 5)
+                if (System.currentTimeMillis() - user.getLastAlert() < COOLDOWN)
                 {
                     return;
                 }
+
                 // Alert the enemy team
-                user.setLastAlert(loc);
+                user.setLastAlert();
                 claim.getTeam().alert(FracturedCore.getMessages().get(Messages.REGION_ALERT_ACTIVITY)
                         .replace("%player%", player.getName())
                         .replace("%team%", team.getName())
                         .replace("%locx%", String.valueOf(loc.getBlockY()))
                         .replace("%locy%", String.valueOf(loc.getBlockY()))
                         .replace("%locz%", String.valueOf(loc.getBlockZ())));
-                player.sendMessage(FracturedCore.getMessages().get(Messages.REGION_TEAM_ALERTED).replace("%team%", team.getName()));
+                player.sendMessage(FracturedCore.getMessages().get(Messages.REGION_TEAM_ALERTED).replace("%team%", claim.getTeam().getName()));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20 * 5, 0));
             }
         }
