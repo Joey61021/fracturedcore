@@ -35,7 +35,7 @@ public final class ChatListener implements Listener
                 return;
             }
 
-            if (!user.getLastChatMessage().equalsIgnoreCase(event.getMessage()))
+            if (user.getLastChatMessage().equalsIgnoreCase(event.getMessage()))
             {
                 event.setCancelled(true);
                 player.sendMessage(FracturedCore.getMessages().get(Messages.SIMILAR_MESSAGE));
