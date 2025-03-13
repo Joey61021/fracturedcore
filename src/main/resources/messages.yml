@@ -153,6 +153,8 @@ commands:
     usage: "&cUsage:\n- /tag [player]"
     player_logged: "&cThis player is no longer online!"
     assigned: "&e%player% &fhas been assigned the &d%tag% &ftag!"
+  back:
+    none_set: "&cYou have no previous location set!"
 deaths:
   kill: "%victim% &fdied"
   world_border: "%victim% left the confines of this world"

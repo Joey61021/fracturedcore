@@ -6,6 +6,7 @@ import com.fractured.commands.messages.ReplyCommand;
 import com.fractured.commands.messages.SocialSpyCommand;
 import com.fractured.commands.team.TeamChatCommand;
 import com.fractured.commands.team.TeamCommand;
+import com.fractured.commands.tpa.BackCommand;
 import com.fractured.commands.tpa.TpaAcceptCommand;
 import com.fractured.commands.tpa.TpaDenyCommand;
 import com.fractured.commands.tpa.TpaGenericCommand;
@@ -135,6 +136,7 @@ public final class FracturedCore extends JavaPlugin
         getCommand("socialspy").setExecutor(SocialSpyCommand::socialSpy);
         getCommand("enchant").setExecutor(EnchantCommand::enchant);
         getCommand("tag").setExecutor(TagCommand::tag);
+        getCommand("back").setExecutor(BackCommand::back);
     }
 
     @Override

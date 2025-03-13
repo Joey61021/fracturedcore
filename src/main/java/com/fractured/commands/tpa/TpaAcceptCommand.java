@@ -3,6 +3,8 @@ package com.fractured.commands.tpa;
 import com.fractured.FracturedCore;
 import com.fractured.events.tpa.TpaManager;
 import com.fractured.events.tpa.TpaRequest;
+import com.fractured.user.User;
+import com.fractured.user.UserManager;
 import com.fractured.util.globals.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -40,15 +42,27 @@ public final class TpaAcceptCommand
 
                 if (request.getTpaHere())
                 {
-                    player.teleport(target);
+                    teleportPlayer(player, target);
                     return true;
                 }
-                target.teleport(player);
+                teleportPlayer(target, player);
                 return true;
             }
         }
 
         player.sendMessage(FracturedCore.getMessages().get(Messages.COMMAND_TPA_NO_REQUESTS));
         return true;
+    }
+
+    public static void teleportPlayer(Player player, Player target)
+    {
+        User user = UserManager.getUser(player);
+        if (user == null)
+        {
+            return;
+        }
+
+        user.setLastLocation(player.getLocation());
+        player.teleport(player);
     }
 }

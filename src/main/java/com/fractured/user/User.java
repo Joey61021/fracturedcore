@@ -27,6 +27,7 @@ public class User
     private String lastChatMessage = "";
     private String tag = null;
     private UUID selectedPlayer = null; // used in admin menus
+    private Location lastLocation = null; // /back command
 
     public User(UUID uuid)
     {
@@ -154,5 +155,15 @@ public class User
     public void setSelectedPlayer(UUID selectedPlayer)
     {
         this.selectedPlayer = selectedPlayer;
+    }
+
+    public Location getLastLocation()
+    {
+        return lastLocation;
+    }
+
+    public void setLastLocation(Location lastLocation)
+    {
+        this.lastLocation = lastLocation;
     }
 }
