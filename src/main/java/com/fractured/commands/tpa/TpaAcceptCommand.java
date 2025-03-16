@@ -63,6 +63,6 @@ public final class TpaAcceptCommand
         }
 
         user.setLastLocation(player.getLocation());
-        player.teleport(player);
+        player.teleport(target);
     }
 }
