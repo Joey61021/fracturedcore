@@ -28,6 +28,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import static com.fractured.util.Utils.romanNumeral;
 
@@ -191,13 +194,17 @@ public final class EnchantManager implements Listener
             return;
         }
 
-        double chance = .5;
+        // at level 3, there's a 60% chance
+        double chance = .6 / 3 * level;
 
         if (Math.random() < chance)
         {
-            if (event.getDamage() < 8)
+            // 18 damage at level 3
+            double damage = 17 * Math.sqrt(level / 0.3d);
+
+            if (event.getDamage() < damage)
             {
-                event.setDamage(8);
+                event.setDamage(damage);
                 attacked.getWorld().strikeLightning(attacked.getLocation());
             }
         }
@@ -248,15 +255,33 @@ public final class EnchantManager implements Listener
         block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(drop));
     }
 
+    private static boolean isWoodLog(Block block)
+    {
+        return switch (block.getBlockData().getMaterial())
+        {
+            case Material.OAK_LOG, Material.SPRUCE_LOG, Material.DARK_OAK_LOG, Material.BIRCH_LOG,
+                 Material.ACACIA_LOG, Material.JUNGLE_LOG, Material.PALE_OAK_LOG, Material.CHERRY_LOG,
+                 Material.MANGROVE_LOG, Material.STRIPPED_OAK_LOG, Material.STRIPPED_SPRUCE_LOG,
+                 Material.STRIPPED_DARK_OAK_LOG, Material.STRIPPED_BIRCH_LOG,
+                 Material.STRIPPED_ACACIA_LOG, Material.STRIPPED_JUNGLE_LOG, Material.STRIPPED_PALE_OAK_LOG,
+                 Material.STRIPPED_CHERRY_LOG, Material.STRIPPED_MANGROVE_LOG -> true;
+            default -> false;
+        };
+    }
+
+    public static boolean canBeBroken(Block block)
+    {
+        return switch (block.getBlockData().getMaterial()) {
+            case BEDROCK, OBSIDIAN -> false;
+            default -> true;
+        };
+    }
+
     public static void timber(BlockBreakEvent event, int level)
     {
         Block block = event.getBlock();
 
-        Set<Block> blocks = new HashSet<>();
-        getNearbyBlocks(true, block, 3 * level, blocks);
-
-        blocks.forEach(Block::breakNaturally);
-        blocks.clear();
+        iterateNearbyBlocks(block.getLocation(), 3 * level, Block::breakNaturally, EnchantManager::isWoodLog);
     }
 
     public static void chunker(BlockBreakEvent event, int level)
@@ -264,10 +289,9 @@ public final class EnchantManager implements Listener
         Block block = event.getBlock();
 
         Set<Block> blocks = new HashSet<>();
-        getNearbyBlocks(true, block, 2, blocks);
+        iterateNearbyBlocks(block.getLocation(), 1, Block::breakNaturally, EnchantManager::canBeBroken);
 
         blocks.forEach(Block::breakNaturally);
-        blocks.clear();
     }
 
     public static void aimbot(ProjectileLaunchEvent event, int level)
@@ -360,12 +384,12 @@ public final class EnchantManager implements Listener
         return nearestTarget;
     }
 
-    public static void getNearbyBlocks(boolean checkType, Block block, int radius, Set<Block> blocks) {
-        int bx = block.getX();
-        int by = block.getY();
-        int bz = block.getZ();
+    public static void iterateNearbyBlocks(Location loc, int radius, Consumer<Block> callback, Predicate<Block> verify) {
+        int bx = loc.getBlockX();
+        int by = loc.getBlockY();
+        int bz = loc.getBlockZ();
 
-        World world = block.getWorld();
+        World world = loc.getWorld();
 
         for (int x = -radius; x <= radius; x++) {
             for (int y = -radius; y <= radius; y++) {
@@ -373,20 +397,12 @@ public final class EnchantManager implements Listener
                     Block relative = world.getBlockAt(bx + x, by + y, bz + z);
 
                     // Check if within spherical radius
-                    if ((relative.getType().equals(block.getType()) || checkType) && canBeBroken(relative.getType()) && relative.getLocation().distance(block.getLocation()) <= radius) {
-                        blocks.add(relative);
+                    if (verify.test(relative)) {
+                        callback.accept(relative);
                     }
                 }
             }
         }
-    }
-
-    public static boolean canBeBroken(Material material)
-    {
-        return switch (material) {
-            case BEDROCK, OBSIDIAN -> false;
-            default -> true;
-        };
     }
 
     // For the soul bound enchant, temporarily keep the items for when the player respawns.
@@ -433,7 +449,7 @@ public final class EnchantManager implements Listener
     }
 
     /**
-     * Handles lifesteal, venomous, wither, shred, and conductance
+     * Handles lifesteal shred, and conductance
      */
     @EventHandler
     public static void onAttack(EntityDamageByEntityEvent event)
@@ -492,6 +508,8 @@ public final class EnchantManager implements Listener
     @EventHandler
     public static void onDeath(PlayerDeathEvent event)
     {
+        // fixme soulbound
+
         List<ItemStack> items = new ArrayList<>();
 
         for (ItemStack item : event.getDrops())
