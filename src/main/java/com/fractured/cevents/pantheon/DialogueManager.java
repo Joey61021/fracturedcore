@@ -3,8 +3,10 @@ package com.fractured.cevents.pantheon;
 import com.fractured.FracturedCore;
 import com.fractured.user.PantheonMeta;
 import com.fractured.user.User;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.craftbukkit.entity.CraftVillager;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager;
@@ -22,12 +24,15 @@ public class DialogueManager
 
     public static void newDialogueHolder(Location loc, String name, Response dialogue)
     {
-        Villager villager = (Villager) loc.getWorld().spawnEntity(loc, EntityType.VILLAGER);
+        CraftVillager villager = (CraftVillager) loc.getWorld().spawnEntity(loc, EntityType.VILLAGER);
 
         villager.setProfession(Villager.Profession.CARTOGRAPHER);
 
-        ((net.minecraft.world.entity.npc.Villager) villager).goalSelector.removeAllGoals(goal -> true);
-        ((net.minecraft.world.entity.npc.Villager) villager).targetSelector.removeAllGoals(goal -> true);
+        villager.setGravity(false);
+        villager.setNoPhysics(true);
+
+        villager.getHandle().goalSelector.removeAllGoals(goal -> !(goal instanceof LookAtPlayerGoal));
+        villager.getHandle().targetSelector.removeAllGoals(goal -> true);
 
         villager.setCustomName(name);
         rootDialogues.put(id, dialogue);
@@ -44,22 +49,16 @@ public class DialogueManager
 
         if (id != null)
         {
+            // cancel for inventory opens or whatever else
+            event.setCancelled(true);
+
             PantheonMeta meta = ((PantheonMeta) user.getEventMeta());
 
-            if (meta.getDialogueHolder() != null && meta.getDialogueHolder().equals(id))
-            {
-                event.getPlayer().sendMessage("talked to the same entity");
-                // If the user is talking to the same entity, we need to progress their dialogue
-            } else
-            {
-                // set a new dialogue holder
-                event.getPlayer().sendMessage("talked to a different entity");
+            // set a new dialogue holder
+            Response response = rootDialogues.get(id);
 
-                Response response = rootDialogues.get(id);
-
-                response.send(event.getPlayer());
-                meta.startConversation(id, response);
-            }
+            response.send(event.getPlayer());
+            meta.setLastMessage(response);
         }
     }
 }

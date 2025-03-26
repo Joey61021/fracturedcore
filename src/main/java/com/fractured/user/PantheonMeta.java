@@ -1,18 +1,18 @@
 package com.fractured.user;
 
+import com.fractured.cevents.pantheon.Prompt;
 import com.fractured.cevents.pantheon.Response;
+import net.kyori.adventure.text.Component;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public final class PantheonMeta implements EventMeta
 {
     /**
-     * Last dialogue holder that this user spoke to
-     */
-    private Integer dialogueHolder;
-    /**
      * The message that responseSender sent.
      */
     private Response lastMessage;
+    private Component conversation;
     public final GateKeeperDialogueState gateKeeperStateRoot;
 
     public PantheonMeta()
@@ -20,14 +20,8 @@ public final class PantheonMeta implements EventMeta
         gateKeeperStateRoot = new GateKeeperDialogueState();
     }
 
-    public Integer getDialogueHolder()
+    public void setLastMessage(Response response)
     {
-        return dialogueHolder;
-    }
-
-    public void startConversation(int id, Response response)
-    {
-        dialogueHolder = id;
         lastMessage = response;
     }
 
@@ -35,8 +29,16 @@ public final class PantheonMeta implements EventMeta
     {
         if (lastMessage != null)
         {
-            lastMessage = lastMessage.getNextResponse(option);
-            lastMessage.send(player);
+            Prompt prompt = lastMessage.getPromptClicked(option);
+
+            if (prompt != null)
+            {
+                player.sendMessage(Component.text(player.getDisplayName() + ChatColor.WHITE + ". ").append(prompt.component()));
+
+                // next response according to that prompt
+                lastMessage = prompt.response();
+                lastMessage.send(player);
+            }
         }
     }
 }

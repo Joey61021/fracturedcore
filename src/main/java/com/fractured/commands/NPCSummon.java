@@ -4,9 +4,6 @@ import com.fractured.FracturedCore;
 import com.fractured.cevents.pantheon.DialogueManager;
 import com.fractured.cevents.pantheon.Prompt;
 import com.fractured.cevents.pantheon.Response;
-import com.fractured.user.PantheonMeta;
-import com.fractured.user.User;
-import com.fractured.user.UserManager;
 import com.fractured.util.globals.Messages;
 import com.fractured.util.globals.Permissions;
 import org.bukkit.command.Command;
@@ -41,8 +38,10 @@ public final class NPCSummon
         Response definePantheon = new Response("The Gatekeeper. The Great Pantheon is a sacred place of the ancients, where the echoes of history reside.", 20);
         root.addPrompt(new Prompt("What is this place?", definePantheon));
 
-        Response bruhWhat = new Response("Erm, what the sigma?", 0);
+        Response bruhWhat = new Response("Erm, what the sigma?", 20);
         root.addPrompt(new Prompt("Do you yearn for the mines?", bruhWhat));
+
+        root.buildPromptSelector();
 
         DialogueManager.newDialogueHolder(player.getLocation(), "The Gatekeeper", root);
 
