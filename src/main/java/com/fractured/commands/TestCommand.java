@@ -1,5 +1,7 @@
 package com.fractured.commands;
 
+import com.destroystokyo.paper.profile.CraftPlayerProfile;
+import com.destroystokyo.paper.profile.PlayerProfile;
 import com.fractured.commands.subcommand.SubCommandRegistry;
 import com.fractured.entity.DungeonBoss;
 import com.mojang.authlib.GameProfile;
@@ -13,6 +15,8 @@ import net.minecraft.server.level.*;
 import net.minecraft.server.network.CommonListenerCookie;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.entity.player.ChatVisiblity;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.CraftWorld;
@@ -32,6 +36,7 @@ public final class TestCommand
 
         subcommands.register("1", TestCommand::test1);
         subcommands.register("2", TestCommand::test2);
+        subcommands.register("3", TestCommand::test3);
     }
 
     public static boolean test(CommandSender sender, Command command, String label, String[] args)
@@ -73,16 +78,16 @@ public final class TestCommand
         ServerPlayer npc = new ServerPlayer(server, level, profile, info);
         npc.setPos(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
 
-        /* Retrieving skins:
-         *  - First thing to understand is that skins have to be "signed" by Mojang. Each skin has two parts: texture and signature
-         *  - You can retrieve this data from:
-         *    https://sessionserver.mojang.com/session/minecraft/profile/UUID?unsigned=false
-         *  - UUID = the uuid of a player without the dashes
-         *  - UUID data can only be retrieved every 60 seconds (if same uuid)
-         */
-        String signature = "ArwoD4sGhthC32Qaq1oSwNOWPciJN54mLj+Tq0tZBUMCaw7Gnpj6W9HJhLrax6gVs8X3O5cWUrgLbAIF8uelb5jLdUpm9ZFsAFUo/MtE3oqCXBjoXw8+Wn8y8WR1UAXwv0ts+C6OSyOfLGk0tR7Jmkac6G7bUKYOAMFtCGcppdmoxvhALHPkcsPmdlE8SsHhOVDBp+SE9SBA0V5Z2YDTua34bLdCh4jHibb9x6D8yLxos5ksqcUzsLW9HZ6gqt29GqRD3+M2q1VyXyOjQCR1MD/5A0WfFAFBtExWPRn4V8Fl8a6+814a84H6apaoIN0e6rZHC9ArLEbfSStS54YbjFZ5jfUHx4jkyg0n16B14Z7KLVRmWJjUPtICWaW7zlOOzzq+ZkV1fckVmXEA0Ri349DnWMSGU44nkgPsjD5PL9PLdDqhWqXQGL9f3C+XmUC+5WWdE1cA2W+ZrTN0mZajlkmcwYL0priAZZfzubhVV6PqWAaM9phgaoK7s5oQc6ruaXObauGZvxZ2p+LDx8A+AKnpxSPvjE+fVoOZUAvzVIhwXkFo8Y7+lJi29GjNS8f+fZctPivnABnK2oHXVapvdWlOfpTg/Y8cgc+GHhsvY82f9p7tyFAjV59Ps2G3TDjNbxm7iRaNs4MBUf2e8+mQFt/MbbblCfDBMUOprV0vjks=";
-        String texture = "ewogICJ0aW1lc3RhbXAiIDogMTYzMzI2Mzg5NjIyNSwKICAicHJvZmlsZUlkIiA6ICIwNjlhNzlmNDQ0ZTk0NzI2YTViZWZjYTkwZTM4YWFmNSIsCiAgInByb2ZpbGVOYW1lIiA6ICJOb3RjaCIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS8yOTIwMDlhNDkyNWI1OGYwMmM3N2RhZGMzZWNlZjA3ZWE0Yzc0NzJmNjRlMGZkYzMyY2U1NTIyNDg5MzYyNjgwIgogICAgfQogIH0KfQ==";
-        npc.getGameProfile().getProperties().put("textures", new Property("textures", texture, signature));
+        // npc skin
+        PlayerProfile playerProfile = Bukkit.createProfile("Texxyy");
+
+        // make sure the skin was queried from the api
+        if (!playerProfile.isComplete())
+        {
+            playerProfile.complete(true);
+        }
+
+        npc.getGameProfile().getProperties().put("textures", (Property) ((CraftPlayerProfile) playerProfile).getGameProfile().getProperties().get("textures").toArray()[0]);
 
         ServerEntity npcServerEntity = new ServerEntity(level, senderPlayer, 0, false, packet -> { }, Set.of()); // someone on a forum said to do that ...*1
 
@@ -96,6 +101,14 @@ public final class TestCommand
         conn.send(new ClientboundAddEntityPacket(npc, npcServerEntity));
 
         sender.sendMessage("spawned");
+
+        return true;
+    }
+
+    private static boolean test3(CommandSender sender, Command command, String label, String[] args)
+    {
+
+
 
         return true;
     }
